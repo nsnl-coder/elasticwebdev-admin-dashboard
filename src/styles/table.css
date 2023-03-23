@@ -1,0 +1,22 @@
+.table {
+  width: 100%;
+}
+
+.table img {
+  width: 80px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+}
+
+.table th {
+  text-align: start;
+  padding: 30px 10px;
+  border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
+}
+
+.table td {
+  border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
+  padding: 30px 10px;
+  text-transform: lowercase;
+}

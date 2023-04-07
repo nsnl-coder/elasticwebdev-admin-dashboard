@@ -12,13 +12,13 @@ module.exports = {
     extend: {
       colors: {
         primary: 'rgba(115, 103, 240, 1)',
-        'primary-light': '',
+        'primary-light': 'rgba(115, 103, 240, 0.3)',
         success: 'rgba(40, 199, 111, 1)',
-        'success-light': '',
+        'success-light': 'rgba(40, 199, 111, 0.5)',
         danger: 'rgba(234, 84, 85, 1)',
-        'danger-light': '',
+        'danger-light': 'rgba(234, 84, 85, 0.5)',
         warning: 'rgba(255, 173, 95, 1)',
-        'warning-light': '',
+        'warning-light': 'rgba(255, 173, 95, 0.5)',
         heading: 'rgba(51, 48, 60,0.87)',
         paragraph: 'rgba(51, 48, 60,0.87)',
         'paragraph-light': 'rgba(51, 48, 60,0.38)',

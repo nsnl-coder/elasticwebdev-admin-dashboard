@@ -1,0 +1,100 @@
+import { Dispatch, SetStateAction, useState } from 'react';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import { useRouter } from 'next/router';
+import { BiSortAlt2 } from 'react-icons/bi';
+//
+import { Sort } from '@src/types/table';
+import SortItem from './SortItem';
+import { DisplayTool } from './Toolbar';
+interface Props {
+  sort: Sort;
+  showSort: boolean;
+  setDisplayTool: Dispatch<SetStateAction<DisplayTool>>;
+}
+
+function SortBar(props: Props): JSX.Element {
+  const { showSort, sort, setDisplayTool } = props;
+  const router = useRouter();
+
+  const sortAscHandler = () => {
+    if (
+      typeof router.query.sort === 'string' &&
+      router.query.sort.includes('-')
+    ) {
+      router.push({
+        query: {
+          ...router.query,
+          sort: router.query.sort.replace('-', ''),
+        },
+      });
+    }
+  };
+
+  const sortDescHandler = () => {
+    if (
+      typeof router.query.sort === 'string' &&
+      !router.query.sort.includes('-')
+    ) {
+      router.push({
+        query: {
+          ...router.query,
+          sort: `-${router.query.sort}`,
+        },
+      });
+    }
+  };
+
+  const sortDirection = router.query.sort?.includes('-') ? 'desc' : 'asc';
+  const currentSort = sort.find((item) => router.query.sort?.includes(item[0]));
+
+  const toggleSortbar = () => {
+    setDisplayTool((prev) => ({ ...prev, showSort: !prev.showSort }));
+  };
+
+  return (
+    <div
+      className={`dropdown dropdown-end text-paragraph ${
+        showSort ? 'dropdown-open' : ''
+      }`}
+    >
+      <label
+        onClick={toggleSortbar}
+        className="border p-1 block cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-sm"
+      >
+        <BiSortAlt2 size={23} />
+      </label>
+      <div className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1">
+        <div className="py-3 px-3">
+          <h3>Sort by</h3>
+          <ul>
+            {sort.map((item) => (
+              <SortItem key={item[0]} sortBy={item[0]} />
+            ))}
+          </ul>
+        </div>
+        <ul className="px-3 py-4 space-y-2 cursor-pointer">
+          <li
+            onClick={sortAscHandler}
+            className={`flex gap-x-2 items-center px-1 py-1 rounded-sm ${
+              sortDirection === 'asc' ? 'bg-blue-50' : ''
+            }`}
+          >
+            <AiOutlineArrowUp size={21} />
+            <span>{currentSort ? currentSort[1] : 'a-z'}</span>
+          </li>
+          <li
+            onClick={sortDescHandler}
+            className={`flex gap-x-2 items-center px-1 py-1 ${
+              sortDirection == 'desc' ? 'bg-blue-50' : ''
+            }`}
+          >
+            <AiOutlineArrowDown size={21} />
+            <span>{currentSort ? currentSort[2] : 'z-a'}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default SortBar;

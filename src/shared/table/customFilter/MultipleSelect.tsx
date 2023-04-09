@@ -44,7 +44,10 @@ function MultipleSelect(props: Props): JSX.Element {
     delete query[queryField];
 
     router.push({
-      query,
+      query: {
+        ...query,
+        page: 1,
+      },
     });
   };
 
@@ -56,7 +59,7 @@ function MultipleSelect(props: Props): JSX.Element {
     >
       <label
         onClick={openFilter}
-        className="border px-4 bg-gray-50 hover:bg-gray-100 cursor-pointer rounded-full border-dashed flex items-center gap-x-1"
+        className="border px-4 py-0.5 bg-gray-50 hover:bg-gray-100 cursor-pointer rounded-full border-dashed flex items-center gap-x-1"
       >
         <span>{displayText || queryField}</span>
         <span>

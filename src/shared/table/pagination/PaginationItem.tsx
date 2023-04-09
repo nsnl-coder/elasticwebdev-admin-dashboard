@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 interface Props {
   pageNum: number | string;
-  currentPage: number;
+  currentPage: number | undefined;
 }
 
 function PaginationItem(props: Props): JSX.Element {
@@ -24,7 +24,9 @@ function PaginationItem(props: Props): JSX.Element {
   return (
     <button
       onClick={onClickHandler}
-      className={`btn ${currentPage === pageNum ? 'btn-active' : ''}`}
+      className={`text-paragraph w-9 text-sm aspect-square rounded-full hover:bg-primary hover:text-white ${
+        currentPage === pageNum ? 'bg-primary text-white' : ''
+      }`}
     >
       {pageNum}
     </button>

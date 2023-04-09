@@ -1,0 +1,122 @@
+import { RiBold, RiItalic } from 'react-icons/ri';
+import {
+  AiOutlineStrikethrough,
+  AiOutlineClear,
+  AiOutlineEnter,
+} from 'react-icons/ai';
+import { FaUndo, FaRedo, FaMarker } from 'react-icons/fa';
+import { HiOutlineListBullet } from 'react-icons/hi2';
+import { BsListOl, BsFillFileCodeFill } from 'react-icons/bs';
+import { GrBlockQuote } from 'react-icons/gr';
+import { MdHorizontalRule } from 'react-icons/md';
+//
+import Heading from './Heading';
+import ToolbarItem from './ToolbarItem';
+import { Editor } from '@tiptap/react';
+import Table from './Table';
+
+interface Props {
+  editor: Editor | null;
+}
+
+const Toolbar = (props: Props) => {
+  const { editor } = props;
+
+  if (!editor) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-wrap gap-x-2 gap-y-2 px-4 shadow-lg py-2">
+      <ToolbarItem
+        onClick={() => editor.chain().focus().undo().run()}
+        disabled={!editor.can().chain().focus().undo().run()}
+      >
+        <FaUndo />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => editor.chain().focus().redo().run()}
+        disabled={!editor.can().chain().focus().redo().run()}
+      >
+        <FaRedo />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        disabled={!editor.can().chain().focus().toggleBold().run()}
+        isActive={editor.isActive('bold')}
+      >
+        <RiBold size={20} />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        disabled={!editor.can().chain().focus().toggleItalic().run()}
+        isActive={editor.isActive('italic')}
+      >
+        <RiItalic size={19} />
+      </ToolbarItem>
+
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleStrike().run()}
+        disabled={!editor.can().chain().focus().toggleStrike().run()}
+        isActive={editor.isActive('strike')}
+      >
+        <AiOutlineStrikethrough size={20} />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        isActive={editor.isActive('bulletList')}
+      >
+        <HiOutlineListBullet size={26} />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        isActive={editor.isActive('orderedList')}
+      >
+        <BsListOl size={23} />
+      </ToolbarItem>
+
+      <Table editor={editor} />
+
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        isActive={editor.isActive('blockquote')}
+      >
+        <GrBlockQuote />
+      </ToolbarItem>
+
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        disabled={!editor.can().chain().focus().toggleCode().run()}
+        isActive={editor.isActive('code')}
+      >
+        <BsFillFileCodeFill size={20} />
+      </ToolbarItem>
+
+      <ToolbarItem
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        isActive={editor.isActive('codeBlock')}
+      >
+        <FaMarker />
+      </ToolbarItem>
+      <Heading editor={editor} />
+      <ToolbarItem
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+      >
+        <MdHorizontalRule size={24} />
+      </ToolbarItem>
+      <ToolbarItem onClick={() => editor.chain().focus().setHardBreak().run()}>
+        <AiOutlineEnter size={20} />
+      </ToolbarItem>
+      <ToolbarItem
+        onClick={() => {
+          editor.chain().focus().unsetAllMarks().run();
+          editor.chain().focus().clearNodes().run();
+        }}
+      >
+        <AiOutlineClear size={20} />
+      </ToolbarItem>
+    </div>
+  );
+};
+
+export default Toolbar;

@@ -3,6 +3,7 @@ interface Pagination {
   totalResults: number;
   currentPage: number;
   results: number;
+  itemsPerPage: number;
 }
 
 export default Pagination;

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from '@src/config/axios';
+import { toastGeneralError } from '@src/utils/toast';
 
 interface RequestConfig {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -8,11 +9,24 @@ interface RequestConfig {
   params?: object;
 }
 
-type ApplyApiData = (payload: object) => any;
+interface ApiError {
+  status: string;
+  message: string;
+  errors?: string[];
+}
+
+interface Response {
+  status: string;
+  message?: string;
+  data?: string;
+  errors?: string[];
+}
+
+type ApplyApiData = (payload: Response) => any;
 
 const useCallApi = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<ApiError | null>(null);
 
   const sendRequest = async (
     requestConfig: RequestConfig,
@@ -35,13 +49,21 @@ const useCallApi = () => {
       applyApiData(data);
       setIsLoading(false);
     } catch (err: any) {
-      console.log(err);
       setIsLoading(false);
-      setError(err.response.data);
+      if (err.response?.data) {
+        setApiError(err.response?.data);
+      } else {
+        toastGeneralError();
+        setApiError({
+          status: 'fail',
+          message: 'Server is not up! Please double check!',
+        });
+      }
     }
   };
 
-  return { isLoading, error, sendRequest, setError };
+  return { isLoading, apiError, sendRequest, setApiError };
 };
 
 export default useCallApi;
+export type { Response };

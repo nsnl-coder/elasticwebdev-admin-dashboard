@@ -1,14 +1,16 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, InputHTMLAttributes, SetStateAction, useRef } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { DisplayTool } from './Toolbar';
 
 interface Props {
   showSearch: boolean;
   setDisplayTool: Dispatch<SetStateAction<DisplayTool>>;
+  searchBy: string;
 }
 
 function SearchBar(props: Props): JSX.Element {
   const { showSearch, setDisplayTool } = props;
+  const keywordInputRef = useRef<HTMLInputElement>(null);
 
   const hideSearchBar = () => {
     setDisplayTool((prev) => ({ ...prev, showSearch: false }));
@@ -18,11 +20,17 @@ function SearchBar(props: Props): JSX.Element {
     setDisplayTool((prev) => ({ ...prev, showSearch: true }));
   };
 
+  const searchHandler = () => {};
+
   return (
-    <div>
+    <form onSubmit={searchHandler} className="flex-grow flex justify-end">
       {showSearch && (
-        <div className="flex gap-x-3 ">
-          <input type="text" className="input-sm w-full border" />
+        <div className="flex gap-x-3 flex-grow">
+          <input
+            type="text"
+            className="py-2 px-2 border flex-grow"
+            ref={keywordInputRef}
+          />
           <button
             onClick={hideSearchBar}
             type="button"
@@ -40,7 +48,7 @@ function SearchBar(props: Props): JSX.Element {
           <BsSearch />
         </button>
       )}
-    </div>
+    </form>
   );
 }
 

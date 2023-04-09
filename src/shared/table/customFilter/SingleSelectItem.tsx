@@ -15,6 +15,7 @@ function SingleSelectItem(props: Props): JSX.Element {
       query: {
         ...query,
         [queryField]: value,
+        page: 1,
       },
     });
   };

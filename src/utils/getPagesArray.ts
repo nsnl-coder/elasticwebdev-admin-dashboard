@@ -1,7 +1,7 @@
 const getPagesArray = (
   currentPage: number,
   totalPages: number,
-  displayRange: number = 2,
+  displayRange: number = 4,
 ) => {
   let startPage = currentPage - displayRange;
   if (startPage < 1) startPage = 1;

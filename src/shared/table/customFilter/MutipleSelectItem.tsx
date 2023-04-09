@@ -29,13 +29,10 @@ function SelectItem(props: Props): JSX.Element {
       query: {
         ...query,
         [queryField]: oldFilter,
+        page: 1,
       },
     });
   };
-
-  useEffect(() => {
-    console.log(query);
-  }, [query]);
 
   const isChecked = router.query[queryField]?.includes(value);
 

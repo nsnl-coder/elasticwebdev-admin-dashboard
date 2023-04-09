@@ -65,7 +65,7 @@ function SortBar(props: Props): JSX.Element {
       </label>
       <div className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1">
         <div className="py-3 px-3">
-          <h3>Sort by</h3>
+          <h3 className="font-semibold">Sort by</h3>
           <ul>
             {sort.map((item) => (
               <SortItem key={item[0]} sortBy={item[0]} />

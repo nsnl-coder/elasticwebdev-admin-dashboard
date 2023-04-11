@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
-const toastGeneralError = () => {
-  toast.error('Something went wrong! Try again later', {
+const toastGeneralError = (message?: string) => {
+  toast.error(message || 'Something went wrong! Try again later', {
     position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,

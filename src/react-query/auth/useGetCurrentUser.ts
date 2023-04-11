@@ -1,35 +1,37 @@
+import { useQuery } from '@tanstack/react-query';
+//
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin, logUserIn } from '@src/store/auth';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-//
-import useCallApi, { Response } from '../useCallApi';
+import axios from '@src/config/axios';
 
-const useGetCurrentUser = () => {
+import { HttpError, HttpResponse } from '@src/types/api';
+import User from '@src/types/user';
+
+type Response = HttpResponse<User>;
+
+const useCurrentUser = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, apiError, sendRequest, setApiError } = useCallApi();
 
-  const applyApiData = (res: Response) => {
-    dispatch(logUserIn(res));
+  const queryFn = async () => {
+    const { data } = await axios.get<Response>('/api/auth/current-user');
+    return data;
   };
 
-  useEffect(() => {
-    sendRequest(
-      {
-        url: '/auth/current-user',
-        method: 'GET',
-      },
-      applyApiData,
-    );
-  }, []);
+  const onSuccess = (data: Response) => dispatch(logUserIn(data));
+  const onError = (err: HttpError) => dispatch(failToLogin());
 
-  useEffect(() => {
-    if (apiError) {
-      dispatch(failToLogin());
-    }
-  }, [apiError]);
+  const res = useQuery<any, HttpError, Response>({
+    queryKey: ['auth'],
+    queryFn,
+    onSuccess,
+    onError,
+    retry: 0,
+  });
 
-  return { isLoading, apiError, setApiError };
+  return {
+    isLoading: res.isLoading,
+    apiError: res.error,
+  };
 };
 
-export default useGetCurrentUser;
+export default useCurrentUser;

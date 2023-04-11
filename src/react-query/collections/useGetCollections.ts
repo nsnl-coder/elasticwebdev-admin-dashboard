@@ -1,51 +1,36 @@
-import useCallApi from '../useCallApi';
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+//
 import Collection from '@src/types/collection';
-import Pagination from '@src/types/pagination';
+import { HttpError, HttpResponse } from '@src/types/api';
 import { useRouter } from 'next/router';
 
+type Response = HttpResponse<Collection[]>;
+
 const useGetCollections = () => {
-  const router = useRouter();
-  const query = router.query;
+  const { query } = useRouter();
 
-  const [collections, setCollections] = useState<Collection[] | []>([]);
-  const [pagination, setPagination] = useState<Pagination | null>(null);
-
-  const applyApiData = (data: any) => {
-    setCollections(data.data);
-    setPagination(data.pagination);
+  const queryFn = async () => {
+    const { data } = await axios<Response>({
+      method: 'get',
+      url: '/api/collections',
+      params: query,
+    });
+    return data;
   };
 
-  const {
-    isLoading: isLoadingCollections,
-    error: collectionError,
-    sendRequest,
-  } = useCallApi();
+  const res = useQuery<any, HttpError, Response>(
+    ['collections', query],
+    queryFn,
+  );
 
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    // console.log(query);
-
-    sendRequest(
-      {
-        method: 'GET',
-        url: '/collections',
-        params: {
-          ...query,
-        },
-      },
-      applyApiData,
-    );
-  }, [
-    query.page,
-    query.itemsPerPage,
-    query.sort,
-    query.status,
-    router.isReady,
-  ]);
-
-  return { isLoadingCollections, collections, collectionError, pagination };
+  return {
+    collections: res.data?.data,
+    pagination: res.data?.pagination,
+    isLoading: res.isLoading,
+    isError: res.isError,
+    error: res.error,
+  };
 };
 
 export default useGetCollections;

@@ -26,12 +26,12 @@ function Login(): JSX.Element {
     },
   });
 
-  const { login, isLoading, apiError, setApiError } = useLogin();
+  const { login, isLoading, apiError, reset } = useLogin();
   const onSubmit = (data: any) => login(data);
 
   useEffect(() => {
     if (apiError) {
-      setApiError(null);
+      reset();
     }
   }, [isValidating]);
 

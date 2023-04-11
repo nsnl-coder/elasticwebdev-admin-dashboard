@@ -1,8 +1,6 @@
-import Table from '@src/shared/table/Table';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:5000';
+import Gallery from '@src/shared/gallery/Gallery';
+import UploadFiles from '@src/shared/uploadFiles/UploadFiles';
 
 export default function Home() {
-  return <div>Home page</div>;
+  return <Gallery />;
 }

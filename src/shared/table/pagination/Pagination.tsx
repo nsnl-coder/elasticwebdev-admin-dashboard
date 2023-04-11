@@ -4,7 +4,8 @@ import Gotopage from './Gotopage';
 import PaginationItem from './PaginationItem';
 
 interface Props {
-  pagination: Partial<Pagination> | null;
+  pagination: Partial<Pagination> | undefined;
+  isLoading: boolean;
 }
 
 function Pagination(props: Props): JSX.Element {
@@ -14,8 +15,12 @@ function Pagination(props: Props): JSX.Element {
   let totalResults = props.pagination?.totalResults;
   let results = props.pagination?.results || 0;
 
-  if (currentPage === undefined || totalPages === undefined) {
+  if (props.isLoading) {
     return <div>Loading....</div>;
+  }
+
+  if (!totalPages || !currentPage) {
+    return <div>No</div>;
   }
 
   const pagesArray = getPagesArray(currentPage, totalPages);

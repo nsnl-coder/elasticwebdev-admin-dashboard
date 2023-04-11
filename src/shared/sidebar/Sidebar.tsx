@@ -27,40 +27,44 @@ function Sidebar(): JSX.Element {
       <Logo />
       <div className="flex-grow overflow-y-auto hidden-scrollbar hover:small-scrollbar py-6 px-5">
         <Section sectionName="quick link">
-          <SidebarItem text="Dashboard" href="" icon={<AiFillHome />} />
-          <SidebarItem text="Chat" href="" icon={<BsFillChatDotsFill />} />
+          <SidebarItem text="Dashboard" href="/" icon={<AiFillHome />} />
+          <SidebarItem text="Chat" href="/" icon={<BsFillChatDotsFill />} />
         </Section>
         {/* <Section sectionName="reports">
-        <SidebarItem text="report 1" href="" />
-        <SidebarItem text="report 2" href="" />
-        <SidebarItem text="report " href="" />
+        <SidebarItem text="report 1" href="/" />
+        <SidebarItem text="report 2" href="/" />
+        <SidebarItem text="report " href="/" />
       </Section> */}
         <Section sectionName="Resources">
-          <SidebarItem text="users" href="" icon={<AiOutlineUserSwitch />} />
-          <SidebarItem text="emails" href="" icon={<AiOutlineMail />} />
-          <SidebarItem text="gallery" href="" icon={<ImImages />} />
+          <SidebarItem text="users" href="/" icon={<AiOutlineUserSwitch />} />
+          <SidebarItem text="emails" href="/" icon={<AiOutlineMail />} />
+          <SidebarItem text="gallery" href="/" icon={<ImImages />} />
         </Section>
         <Section sectionName="Shop">
-          <SidebarItem text="products" href="" icon={<FaProductHunt />} />
-          <SidebarItem text="categories" href="" icon={<BiCategoryAlt />} />
-          <SidebarItem text="orders" href="" icon={<RiBillLine />} />
-          <SidebarItem text="reviews" href="" icon={<AiFillStar />} />
+          <SidebarItem text="products" href="/" icon={<FaProductHunt />} />
+          <SidebarItem
+            text="collections"
+            href="/collections"
+            icon={<BiCategoryAlt />}
+          />
+          <SidebarItem text="orders" href="/" icon={<RiBillLine />} />
+          <SidebarItem text="reviews" href="/" icon={<AiFillStar />} />
           <SidebarItem
             text="coupons"
             href=""
             icon={<TbDiscountCheckFilled />}
           />
-          <SidebarItem text="shippings" href="" icon={<FaShippingFast />} />
+          <SidebarItem text="shippings" href="/" icon={<FaShippingFast />} />
         </Section>
         <Section sectionName="Blog">
-          <SidebarItem text="posts" href="" icon={<AiFillPushpin />} />
-          <SidebarItem text="categories" href="" icon={<MdCategory />} />
-          <SidebarItem text="Comments" href="" icon={<BiCommentDetail />} />
+          <SidebarItem text="posts" href="/" icon={<AiFillPushpin />} />
+          <SidebarItem text="categories" href="/" icon={<MdCategory />} />
+          <SidebarItem text="Comments" href="/" icon={<BiCommentDetail />} />
         </Section>
         <Section sectionName="settings">
-          <SidebarItem text="general" href="" icon={<IoIosSettings />} />
-          <SidebarItem text="main menu" href="" icon={<AiOutlineMenu />} />
-          <SidebarItem text="footer" href="" icon={<BsMenuButtonWideFill />} />
+          <SidebarItem text="general" href="/" icon={<IoIosSettings />} />
+          <SidebarItem text="main menu" href="/" icon={<AiOutlineMenu />} />
+          <SidebarItem text="footer" href="/" icon={<BsMenuButtonWideFill />} />
         </Section>
       </div>
     </div>

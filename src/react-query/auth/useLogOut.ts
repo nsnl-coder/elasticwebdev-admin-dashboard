@@ -1,39 +1,35 @@
+import { useMutation } from '@tanstack/react-query';
+//
+import axios from '@src/config/axios';
+import { HttpError } from '@src/types/api';
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin } from '@src/store/auth';
-import { toastGeneralError } from '@src/utils/toast';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import useCallApi from '../useCallApi';
 
-const useLogout = () => {
+const useLogOut = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isLoading, apiError, sendRequest, setApiError } = useCallApi();
 
-  const applyApiData = () => {
+  const mutationFn = async (payload: any) => {
+    const { data } = await axios.post('/api/auth/sign-out');
+    return data;
+  };
+
+  const onSuccess = () => {
     dispatch(failToLogin());
-    router.push({
-      pathname: '/auth/login',
-    });
+    router.push('/auth/login');
   };
 
-  const logout = () => {
-    sendRequest(
-      {
-        url: '/auth/sign-out',
-        method: 'POST',
-      },
-      applyApiData,
-    );
+  const mutation = useMutation<any, HttpError>({
+    mutationFn,
+    onSuccess,
+    retry: 0,
+  });
+
+  return {
+    logout: mutation.mutate,
+    isLoggingOut: mutation.isLoading,
   };
-
-  useEffect(() => {
-    if (apiError) {
-      toastGeneralError();
-    }
-  }, [apiError]);
-
-  return { logout, isLoading, apiError, setApiError };
 };
 
-export default useLogout;
+export default useLogOut;

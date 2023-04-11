@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { NextComponentType, NextPageContext } from 'next';
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 //
 import CommonLayout from '@src/shared/layout/CommonLayout';
@@ -11,8 +12,11 @@ import RequireAdmin from '@src/shared/requireAdmin/RequireAdmin';
 import GetCurrentUser from '@src/shared/getCurrentUser/GetCurrentUser';
 import 'react-toastify/dist/ReactToastify.css';
 import '@src/styles/globals.scss';
+import { queryClient, QueryClientProvider } from '@src/react-query/queryClient';
+import ProgressBar from '@src/shared/loading/ProgressBar';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
+axios.defaults.baseURL = 'http://localhost:5000';
 
 export type NextApplicationPage = NextComponentType<
   NextPageContext,
@@ -29,21 +33,23 @@ function App(props: AppProps): JSX.Element {
   }: { Component: NextApplicationPage; pageProps: any } = props;
 
   return (
-    <Provider store={store}>
-      <GetCurrentUser />
-      <ToastContainer />
-      <main className={publicSans.className}>
-        {Component.requireAdmin === false ? (
-          <Component {...pageProps} />
-        ) : (
-          <RequireAdmin>
-            <CommonLayout>
-              <Component {...pageProps} />
-            </CommonLayout>
-          </RequireAdmin>
-        )}
-      </main>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <GetCurrentUser />
+        <ToastContainer />
+        <main className={publicSans.className}>
+          {Component.requireAdmin === false ? (
+            <Component {...pageProps} />
+          ) : (
+            <RequireAdmin>
+              <CommonLayout>
+                <Component {...pageProps} />
+              </CommonLayout>
+            </RequireAdmin>
+          )}
+        </main>
+      </Provider>
+    </QueryClientProvider>
   );
 }
 

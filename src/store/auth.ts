@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { HttpResponse } from '@src/types/api';
 import User from '@src/types/user';
 
 interface AuthState {
@@ -15,8 +16,8 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logUserIn(state, action) {
-      const res = action.payload;
+    logUserIn(state, { payload }: { payload: HttpResponse<User> }) {
+      const res = payload;
       state.user = res.data;
       state.isLoggedIn = true;
     },

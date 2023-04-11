@@ -5,7 +5,7 @@ import Toolbar from '@src/shared/table/toolbar/Toolbar';
 import Link from 'next/link';
 
 const CollectionTable = (): JSX.Element => {
-  const { collections, pagination } = useGetCollections();
+  const { collections, pagination, isLoading } = useGetCollections();
 
   return (
     <ContentWrapper className="pb-8">
@@ -32,7 +32,7 @@ const CollectionTable = (): JSX.Element => {
             </tr>
           </thead>
           <tbody>
-            {collections.map((collection) => (
+            {collections?.map((collection) => (
               <tr key={collection._id}>
                 <td>
                   <div className="w-16 border">
@@ -56,7 +56,7 @@ const CollectionTable = (): JSX.Element => {
             ))}
           </tbody>
         </table>
-        <Pagination pagination={pagination} />
+        <Pagination pagination={pagination} isLoading={isLoading} />
       </div>
     </ContentWrapper>
   );

@@ -7,11 +7,11 @@ interface Props {
 }
 
 function SidebarItem(props: Props): JSX.Element {
-  const { text, href, icon } = props;
+  const { text, href = '/', icon } = props;
 
   return (
     <Link
-      href="/"
+      href={href}
       className="py-2 hover:bg-gray-100 px-4 rounded-md capitalize flex items-center gap-x-3"
     >
       {icon}

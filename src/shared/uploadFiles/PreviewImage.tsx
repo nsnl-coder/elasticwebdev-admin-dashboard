@@ -1,36 +1,19 @@
-import { FileInfo } from '@src/hooks/useUploadFiles';
+import { FileInfo } from '@src/hooks/useSelectFiles';
 import { Dispatch, SetStateAction } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
 
 interface Props {
   fileinfo: FileInfo;
   index: number;
-  setFiles: Dispatch<SetStateAction<FileInfo[]>>;
+  removeFile: (url: string) => void;
+  pinFile: (file: FileInfo) => void;
 }
 
 function PreviewImage(props: Props): JSX.Element {
-  const { fileinfo, index, setFiles } = props;
+  const { fileinfo, index, removeFile, pinFile } = props;
 
-  const handleRemoveImage = () => {
-    let removeImageUrl = fileinfo.url;
-
-    setFiles((prev) =>
-      prev.filter((fileinfo) => fileinfo.url !== removeImageUrl),
-    );
-
-    URL.revokeObjectURL(removeImageUrl);
-  };
-
-  const handlePinImage = () => {
-    const pinnedImageUrl = fileinfo.url;
-
-    setFiles((prev) => {
-      const filtered = prev.filter(
-        (fileinfo) => fileinfo.url !== pinnedImageUrl,
-      );
-      return [fileinfo, ...filtered];
-    });
-  };
+  const handleRemoveImage = () => removeFile(fileinfo.url);
+  const handlePinImage = () => pinFile(fileinfo);
 
   return (
     <div

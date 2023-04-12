@@ -1,6 +1,6 @@
 import useUploadFiles from '@src/hooks/useUploadFiles';
-import UploadInput from '../uploadFiles/UploadInput';
-import UploadLabel from '../uploadFiles/UploadLabel';
+import UploadInput from '../uploadFiles/HiddenInput';
+import UploadLabel from '../uploadFiles/Label';
 
 function GalleryUpload(): JSX.Element {
   const { setFiles } = useUploadFiles();

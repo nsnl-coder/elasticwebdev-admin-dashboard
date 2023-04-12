@@ -2,7 +2,7 @@ interface Props {
   className?: string;
 }
 
-const UploadLabel = (props: Props) => {
+const Label = (props: Props) => {
   const { className } = props;
 
   return (
@@ -25,4 +25,4 @@ const UploadLabel = (props: Props) => {
   );
 };
 
-export default UploadLabel;
+export default Label;

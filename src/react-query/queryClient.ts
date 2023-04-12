@@ -4,13 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 type OnErrorFn = (error: HttpError) => void;
 
-const withDefaultOnError = (onError: OnErrorFn) => {
-  return (error: HttpError) => {
-    defaultOnError(error);
-    onError(error);
-  };
-};
-
 const defaultOnError = (err: unknown) => {
   const error = err as HttpError;
 
@@ -24,7 +17,13 @@ const defaultOnError = (err: unknown) => {
   }
 };
 
-// Call this function when you want to prefetch the data
+const withDefaultOnError = (onError: OnErrorFn) => {
+  return (error: HttpError) => {
+    defaultOnError(error);
+    onError(error);
+  };
+};
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

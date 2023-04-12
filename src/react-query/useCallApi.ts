@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from '@src/config/axios';
-import { toastGeneralError } from '@src/utils/toast';
+import { toastError } from '@src/utils/toast';
 
 interface RequestConfig {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -53,7 +53,7 @@ const useCallApi = () => {
       if (err.response?.data) {
         setApiError(err.response?.data);
       } else {
-        toastGeneralError();
+        toastError();
         setApiError({
           status: 'fail',
           message: 'Server is not up! Please double check!',

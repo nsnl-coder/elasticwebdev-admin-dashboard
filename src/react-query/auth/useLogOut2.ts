@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin } from '@src/store/auth';
-import { toastGeneralError } from '@src/utils/toast';
+import { toastError } from '@src/utils/toast';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useCallApi from '../useCallApi';
@@ -29,7 +29,7 @@ const useLogout = () => {
 
   useEffect(() => {
     if (apiError) {
-      toastGeneralError();
+      toastError();
     }
   }, [apiError]);
 

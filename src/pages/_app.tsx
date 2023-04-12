@@ -13,7 +13,6 @@ import GetCurrentUser from '@src/shared/getCurrentUser/GetCurrentUser';
 import 'react-toastify/dist/ReactToastify.css';
 import '@src/styles/globals.scss';
 import { queryClient, QueryClientProvider } from '@src/react-query/queryClient';
-import ProgressBar from '@src/shared/loading/ProgressBar';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
 axios.defaults.baseURL = 'http://localhost:5000';

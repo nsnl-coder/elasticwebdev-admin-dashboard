@@ -1,6 +1,6 @@
 import Gallery from '@src/shared/gallery/Gallery';
-import UploadFiles from '@src/shared/uploadFiles/UploadFiles';
+import VideoPlayer from '@src/shared/videoPlay/VideoPlayer';
 
 export default function Home() {
-  return <Gallery />;
+  return <VideoPlayer src="https://www.youtube.com/watch?v=oITDcIjJBlY" />;
 }

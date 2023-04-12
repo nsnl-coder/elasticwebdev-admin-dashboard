@@ -1,4 +1,6 @@
+import { toastError } from '@src/utils/toast';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface FileInfo {
   url: string;
@@ -8,10 +10,30 @@ interface FileInfo {
   file: File;
 }
 
-function useUploadFiles() {
+function useSelectFiles() {
   const [files, setFiles] = useState<FileInfo[]>([]);
 
-  const selectNewFile = (file: File) => {
+  const selectFiles = (files: FileList) => {
+    for (let i = 0; i < files.length; i++) {
+      selectFile(files[i]);
+    }
+  };
+
+  const selectFile = (file: File) => {
+    if (!file.type.startsWith('image') && !file.type.startsWith('video')) {
+      toastError('Please select image or video files only!');
+      return;
+    }
+
+    if (file.type.startsWith('image') && file.size > 1024 * 1024) {
+      toastError('Please select images under 1mb!');
+      return;
+    }
+    if (file.type.startsWith('video') && file.size > 50 * 1024 * 1024) {
+      toastError('Please select videos under 50mb!');
+      return;
+    }
+
     setFiles((prev) => [
       ...prev,
       {
@@ -36,8 +58,8 @@ function useUploadFiles() {
     });
   };
 
-  return { selectNewFile, removeFile, files, pinFile };
+  return { selectFiles, removeFile, files, pinFile };
 }
 
-export default useUploadFiles;
+export default useSelectFiles;
 export type { FileInfo };

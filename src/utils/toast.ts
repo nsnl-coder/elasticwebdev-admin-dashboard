@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const toastGeneralError = (message?: string) => {
+const toastError = (message?: string) => {
   toast.error(message || 'Something went wrong! Try again later', {
     position: 'bottom-left',
     autoClose: 5000,
@@ -26,4 +26,4 @@ const toastSuccess = (content: string) => {
   });
 };
 
-export { toastGeneralError, toastSuccess };
+export { toastError, toastSuccess };

@@ -1,18 +1,18 @@
 import useSelectFiles from '@src/hooks/useSelectFiles';
-import PreviewImage from './PreviewImage';
+import PreviewFile from './PreviewFile';
 import SelectFromGallery from './SelectFromGallery';
 import UploadInput from './HiddenInput';
 import UploadLabel from './Label';
 
 function SelectFiles(): JSX.Element {
-  const { files, selectNewFile, removeFile, pinFile } = useSelectFiles();
+  const { files, selectFiles, removeFile, pinFile } = useSelectFiles();
 
   return (
     <div>
-      <UploadInput selectNewFile={selectNewFile} />
+      <UploadInput selectFiles={selectFiles} />
       <div className="grid grid-cols-4 max-w-5xl gap-4">
         {files.map((fileinfo, index) => (
-          <PreviewImage
+          <PreviewFile
             key={fileinfo.url}
             fileinfo={fileinfo}
             index={index}

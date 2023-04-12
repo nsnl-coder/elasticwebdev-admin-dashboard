@@ -9,7 +9,7 @@ import { withDefaultOnError } from '../queryClient';
 
 type Response = HttpResponse<User>;
 
-interface LoginInfo {
+interface RequestData {
   email: string;
   password: string;
 }
@@ -17,7 +17,7 @@ interface LoginInfo {
 const useLogin = () => {
   const dispatch = useAppDispatch();
 
-  const mutationFn = async (payload: LoginInfo) => {
+  const mutationFn = async (payload: RequestData) => {
     const { data } = await axios<Response>({
       method: 'post',
       url: '/api/auth/sign-in',
@@ -30,14 +30,12 @@ const useLogin = () => {
   const onSuccess = (data: Response) => dispatch(logUserIn(data));
   const onError = (error: HttpError) => dispatch(failToLogin());
 
-  const mutation = useMutation<Response, HttpError, LoginInfo>({
+  const mutation = useMutation<Response, HttpError, RequestData>({
     mutationFn,
     onError: withDefaultOnError(onError),
     onSuccess,
     retry: 0,
   });
-
-  console.log(mutation.error);
 
   return {
     login: mutation.mutate,

@@ -19,7 +19,10 @@ function RequireNotLogin(props: Children): JSX.Element | null {
     }
   }, [router.isReady, auth.user?.role]);
 
-  if (auth.user?.role !== 'admin') {
+  if (
+    (auth.user?.role && auth.user?.role !== 'admin') ||
+    auth.isLoggedIn === false
+  ) {
     return <>{children}</>;
   }
 

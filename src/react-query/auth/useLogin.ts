@@ -5,6 +5,7 @@ import { HttpError, HttpResponse } from '@src/types/api';
 import User from '@src/types/user';
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin, logUserIn } from '@src/store/auth';
+import { withDefaultOnError } from '../queryClient';
 
 type Response = HttpResponse<User>;
 
@@ -31,15 +32,17 @@ const useLogin = () => {
 
   const mutation = useMutation<Response, HttpError, LoginInfo>({
     mutationFn,
-    onError,
+    onError: withDefaultOnError(onError),
     onSuccess,
     retry: 0,
   });
 
+  console.log(mutation.error);
+
   return {
     login: mutation.mutate,
     isLoading: mutation.isLoading,
-    apiError: mutation.error,
+    apiError: mutation.error?.response?.data || null,
     reset: mutation.reset,
   };
 };

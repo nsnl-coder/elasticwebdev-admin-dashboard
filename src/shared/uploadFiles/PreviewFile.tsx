@@ -1,6 +1,6 @@
 import { FileInfo } from '@src/hooks/useSelectFiles';
 import { TbTrashFilled } from 'react-icons/tb';
-import VideoPlayer from '../videoPlay/VideoPlayer';
+import VideoPlayer from '../videoPlayer/VideoPlayer';
 
 interface Props {
   fileinfo: FileInfo;

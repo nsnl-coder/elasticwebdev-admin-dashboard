@@ -58,7 +58,7 @@ function useSelectFiles() {
     });
   };
 
-  return { selectFiles, removeFile, files, pinFile };
+  return { selectFiles, removeFile, files, pinFile, setFiles };
 }
 
 export default useSelectFiles;

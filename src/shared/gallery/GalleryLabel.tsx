@@ -3,7 +3,7 @@ interface Props {
   htmlFor: string;
 }
 
-const Label = (props: Props) => {
+const GalleryLabel = (props: Props) => {
   const { className, htmlFor } = props;
 
   return (
@@ -15,9 +15,6 @@ const Label = (props: Props) => {
         <span className="text-blue-800 px-4 py-0.5 rounded-md bg-slate-100 hover:text-black">
           Add file
         </span>
-        <button className="text-blue-800 underline hover:no-underline">
-          Add from url
-        </button>
       </div>
       <p className="text-center text-sm text-gray-500">
         Accepts images, videos
@@ -26,4 +23,4 @@ const Label = (props: Props) => {
   );
 };
 
-export default Label;
+export default GalleryLabel;

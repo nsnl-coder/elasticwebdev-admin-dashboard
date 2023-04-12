@@ -1,5 +1,6 @@
 import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/api';
+import { toastError } from '@src/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 
@@ -8,7 +9,9 @@ interface RequestData {
   size: number;
 }
 
-type Response = HttpResponse<any>;
+type presignedUrl = string;
+
+type Response = HttpResponse<presignedUrl>;
 
 const useCreatePresignedUrl = () => {
   const mutationFn = async (payload: RequestData) => {
@@ -17,11 +20,14 @@ const useCreatePresignedUrl = () => {
       url: '/api/files/presigned-url',
       data: payload,
     });
+    console.log('creating presign url');
 
     return data;
   };
 
-  const onError = () => {};
+  const onError = () => {
+    toastError('Cannot create presigned url!');
+  };
 
   const mutation = useMutation<Response, HttpError, RequestData>({
     mutationFn,
@@ -30,8 +36,9 @@ const useCreatePresignedUrl = () => {
   });
 
   return {
-    isSuccess: mutation.isSuccess,
     createPresignUrl: mutation.mutate,
+    url: mutation.data?.data,
+    status: mutation.status,
   };
 };
 

@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 //
 import Collection from '@src/types/collection';
 import { HttpError, HttpResponse } from '@src/types/api';
-import { useRouter } from 'next/router';
+import axios from '@src/config/axios';
 
 type Response = HttpResponse<Collection[]>;
 

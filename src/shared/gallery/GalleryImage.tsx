@@ -15,13 +15,15 @@ function GalleryImage(props: Props): JSX.Element {
     setIsSelected((prev) => !prev);
   };
 
+  let imageLink = src.startsWith('https')
+    ? src
+    : `${process.env.NEXT_PUBLIC_S3_BUCKET}/${src}`;
+
   return (
     <div className="group relative">
       <img
-        className="object-cover w-full"
-        src={
-          'https://img.quizur.com/f/img5bf5e6d2090c55.70073545.jpg?lastEdited=1542842070'
-        }
+        src={imageLink}
+        className="object-cover w-full h-48 overflow-hidden"
       />
       <div
         onClick={handleAddImage}
@@ -53,14 +55,6 @@ function GalleryImage(props: Props): JSX.Element {
           </button>
         )}
       </div>
-      {!isSelected && (
-        <button
-          onClick={handleSelectImage}
-          className="px-4 py-1 hover:brightness-90 rounded-full group-hover:opacity-100 opacity-0 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white"
-        >
-          Select
-        </button>
-      )}
     </div>
   );
 }

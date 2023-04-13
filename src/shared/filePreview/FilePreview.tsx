@@ -15,7 +15,7 @@ function FilePreview(props: Props): JSX.Element {
   if (type?.startsWith('image')) fileType = 'image';
   if (type?.startsWith('video')) fileType = 'video';
 
-  if (!type) {
+  if (!type || type === 'unknown') {
     fileType = imageOrVideo(src);
   }
 

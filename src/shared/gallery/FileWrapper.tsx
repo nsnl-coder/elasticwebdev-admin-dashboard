@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import useDeleteFile from '@src/react-query/files/useDeleteFile';
+import { useEffect, useState } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  s3Key: string;
 }
 
-function GalleryImage(props: Props): JSX.Element {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+function FileWrapper(props: Props): JSX.Element {
+  const { s3Key } = props;
 
-  const handleRemoveImage = () => {};
+  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const { deleteFile } = useDeleteFile();
+
   const handleAddImage = () => {
     setIsSelected((prev) => !prev);
+  };
+
+  const handleRemoveImage = () => {
+    deleteFile({ key: s3Key });
   };
 
   return (
@@ -32,22 +40,22 @@ function GalleryImage(props: Props): JSX.Element {
           />
         )}
       </div>
-      <div className="group-hover:opacity-100 opacity-0 absolute left-0 top-0 flex justify-between w-full p-3">
+      <div className="group-hover:opacity-100 opacity-0 absolute left-0 top-0 w-12 flex justify-between p-3">
         {!isSelected && (
-          <button
+          <div
             data-tip="delete image"
-            className="tooltip tooltip-right"
+            className=" tooltip-right"
             onClick={handleRemoveImage}
           >
             <TbTrashFilled
               size={24}
               className="text-white  tooltip-bottom hover:text-red-400 cursor-pointer"
             />
-          </button>
+          </div>
         )}
       </div>
     </div>
   );
 }
 
-export default GalleryImage;
+export default FileWrapper;

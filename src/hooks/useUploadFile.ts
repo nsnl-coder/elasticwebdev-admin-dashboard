@@ -47,6 +47,7 @@ const useUploadFile = () => {
     uploadFile: mutation.mutate,
     isUploading: mutation.isLoading,
     isUploaded: mutation.isSuccess,
+    reset: mutation.reset,
     // filepath:mutation.data?.data
   };
 };

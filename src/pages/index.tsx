@@ -1,18 +1,15 @@
-import useConfirm from '@src/hooks/useConfirm';
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 
 export default function Home() {
-  const { isConfirmed } = useConfirm();
+  const { selectFromGallery } = useSelectFromGallery();
 
-  const onClickHandler = async () => {
-    const result = await isConfirmed('Do you want to delete the file?');
-    console.log(result);
+  const handleOnClick = async () => {
+    const files = await selectFromGallery();
   };
 
   return (
-    <div>
-      <button type="button" onClick={onClickHandler} className="btn">
-        open prompt
-      </button>
-    </div>
+    <button className="btn" onClick={handleOnClick}>
+      open gallery
+    </button>
   );
 }

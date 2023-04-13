@@ -10,7 +10,7 @@ interface FileInfo {
   file: File;
 }
 
-function useSelectFiles() {
+function useSelectLocalFiles() {
   const [files, setFiles] = useState<FileInfo[]>([]);
 
   const selectFiles = (files: FileList) => {
@@ -61,5 +61,5 @@ function useSelectFiles() {
   return { selectFiles, removeFile, files, pinFile, setFiles };
 }
 
-export default useSelectFiles;
+export default useSelectLocalFiles;
 export type { FileInfo };

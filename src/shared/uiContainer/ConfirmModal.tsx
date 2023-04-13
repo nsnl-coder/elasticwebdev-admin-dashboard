@@ -1,7 +1,7 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import useConfirm from '../../hooks/useConfirm';
 
-const ConformModal = () => {
+const ConfirmModal = () => {
   const { prompt = '', isOpen = false, resolve, reject } = useConfirm();
 
   return (
@@ -27,7 +27,7 @@ const ConformModal = () => {
               className="bg-blue-600 rounded-sm px-4 py-1 text-white hover:bg-blue-700"
               onClick={resolve}
             >
-              Xác nhận
+              Confirm
             </button>
           </div>
         </div>
@@ -36,4 +36,4 @@ const ConformModal = () => {
   );
 };
 
-export default ConformModal;
+export default ConfirmModal;

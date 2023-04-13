@@ -1,3 +1,5 @@
+import useConfirm from '@src/hooks/useConfirm';
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import useDeleteFile from '@src/react-query/files/useDeleteFile';
 import { useEffect, useState } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
@@ -9,20 +11,30 @@ interface Props {
 
 function FileWrapper(props: Props): JSX.Element {
   const { s3Key } = props;
+  //
+  const { isConfirmed } = useConfirm();
+  const { deleteFile, isLoading } = useDeleteFile();
+  const { handleSelectFile, handleRemoveSelect, selectedFiles } =
+    useSelectFromGallery();
 
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-  const { deleteFile } = useDeleteFile();
+  let isSelected = selectedFiles.includes(s3Key);
 
   const handleAddImage = () => {
-    setIsSelected((prev) => !prev);
+    if (isSelected) {
+      handleRemoveSelect(s3Key);
+    }
+    if (!isSelected) {
+      handleSelectFile(s3Key);
+    }
   };
 
-  const handleRemoveImage = () => {
-    deleteFile({ key: s3Key });
+  const handleDeleteS3File = async () => {
+    const confirm = await isConfirmed('Do you want to delete the file?');
+    if (confirm) deleteFile({ key: s3Key });
   };
 
   return (
-    <div className="group relative">
+    <div className="group relative h-48 overflow-hidden ">
       {props.children}
       <div
         onClick={handleAddImage}
@@ -45,7 +57,7 @@ function FileWrapper(props: Props): JSX.Element {
           <div
             data-tip="delete image"
             className=" tooltip-right"
-            onClick={handleRemoveImage}
+            onClick={handleDeleteS3File}
           >
             <TbTrashFilled
               size={24}

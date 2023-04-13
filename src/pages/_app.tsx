@@ -1,19 +1,18 @@
 import { Public_Sans } from 'next/font/google';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
 import { NextComponentType, NextPageContext } from 'next';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
-//
+// src
 import CommonLayout from '@src/shared/layout/CommonLayout';
-import { store } from '@src/store';
 import RequireAdmin from '@src/shared/requireAdmin/RequireAdmin';
+import UiContainer from '@src/shared/uiContainer/UiContainer';
+import ContextProvider from '@src/contexts/ContextProvider';
+
+// css
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '@src/styles/globals.scss';
-import { queryClient, QueryClientProvider } from '@src/react-query/queryClient';
-import ConfirmContextProvider from '@src/contexts/ConfirmContextProvider';
-import UiContainer from '@src/shared/uiContainer/UiContainer';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -33,24 +32,20 @@ function App(props: AppProps): JSX.Element {
   }: { Component: NextApplicationPage; pageProps: any } = props;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <ConfirmContextProvider>
-          <UiContainer />
-          <main className={publicSans.className}>
-            {Component.requireAdmin === false ? (
+    <ContextProvider>
+      <main className={publicSans.className}>
+        {Component.requireAdmin === false ? (
+          <Component {...pageProps} />
+        ) : (
+          <RequireAdmin>
+            <CommonLayout>
               <Component {...pageProps} />
-            ) : (
-              <RequireAdmin>
-                <CommonLayout>
-                  <Component {...pageProps} />
-                </CommonLayout>
-              </RequireAdmin>
-            )}
-          </main>
-        </ConfirmContextProvider>
-      </Provider>
-    </QueryClientProvider>
+            </CommonLayout>
+          </RequireAdmin>
+        )}
+        <UiContainer />
+      </main>
+    </ContextProvider>
   );
 }
 

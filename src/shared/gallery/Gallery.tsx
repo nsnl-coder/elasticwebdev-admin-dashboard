@@ -1,49 +1,53 @@
-import useSelectFiles from '@src/hooks/useSelectFiles';
 import useUploadFiles from '@src/hooks/useUploadFiles';
-import useGetManyFiles from '@src/react-query/files/useGetManyFiles';
-import React from 'react';
+import useGetFiles from '@src/react-query/files/useGetFiles';
+import React, { useEffect } from 'react';
 import FilePreview from '../filePreview/FilePreview';
 //
 import HiddenInput from '../selectFiles/HiddenInput';
-import FileWrapper from './FileWrapper';
 import GalleryHeader from './GalleryHeader';
 import GalleryLabel from './UploadLabel';
+import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
+import GalleryContent from './GalleryContent';
+import GridSkeleton from '../skeleton/GridSkeleton';
 
 function Gallery(): JSX.Element {
-  const { files, selectFiles, setFiles } = useSelectFiles();
-  useUploadFiles(files, setFiles);
-  const { s3files } = useGetManyFiles();
+  const { isOpen, reject } = useSelectFromGallery();
+  const { s3Files, isLoading, isFetching } = useGetFiles(isOpen);
+
+  const { files, selectFiles, setFiles } = useSelectLocalFiles();
+  const { isUploaded, isUploading, reset } = useUploadFiles(files, setFiles);
+
+  useEffect(() => {
+    reset();
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isFetching) {
+      reset();
+    }
+  }, [isFetching]);
 
   return (
-    <div>
-      <label htmlFor="gallery" className="btn">
-        open modal
-      </label>
-      <input type="checkbox" id="gallery" className="modal-toggle" />
-      <label htmlFor="gallery" className="modal cursor-pointer">
+    <div
+      className={`modal cursor-pointer ${isOpen ? 'modal-open' : ''}`}
+      onClick={reject}
+    >
+      <div
+        className="modal-box max-w-6xl relative w-screen h-screen rounded-md p-0"
+        onClick={(e) => e.stopPropagation()}
+      >
         <HiddenInput id="gallery_upload" selectFiles={selectFiles} />
-        <label className="modal-box max-w-6xl relative w-screen h-screen rounded-md p-0">
-          <GalleryHeader />
-          <div className="p-8 overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
-            <GalleryLabel htmlFor="gallery_upload" />
-            {s3files?.pages.map((page, index) => {
-              return (
-                <React.Fragment key={index}>
-                  {...page.data.map((item) => (
-                    <FileWrapper key={item.Key} s3Key={item.Key}>
-                      <FilePreview
-                        src={item.Key}
-                        type="unknown"
-                        className="h-48 w-full object-cover"
-                      />
-                    </FileWrapper>
-                  ))}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </label>
-      </label>
+        <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
+        <div className="p-8 overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
+          <GalleryLabel htmlFor="gallery_upload" />
+          {(isUploading || (isFetching && isUploaded)) && (
+            <GridSkeleton count={1} className="h-48" />
+          )}
+          {isLoading && <GridSkeleton count={11} className="h-48" />}
+          {s3Files?.pages.length && <GalleryContent s3Files={s3Files} />}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,9 @@
 import { Children } from '@src/types/shared';
 import { BiChevronRight } from 'react-icons/bi';
 
-interface Props {
+interface Props extends Children {
   textContent: string;
   className?: string;
-  children?: JSX.Element | JSX.Element[];
 }
 
 function WithNestedMenu(props: Props): JSX.Element {

@@ -1,15 +1,14 @@
 import useCreatePresignedUrl from '@src/react-query/files/useCreatePresignedUrl';
-import { isError } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { FileInfo } from './useSelectFiles';
+import { FileInfo } from './useSelectLocalFiles';
 import useUploadFile from './useUploadFile';
 
 const useUploadFiles = (
   files: FileInfo[],
   setFiles: Dispatch<SetStateAction<FileInfo[]>>,
 ) => {
-  const { createPresignUrl, url, status } = useCreatePresignedUrl();
-  const { uploadFile, isUploading, isUploaded } = useUploadFile();
+  const { createPresignUrl, url, status, isCreating } = useCreatePresignedUrl();
+  const { uploadFile, isUploaded, isUploading, reset } = useUploadFile();
 
   useEffect(() => {
     if (files.length > 0) {
@@ -31,6 +30,12 @@ const useUploadFiles = (
 
     setFiles((prev) => prev.slice(1));
   }, [status, url]);
+
+  return {
+    isUploaded,
+    isUploading: isCreating || isUploading,
+    reset,
+  };
 };
 
 export default useUploadFiles;

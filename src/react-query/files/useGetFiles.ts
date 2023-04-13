@@ -3,7 +3,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { HttpError, HttpResponse } from '@src/types/api';
 import axios from '@src/config/axios';
 
-type Response = {
+export type Response = {
   isTruncated: boolean;
   results: number;
   lastKey: number;
@@ -16,7 +16,7 @@ interface Query {
   prefix?: string; // in what folder
 }
 
-const useGetManyFiles = () => {
+const useGetFiles = (isOpen: boolean) => {
   const fetchPage = async ({ pageParam = undefined }) => {
     const { data } = await axios<Response>({
       method: 'get',
@@ -33,16 +33,15 @@ const useGetManyFiles = () => {
     queryFn: fetchPage,
     getNextPageParam: (lastPage: Response) =>
       lastPage.isTruncated ? lastPage.lastKey : undefined,
+    enabled: isOpen,
   });
 
-  console.log(res.data);
-
   return {
-    s3files: res.data,
+    s3Files: res.data,
     isLoading: res.isLoading,
     isError: res.isError,
-    error: res.error,
+    isFetching: res.isFetching,
   };
 };
 
-export default useGetManyFiles;
+export default useGetFiles;

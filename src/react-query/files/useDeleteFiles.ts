@@ -5,20 +5,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 
 interface RequestData {
-  key: string;
+  deleteList: string[];
 }
 
 type Response = HttpResponse<any>;
 
-const useDeleteFile = () => {
+const useDeleteFiles = () => {
   const queryClient = useQueryClient();
 
-  const mutationFn = async ({ key }: RequestData) => {
+  const mutationFn = async ({ deleteList }: RequestData) => {
     const { data } = await axios<Response>({
-      url: '/api/files/delete-one-file',
+      url: '/api/files',
       method: 'delete',
-      params: {
-        key,
+      data: {
+        deleteList,
       },
     });
 
@@ -42,9 +42,9 @@ const useDeleteFile = () => {
 
   return {
     isLoading: mutation.isLoading,
-    deleteFile: mutation.mutate,
+    deleteFiles: mutation.mutate,
     isDeleted: mutation.isSuccess,
   };
 };
 
-export default useDeleteFile;
+export default useDeleteFiles;

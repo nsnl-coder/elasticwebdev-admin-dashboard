@@ -15,7 +15,7 @@ import '@videojs/themes/dist/city/index.css';
 // Sea
 // import '@videojs/themes/dist/sea/index.css';
 
-interface Props {
+export interface VideoProps {
   autoplay?: boolean;
   controls?: boolean;
   src: string;
@@ -25,7 +25,7 @@ interface Props {
   theme?: 'city' | 'fantasy' | 'forest' | 'sea';
 }
 
-function VideoPlayer(props: Props): JSX.Element {
+function VideoPlayer(props: VideoProps): JSX.Element {
   const playerRef = useRef<any>(null);
   const videoRef = useRef<any>(null);
 

@@ -2,29 +2,20 @@ import { useState } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
 
 interface Props {
-  src: string;
+  children: JSX.Element | JSX.Element[];
 }
 
 function GalleryImage(props: Props): JSX.Element {
-  const { src } = props;
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const handleRemoveImage = () => {};
-  const handleSelectImage = () => {};
   const handleAddImage = () => {
     setIsSelected((prev) => !prev);
   };
 
-  let imageLink = src.startsWith('https')
-    ? src
-    : `${process.env.NEXT_PUBLIC_S3_BUCKET}/${src}`;
-
   return (
     <div className="group relative">
-      <img
-        src={imageLink}
-        className="object-cover w-full h-48 overflow-hidden"
-      />
+      {props.children}
       <div
         onClick={handleAddImage}
         className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer ${

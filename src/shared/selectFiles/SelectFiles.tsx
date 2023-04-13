@@ -1,8 +1,9 @@
 import useSelectFiles from '@src/hooks/useSelectFiles';
-import PreviewFile from './PreviewFile';
+import FileWrapper from './FileWrapper';
 import SelectFromGallery from './SelectFromGallery';
 import HiddenInput from './HiddenInput';
 import Label from './Label';
+import FilePreview from '../filePreview/FilePreview';
 
 function SelectFiles(): JSX.Element {
   const { files, selectFiles, removeFile, pinFile } = useSelectFiles();
@@ -12,13 +13,15 @@ function SelectFiles(): JSX.Element {
       <HiddenInput id="select_file" selectFiles={selectFiles} />
       <div className="grid grid-cols-4 max-w-5xl gap-4">
         {files.map((fileinfo, index) => (
-          <PreviewFile
+          <FileWrapper
             key={fileinfo.url}
             fileinfo={fileinfo}
             index={index}
             removeFile={removeFile}
             pinFile={pinFile}
-          />
+          >
+            <FilePreview src={fileinfo.url} type={fileinfo.type} />
+          </FileWrapper>
         ))}
 
         <Label htmlFor="select_file" className="aspect-square" />

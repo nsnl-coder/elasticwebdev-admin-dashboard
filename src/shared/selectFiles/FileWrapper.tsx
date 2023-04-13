@@ -1,22 +1,21 @@
 import { FileInfo } from '@src/hooks/useSelectFiles';
 import { TbTrashFilled } from 'react-icons/tb';
-import VideoPlayer from '../videoPlayer/VideoPlayer';
 
 interface Props {
   fileinfo: FileInfo;
   index: number;
   removeFile: (url: string) => void;
   pinFile: (file: FileInfo) => void;
+  children: JSX.Element | JSX.Element[];
 }
 
-function PreviewFile(props: Props): JSX.Element {
-  const { fileinfo, index, removeFile, pinFile } = props;
+function FileWrapper(props: Props): JSX.Element {
+  const { fileinfo, index, removeFile, pinFile, children } = props;
 
   const handleRemoveImage = () => removeFile(fileinfo.url);
   const handlePinImage = () => pinFile(fileinfo);
 
   const fileIsImage = fileinfo.type.startsWith('image');
-  const fileIsVideo = fileinfo.type.startsWith('video');
 
   return (
     <div
@@ -24,13 +23,8 @@ function PreviewFile(props: Props): JSX.Element {
         index === 0 ? 'col-span-2 row-span-2' : ''
       }`}
     >
-      {fileIsImage && (
-        <img
-          className="object-contain max-w-full max-h-full"
-          src={fileinfo.url}
-        />
-      )}
-      {fileIsVideo && <VideoPlayer src={fileinfo.url} />}
+      {children}
+
       {fileIsImage && (
         <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 peer pointer-events-none"></div>
       )}
@@ -66,4 +60,4 @@ function PreviewFile(props: Props): JSX.Element {
   );
 }
 
-export default PreviewFile;
+export default FileWrapper;

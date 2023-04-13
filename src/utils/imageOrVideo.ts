@@ -1,6 +1,8 @@
 import path from 'path';
 
 const imageOrVideo = (key: string) => {
+  if (!key) return;
+
   const extension = path.extname(key);
 
   const imageExtensions = ['.jpeg', '.png', '.webp', '.gif', '.bmp'];

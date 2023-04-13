@@ -1,5 +1,6 @@
 import imageOrVideo from '@src/utils/imageOrVideo';
 import VideoPlayer, { VideoProps } from './VideoPlayer';
+import getS3FileUrl from '@src/utils/getFileUrl';
 
 interface Props extends VideoProps {
   src: string;
@@ -20,7 +21,7 @@ function FilePreview(props: Props): JSX.Element {
   }
 
   if (!src.startsWith('http') && !src.startsWith('blob')) {
-    src = `${process.env.NEXT_PUBLIC_S3_BUCKET}/${src}`;
+    src = getS3FileUrl(src);
   }
 
   if (fileType === 'video') {

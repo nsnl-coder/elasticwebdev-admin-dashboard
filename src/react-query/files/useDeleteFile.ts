@@ -41,7 +41,7 @@ const useDeleteFile = () => {
   });
 
   return {
-    isLoading: mutation.isLoading,
+    isDeleting: mutation.isLoading,
     deleteFile: mutation.mutate,
     isDeleted: mutation.isSuccess,
   };

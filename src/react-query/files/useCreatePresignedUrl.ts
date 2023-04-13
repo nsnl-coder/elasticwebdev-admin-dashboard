@@ -39,10 +39,11 @@ const useCreatePresignedUrl = () => {
 
   return {
     createPresignUrl: mutation.mutate,
-    url: mutation.data?.data?.url,
+    presignUrl: mutation.data?.data?.url,
     key: mutation.data?.data?.key,
     status: mutation.status,
     isCreating: mutation.isLoading,
+    resetCreatePresignedUrl: mutation.reset,
   };
 };
 

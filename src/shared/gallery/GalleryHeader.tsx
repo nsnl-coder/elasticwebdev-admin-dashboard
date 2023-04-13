@@ -2,6 +2,7 @@ import useConfirm from '@src/hooks/useConfirm';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import useDeleteFiles from '@src/react-query/files/useDeleteFiles';
 import { useIsMutating } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { ClipLoader, MoonLoader } from 'react-spinners';
 
 interface Props {
@@ -10,13 +11,12 @@ interface Props {
 }
 
 function GalleryHeader(props: Props): JSX.Element {
-  const { isUploaded, isUploading } = props;
-  const { selectedFiles, resolve, reject, handleRemoveSelect } =
-    useSelectFromGallery();
-  const selectedFileCount = selectedFiles.length;
+  const { isUploading } = props;
+  const { selectedFiles, resolve, handleRemoveSelect } = useSelectFromGallery();
   const { isConfirmed } = useConfirm();
-  const { deleteFiles } = useDeleteFiles();
+  const { deleteFiles, isDeleted } = useDeleteFiles();
 
+  const selectedFileCount = selectedFiles.length;
   const isDeleting = useIsMutating(['delete-file']);
   const disabled = isUploading || isDeleting || !selectedFileCount;
 
@@ -26,12 +26,17 @@ function GalleryHeader(props: Props): JSX.Element {
     );
     if (isConfirm) {
       deleteFiles({ deleteList: selectedFiles });
-      handleRemoveSelect(selectedFiles);
     }
   };
 
+  useEffect(() => {
+    if (isDeleted) {
+      handleRemoveSelect(selectedFiles);
+    }
+  }, [isDeleted]);
+
   return (
-    <div className="flex justify-between shadow-md p-8 items-center">
+    <div className="flex justify-between shadow-md p-8 items-center sticky top-0 z-50 bg-white">
       <button
         type="button"
         className={` px-4 py-1 text-white font-semibold bg-red-400 rounded-md ${
@@ -41,13 +46,6 @@ function GalleryHeader(props: Props): JSX.Element {
       >
         Delete files ({selectedFileCount})
       </button>
-      {!!isDeleting && (
-        <div className="flex items-center gap-x-3">
-          <ClipLoader color="#93aea9" loading size={16} />
-          Deleting...
-        </div>
-      )}
-
       <button
         type="button"
         className={`bg-primary text-white px-4 py-1 rounded-md font-semibold ${

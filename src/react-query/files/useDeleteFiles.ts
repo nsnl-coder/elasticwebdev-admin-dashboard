@@ -26,7 +26,7 @@ const useDeleteFiles = () => {
   };
 
   const onError = () => {
-    toastError('Cannot delete file!');
+    toastError('Cannot delete files!');
   };
 
   const onSuccess = () => {

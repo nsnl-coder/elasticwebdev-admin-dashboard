@@ -38,7 +38,7 @@ function Sidebar(): JSX.Element {
         <Section sectionName="Resources">
           <SidebarItem text="users" href="/" icon={<AiOutlineUserSwitch />} />
           <SidebarItem text="emails" href="/" icon={<AiOutlineMail />} />
-          <SidebarItem text="gallery" href="/" icon={<ImImages />} />
+          <SidebarItem text="gallery" href="/gallery" icon={<ImImages />} />
         </Section>
         <Section sectionName="Shop">
           <SidebarItem text="products" href="/" icon={<FaProductHunt />} />

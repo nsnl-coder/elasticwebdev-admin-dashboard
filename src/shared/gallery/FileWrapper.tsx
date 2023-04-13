@@ -1,6 +1,7 @@
 import useConfirm from '@src/hooks/useConfirm';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import useDeleteFile from '@src/react-query/files/useDeleteFile';
+import { useIsMutating } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
 
@@ -13,11 +14,12 @@ function FileWrapper(props: Props): JSX.Element {
   const { s3Key } = props;
   //
   const { isConfirmed } = useConfirm();
-  const { deleteFile, isLoading } = useDeleteFile();
+  const { deleteFile, isDeleting } = useDeleteFile();
   const { handleSelectFile, handleRemoveSelect, selectedFiles } =
     useSelectFromGallery();
 
   let isSelected = selectedFiles.includes(s3Key);
+  const isDeletingFiles = useIsMutating(['delete-file']) && isSelected;
 
   const handleAddImage = () => {
     if (isSelected) {
@@ -34,7 +36,11 @@ function FileWrapper(props: Props): JSX.Element {
   };
 
   return (
-    <div className="group relative h-48 overflow-hidden ">
+    <div
+      className={`group relative h-48 flex flex-col justify-center ${
+        isDeleting || isDeletingFiles ? 'opacity-60' : ''
+      }`}
+    >
       {props.children}
       <div
         onClick={handleAddImage}

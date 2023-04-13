@@ -1,8 +1,9 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 //
 import { HttpError } from '@src/types/api';
 import axios from '@src/config/axios';
-import { useEffect } from 'react';
+import { toastError } from '@src/utils/toast';
+import { withDefaultOnError } from '../queryClient';
 
 export type Response = {
   isTruncated: boolean;
@@ -24,10 +25,15 @@ const useGetFiles = (isOpen: boolean) => {
     return data;
   };
 
+  const onError = () => {
+    toastError('Can not get files!');
+  };
+
   const res = useInfiniteQuery<any, HttpError, Response>(['files'], {
     queryFn: fetchPage,
     getNextPageParam: (lastPage: Response) =>
       lastPage.isTruncated ? lastPage.lastKey : undefined,
+    onError: withDefaultOnError(onError),
     enabled: isOpen,
   });
 

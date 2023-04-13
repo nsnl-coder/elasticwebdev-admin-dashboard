@@ -19,7 +19,9 @@ const useUploadFile = () => {
       url: payload.presignedUrl,
       method: 'put',
       data: payload.file,
-      headers: {},
+      headers: {
+        'Content-Type': payload.file.type,
+      },
     });
 
     return data;
@@ -44,8 +46,7 @@ const useUploadFile = () => {
     uploadFile: mutation.mutate,
     isUploading: mutation.isLoading,
     isUploaded: mutation.isSuccess,
-    reset: mutation.reset,
-    // filepath:mutation.data?.data
+    resetUploadFile: mutation.reset,
   };
 };
 

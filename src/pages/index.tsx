@@ -1,15 +1,13 @@
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
+import SelectFiles from '@src/shared/selectFiles/SelectFiles';
+import { useState } from 'react';
 
 export default function Home() {
-  const { selectFromGallery } = useSelectFromGallery();
-
-  const handleOnClick = async () => {
-    const files = await selectFromGallery();
-  };
+  const [files, setfiles] = useState<string[]>([]);
 
   return (
-    <button className="btn" onClick={handleOnClick}>
-      open gallery
-    </button>
+    <div>
+      <SelectFiles files={files} setFiles={setfiles} />
+    </div>
   );
 }

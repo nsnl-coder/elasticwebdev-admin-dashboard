@@ -15,9 +15,9 @@ const Label = (props: Props) => {
         <span className="text-blue-800 px-4 py-0.5 rounded-md bg-slate-100 hover:text-black">
           Add file
         </span>
-        <button className="text-blue-800 underline hover:no-underline">
+        {/* <button className="text-blue-800 underline hover:no-underline">
           Add from url
-        </button>
+        </button> */}
       </div>
       <p className="text-center text-sm text-gray-500">
         Accepts images, videos

@@ -1,40 +1,60 @@
 import useCreatePresignedUrl from '@src/react-query/files/useCreatePresignedUrl';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FileInfo } from './useSelectLocalFiles';
 import useUploadFile from './useUploadFile';
 
+/**
+ * this hook accept state and setState as arguement!
+ * this hook will create a signed url then upload it until files in state is empty
+ * use useUpload & useCreatePresignedUrl hooks under the hood
+ */
+
 const useUploadFiles = (
-  files: FileInfo[],
-  setFiles: Dispatch<SetStateAction<FileInfo[]>>,
+  localFiles: FileInfo[],
+  setLocalFiles: Dispatch<SetStateAction<FileInfo[]>>,
 ) => {
-  const { createPresignUrl, url, status, isCreating } = useCreatePresignedUrl();
-  const { uploadFile, isUploaded, isUploading, reset } = useUploadFile();
+  const {
+    createPresignUrl,
+    presignUrl,
+    status,
+    isCreating,
+    key,
+    resetCreatePresignedUrl,
+  } = useCreatePresignedUrl();
+
+  const { uploadFile, isUploaded, isUploading, resetUploadFile } =
+    useUploadFile();
 
   useEffect(() => {
-    if (files.length > 0) {
-      createPresignUrl({ size: files[0].size, type: files[0].type });
+    if (localFiles.length > 0) {
+      createPresignUrl({
+        size: localFiles[0].file.size,
+        type: localFiles[0].file.type,
+      });
     }
-  }, [files]);
+  }, [localFiles]);
 
   useEffect(() => {
     if (status !== 'error' && status !== 'success') return;
-    if (files.length === 0) return;
+    if (localFiles.length === 0) return;
 
-    if (url && status === 'success') {
+    if (presignUrl && status === 'success') {
       uploadFile({
-        presignedUrl: url,
-        file: files[0].file,
-        contentType: files[0].type,
+        presignedUrl: presignUrl,
+        file: localFiles[0].file,
+        contentType: localFiles[0].file.type,
       });
     }
 
-    setFiles((prev) => prev.slice(1));
-  }, [status, url]);
+    setLocalFiles((prev) => prev.slice(1));
+  }, [status, presignUrl]);
 
   return {
     isUploaded,
     isUploading: isCreating || isUploading,
-    reset,
+    resetUploadFile,
+    key,
+    resetCreatePresignedUrl,
   };
 };
 

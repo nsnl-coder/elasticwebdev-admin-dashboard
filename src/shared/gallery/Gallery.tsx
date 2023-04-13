@@ -15,19 +15,17 @@ function Gallery(): JSX.Element {
   const { isOpen, reject } = useSelectFromGallery();
   const { s3Files, isLoading, isFetching, hasNextPage, fetchNextPage } =
     useGetFiles(isOpen);
-  const { files, selectFiles, setFiles } = useSelectLocalFiles();
-  const { isUploaded, isUploading, reset } = useUploadFiles(files, setFiles);
+  const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
+  const { isUploaded, isUploading, resetUploadFile } = useUploadFiles(
+    localFiles,
+    setLocalFiles,
+  );
   const { lastElementRef } = useInfiniteFetch({ hasNextPage, fetchNextPage });
 
   useEffect(() => {
-    reset();
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isFetching) {
-      reset();
-    }
-  }, [isFetching]);
+    if (!isUploaded) return;
+    if (!isOpen || !isFetching) resetUploadFile();
+  }, [isOpen, isFetching]);
 
   return (
     <div
@@ -38,7 +36,7 @@ function Gallery(): JSX.Element {
         className="modal-box max-w-6xl relative w-screen h-screen rounded-md p-0"
         onClick={(e) => e.stopPropagation()}
       >
-        <HiddenInput id="gallery_upload" selectFiles={selectFiles} />
+        <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
         <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
         <div className="p-8 overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
           <GalleryLabel htmlFor="gallery_upload" />

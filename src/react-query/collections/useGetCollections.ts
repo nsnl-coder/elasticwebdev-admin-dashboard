@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import Collection from '@src/types/collection';
 import { HttpError, HttpResponse } from '@src/types/api';
 import axios from '@src/config/axios';
+import { withDefaultOnError } from '../queryClient';
+import { toastError } from '@src/utils/toast';
 
 type Response = HttpResponse<Collection[]>;
 
@@ -19,10 +21,15 @@ const useGetCollections = () => {
     return data;
   };
 
-  const res = useQuery<any, HttpError, Response>(
-    ['collections', query],
+  const onError = () => {
+    toastError('Can not fetch collections!');
+  };
+
+  const res = useQuery<any, HttpError, Response>({
+    queryKey: ['collections', query],
     queryFn,
-  );
+    onError: withDefaultOnError(onError),
+  });
 
   return {
     collections: res.data?.data,

@@ -1,22 +1,36 @@
+import { imageExtensions, videoExtensions } from '@src/utils/imageOrVideo';
 import { toastError } from '@src/utils/toast';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface FileInfo {
   url: string;
-  name: string;
-  size: number;
-  type: string;
   file: File;
 }
 
 function useSelectLocalFiles() {
-  const [files, setFiles] = useState<FileInfo[]>([]);
+  const [localFiles, setLocalFiles] = useState<FileInfo[]>([]);
 
-  const selectFiles = (files: FileList) => {
-    for (let i = 0; i < files.length; i++) {
-      selectFile(files[i]);
+  const selectLocalFiles = (localFiles: FileList) => {
+    for (let i = 0; i < localFiles.length; i++) {
+      selectFile(localFiles[i]);
     }
+  };
+
+  const isSupportedFileType = (fileType: string) => {
+    let extension = fileType.split('/')[1];
+
+    if (fileType.startsWith('image') && !imageExtensions.includes(extension)) {
+      toastError(`Supported images types: ${imageExtensions.join(', ')}`);
+      return false;
+    }
+
+    if (fileType.startsWith('video') && !videoExtensions.includes(extension)) {
+      toastError(`Supported video types: ${videoExtensions.join(', ')}`);
+      return false;
+    }
+
+    return true;
   };
 
   const selectFile = (file: File) => {
@@ -24,6 +38,10 @@ function useSelectLocalFiles() {
       toastError('Please select image or video files only!');
       return;
     }
+
+    const supportTypes = isSupportedFileType(file.type);
+
+    if (!supportTypes) return;
 
     if (file.type.startsWith('image') && file.size > 1024 * 1024) {
       toastError('Please select images under 1mb!');
@@ -34,31 +52,28 @@ function useSelectLocalFiles() {
       return;
     }
 
-    setFiles((prev) => [
+    setLocalFiles((prev) => [
       ...prev,
       {
         url: URL.createObjectURL(file),
-        name: file.name,
-        type: file.type,
-        size: file.size,
         file,
       },
     ]);
   };
 
   const removeFile = (url: string) => {
-    setFiles((prev) => prev.filter((fileinfo) => fileinfo.url !== url));
+    setLocalFiles((prev) => prev.filter((fileinfo) => fileinfo.url !== url));
     URL.revokeObjectURL(url);
   };
 
   const pinFile = (pinnedFile: FileInfo) => {
-    setFiles((prev) => {
+    setLocalFiles((prev) => {
       const otherFiles = prev.filter((file) => file.url !== pinnedFile.url);
       return [pinnedFile, ...otherFiles];
     });
   };
 
-  return { selectFiles, removeFile, files, pinFile, setFiles };
+  return { selectLocalFiles, removeFile, localFiles, setLocalFiles };
 }
 
 export default useSelectLocalFiles;

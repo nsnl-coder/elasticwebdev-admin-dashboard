@@ -11,6 +11,7 @@ function Logo(): JSX.Element {
           height={29}
           alt="site logo"
           className="w-32 object-contain"
+          priority={true}
         />
       </Link>
     </div>

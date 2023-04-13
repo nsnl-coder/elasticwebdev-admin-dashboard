@@ -9,9 +9,12 @@ interface RequestData {
   size: number;
 }
 
-type presignedUrl = string;
-
-type Response = HttpResponse<presignedUrl>;
+type Response = {
+  data: {
+    url: string;
+    key: string;
+  };
+};
 
 const useCreatePresignedUrl = () => {
   const mutationFn = async (payload: RequestData) => {
@@ -20,7 +23,6 @@ const useCreatePresignedUrl = () => {
       url: '/api/files/presigned-url',
       data: payload,
     });
-    console.log('creating presign url');
 
     return data;
   };
@@ -37,7 +39,8 @@ const useCreatePresignedUrl = () => {
 
   return {
     createPresignUrl: mutation.mutate,
-    url: mutation.data?.data,
+    url: mutation.data?.data?.url,
+    key: mutation.data?.data?.key,
     status: mutation.status,
     isCreating: mutation.isLoading,
   };

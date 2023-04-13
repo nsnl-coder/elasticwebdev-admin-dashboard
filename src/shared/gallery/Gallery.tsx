@@ -1,7 +1,6 @@
 import useUploadFiles from '@src/hooks/useUploadFiles';
 import useGetFiles from '@src/react-query/files/useGetFiles';
 import React, { useEffect } from 'react';
-import FilePreview from '../filePreview/FilePreview';
 //
 import HiddenInput from '../selectFiles/HiddenInput';
 import GalleryHeader from './GalleryHeader';
@@ -10,13 +9,15 @@ import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import GalleryContent from './GalleryContent';
 import GridSkeleton from '../skeleton/GridSkeleton';
+import useInfiniteFetch from '@src/hooks/useInfiniteFetch';
 
 function Gallery(): JSX.Element {
   const { isOpen, reject } = useSelectFromGallery();
-  const { s3Files, isLoading, isFetching } = useGetFiles(isOpen);
-
+  const { s3Files, isLoading, isFetching, hasNextPage, fetchNextPage } =
+    useGetFiles(isOpen);
   const { files, selectFiles, setFiles } = useSelectLocalFiles();
   const { isUploaded, isUploading, reset } = useUploadFiles(files, setFiles);
+  const { lastElementRef } = useInfiniteFetch({ hasNextPage, fetchNextPage });
 
   useEffect(() => {
     reset();
@@ -46,6 +47,7 @@ function Gallery(): JSX.Element {
           )}
           {isLoading && <GridSkeleton count={11} className="h-48" />}
           {s3Files?.pages.length && <GalleryContent s3Files={s3Files} />}
+          {!isFetching && <div ref={lastElementRef}></div>}
         </div>
       </div>
     </div>

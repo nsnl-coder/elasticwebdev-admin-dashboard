@@ -16,7 +16,7 @@ function GalleryContent(props: Props): JSX.Element {
       {s3Files?.pages.map((page, index) => {
         return (
           <React.Fragment key={index}>
-            {...page.data.map((item) => (
+            {...page.data.map((item, i) => (
               <FileWrapper key={item.Key} s3Key={item.Key}>
                 <FilePreview
                   src={item.Key}

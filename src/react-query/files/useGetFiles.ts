@@ -1,7 +1,8 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 //
-import { HttpError, HttpResponse } from '@src/types/api';
+import { HttpError } from '@src/types/api';
 import axios from '@src/config/axios';
+import { useEffect } from 'react';
 
 export type Response = {
   isTruncated: boolean;
@@ -10,19 +11,13 @@ export type Response = {
   data: { Key: string }[];
 };
 
-interface Query {
-  startAfter?: string; // key of last file
-  limit?: number; // # of files return
-  prefix?: string; // in what folder
-}
-
 const useGetFiles = (isOpen: boolean) => {
   const fetchPage = async ({ pageParam = undefined }) => {
     const { data } = await axios<Response>({
       method: 'get',
       url: '/api/files',
       params: {
-        limit: 10,
+        limit: 5,
         startAfter: pageParam,
       },
     });
@@ -41,6 +36,8 @@ const useGetFiles = (isOpen: boolean) => {
     isLoading: res.isLoading,
     isError: res.isError,
     isFetching: res.isFetching,
+    fetchNextPage: res.fetchNextPage,
+    hasNextPage: res.hasNextPage,
   };
 };
 

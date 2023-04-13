@@ -1,4 +1,4 @@
-import { FileInfo } from '@src/hooks/useSelectFiles';
+import { FileInfo } from '@src/hooks/useSelectLocalFiles';
 import { TbTrashFilled } from 'react-icons/tb';
 
 interface Props {

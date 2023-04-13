@@ -1,12 +1,13 @@
-import useSelectFiles from '@src/hooks/useSelectFiles';
 import FileWrapper from './FileWrapper';
 import SelectFromGallery from './SelectFromGallery';
 import HiddenInput from './HiddenInput';
 import Label from './Label';
 import FilePreview from '../filePreview/FilePreview';
+import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
+import useUploadFiles from '@src/hooks/useUploadFiles';
 
 function SelectFiles(): JSX.Element {
-  const { files, selectFiles, removeFile, pinFile } = useSelectFiles();
+  const { files, selectFiles, removeFile, pinFile } = useSelectLocalFiles();
 
   return (
     <div>

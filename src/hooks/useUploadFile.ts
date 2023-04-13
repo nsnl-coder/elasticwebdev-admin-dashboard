@@ -19,12 +19,9 @@ const useUploadFile = () => {
       url: payload.presignedUrl,
       method: 'put',
       data: payload.file,
-      headers: {
-        'Content-Type': payload.contentType,
-      },
+      headers: {},
     });
 
-    console.log(data);
     return data;
   };
 

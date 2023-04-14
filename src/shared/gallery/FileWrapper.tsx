@@ -2,8 +2,10 @@ import useConfirm from '@src/hooks/useConfirm';
 import usePreviewOriginalFile from '@src/hooks/usePreviewOriginalFile';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import useDeleteFile from '@src/react-query/files/useDeleteFile';
+import imageOrVideo from '@src/utils/imageOrVideo';
+import { toastError } from '@src/utils/toast';
 import { useIsMutating } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { AiFillEye } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
 
@@ -17,17 +19,31 @@ function FileWrapper(props: Props): JSX.Element {
   //
   const { isConfirmed } = useConfirm();
   const { deleteFile, isDeleting } = useDeleteFile();
-  const { handleSelectFile, handleRemoveSelect, selectedFiles } =
-    useSelectFromGallery();
+  const {
+    handleSelectFile,
+    handleRemoveSelect,
+    selectedFiles,
+    maxFilesCount,
+    allowedTypes,
+    resolve,
+  } = useSelectFromGallery();
+
   const { openPreviewModal } = usePreviewOriginalFile();
 
   let isSelected = selectedFiles.includes(s3Key);
   const isDeletingFiles = useIsMutating(['delete-file']) && isSelected;
+  const fileType = imageOrVideo(s3Key);
+  const canSelect =
+    (allowedTypes === fileType || allowedTypes === '*') &&
+    selectedFiles.length < maxFilesCount;
 
   const handleAddImage = () => {
-    if (isSelected) {
-      handleRemoveSelect(s3Key);
+    if (!canSelect) {
+      if (isSelected) handleRemoveSelect(s3Key);
+      else toastError('You haved reach the maximum files selections!');
+      return;
     }
+
     if (!isSelected) {
       handleSelectFile(s3Key);
     }
@@ -38,6 +54,12 @@ function FileWrapper(props: Props): JSX.Element {
     if (confirm) deleteFile({ key: s3Key });
   };
 
+  useEffect(() => {
+    if (maxFilesCount === 1 && isSelected) {
+      resolve(selectedFiles);
+    }
+  }, [maxFilesCount, isSelected]);
+
   return (
     <div
       className={`group relative h-48 flex flex-col justify-center bg-gray-200 ${
@@ -47,10 +69,10 @@ function FileWrapper(props: Props): JSX.Element {
       {props.children}
       <div
         onClick={handleAddImage}
-        className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer tooltip tooltip-bottom ${
+        className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 tooltip tooltip-bottom ${
           isSelected ? 'opacity-100 flex justify-end items-start' : 'opacity-0'
-        }`}
-        data-tip="Click to select"
+        } ${!canSelect ? 'cursor-not-allowed opacity-90' : ''}`}
+        data-tip={canSelect ? 'Click to select' : 'Can not select more files!'}
       >
         {isSelected && (
           <input

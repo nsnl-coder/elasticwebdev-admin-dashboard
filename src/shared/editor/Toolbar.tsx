@@ -31,7 +31,7 @@ const Toolbar = (props: Props) => {
   }
 
   const handleAddImage = async () => {
-    const files = await selectFromGallery();
+    const files = await selectFromGallery(1, '*');
 
     if (files.length === 0) return;
     if (imageOrVideo(files[0]) === 'video') return;

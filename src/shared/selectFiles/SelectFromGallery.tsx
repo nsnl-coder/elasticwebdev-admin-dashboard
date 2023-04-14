@@ -1,3 +1,4 @@
+import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import { toastError } from '@src/utils/toast';
 import { Dispatch, SetStateAction } from 'react';
@@ -8,14 +9,24 @@ interface Props {
   setFiles: Dispatch<SetStateAction<string[]>>;
   maxFilesCount: number;
   currentFilesCount: number;
+  allowedTypes: AllowedFilesTypes;
 }
 
 const SelectFromGallery = (props: Props) => {
-  const { className, setFiles, maxFilesCount, currentFilesCount } = props;
+  const {
+    className,
+    setFiles,
+    maxFilesCount,
+    currentFilesCount,
+    allowedTypes,
+  } = props;
   const { selectFromGallery } = useSelectFromGallery();
 
   const handleSelectFromGallery = async () => {
-    const files = await selectFromGallery();
+    const files = await selectFromGallery(
+      maxFilesCount - currentFilesCount,
+      allowedTypes,
+    );
     if (files.length + currentFilesCount > maxFilesCount) {
       toastError(`Only allow maximum ${maxFilesCount} files!`);
     }

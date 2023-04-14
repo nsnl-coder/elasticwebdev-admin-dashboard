@@ -1,11 +1,15 @@
 import { Children } from '@src/types/shared';
 import React, { createContext, useEffect, useState } from 'react';
 
+type AllowedFilesTypes = 'video' | 'image' | '*';
+
 interface State {
   isOpen: boolean;
   resolve: any;
   reject: any;
   selectedFiles: string[];
+  maxFilesCount: number;
+  allowedTypes: 'video' | 'image' | '*';
 }
 
 type TContext = {
@@ -20,7 +24,9 @@ const defaultState = {
   resolve: null,
   reject: null,
   selectedFiles: [],
-};
+  maxFilesCount: 50,
+  allowedTypes: '*',
+} as State;
 
 const GalleryContext = createContext<TContext>({
   state: defaultState,
@@ -66,4 +72,5 @@ const GalleryContextProvider = (props: Children) => {
 };
 
 export default GalleryContextProvider;
-export { GalleryContext };
+export { GalleryContext, defaultState };
+export type { AllowedFilesTypes };

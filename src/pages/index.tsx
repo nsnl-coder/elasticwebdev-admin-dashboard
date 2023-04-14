@@ -7,11 +7,11 @@ export default function Home() {
 
   return (
     <div>
-      <Editor />
       <SelectFiles
         files={files}
         setFiles={setfiles}
-        maxFilesCount={4}
+        maxFilesCount={1}
+        allowedTypes="*"
         className="max-w-3xl"
       />
     </div>

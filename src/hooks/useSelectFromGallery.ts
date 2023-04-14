@@ -1,4 +1,9 @@
-import { GalleryContext } from '@src/contexts/GalleryContextProvider';
+import {
+  AllowedFilesTypes,
+  GalleryContext,
+  defaultState,
+} from '@src/contexts/GalleryContextProvider';
+
 import { useContext } from 'react';
 
 const useSelectFromGallery = () => {
@@ -7,23 +12,23 @@ const useSelectFromGallery = () => {
   const { state, setState, handleSelectFile, handleRemoveSelect } =
     galleryContext;
 
-  const selectFromGallery = () => {
+  const selectFromGallery = (
+    maxFilesCount: number,
+    allowedTypes: AllowedFilesTypes = '*',
+  ) => {
     const promise: Promise<string[]> = new Promise((resolve, reject) => {
       setState({
         isOpen: true,
         selectedFiles: [],
         resolve,
         reject,
+        maxFilesCount,
+        allowedTypes,
       });
     });
 
     const cleanup = () => {
-      setState({
-        isOpen: false,
-        resolve: null,
-        reject: null,
-        selectedFiles: [],
-      });
+      setState(defaultState);
     };
 
     return promise.then(
@@ -46,6 +51,8 @@ const useSelectFromGallery = () => {
     reject: state.reject,
     isOpen: state.isOpen,
     selectedFiles: state.selectedFiles,
+    maxFilesCount: state.maxFilesCount,
+    allowedTypes: state.allowedTypes,
   };
 };
 

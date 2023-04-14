@@ -1,18 +1,22 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 //
 import useUploadFiles from '@src/hooks/useUploadFiles';
+import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
+import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
+
+//
 import FileWrapper from './FileWrapper';
 import SelectFromGallery from './SelectFromGallery';
 import HiddenInput from './HiddenInput';
 import Label from './Label';
 import FilePreview from '../filePreview/FilePreview';
-import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
-import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   files: string[];
   setFiles: Dispatch<SetStateAction<string[]>>;
   maxFilesCount: number;
+  allowedTypes: AllowedFilesTypes;
   className?: string;
   heading?: string;
 }
@@ -24,6 +28,7 @@ function SelectFiles(props: Props): JSX.Element {
     className,
     maxFilesCount,
     heading = 'Media',
+    allowedTypes,
   } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
@@ -67,6 +72,7 @@ function SelectFiles(props: Props): JSX.Element {
         {isUploading && <Skeleton count={1} className="h-full" />}
         {!isMaxFilesCount && (
           <SelectFromGallery
+            allowedTypes={allowedTypes}
             setFiles={setFiles}
             className="aspect-square"
             maxFilesCount={maxFilesCount}

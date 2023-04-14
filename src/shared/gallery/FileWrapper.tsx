@@ -27,9 +27,9 @@ function FileWrapper(props: Props): JSX.Element {
     allowedTypes,
     resolve,
   } = useSelectFromGallery();
-
   const { openPreviewModal } = usePreviewOriginalFile();
 
+  //
   let isSelected = selectedFiles.includes(s3Key);
   const isDeletingFiles = useIsMutating(['delete-file']) && isSelected;
   const fileType = imageOrVideo(s3Key);

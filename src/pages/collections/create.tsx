@@ -11,6 +11,7 @@ import SubmitBtn from '@src/shared/form/SubmitBtn';
 import Collection from '@src/types/collection';
 import collectionSchema from '@src/yup/collectionSchema';
 import RichText from '@src/shared/form/RichText';
+import FilesInput from '@src/shared/form/FilesInput';
 
 function Create(): JSX.Element {
   const {
@@ -22,7 +23,7 @@ function Create(): JSX.Element {
     resolver: yupResolver(collectionSchema),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: Collection) => {
     console.log(data);
   };
 
@@ -43,7 +44,8 @@ function Create(): JSX.Element {
           <RichText
             control={control}
             fieldName="description"
-            defaultValue='{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"dsaasdsad"}]}]}'
+            defaultValue="<h1>Heading....</h1>"
+            errors={errors}
           />
         </Block>
         <Block>
@@ -70,6 +72,15 @@ function Create(): JSX.Element {
           <div className="flex justify-end mt-4">
             <SubmitBtn />
           </div>
+        </Block>
+        <Block>
+          <FilesInput
+            allowedTypes="*"
+            control={control}
+            fieldName="photo"
+            maxFilesCount={1}
+            errors={errors}
+          />
         </Block>
       </SmallBlocks>
     </form>

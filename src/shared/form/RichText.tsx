@@ -6,19 +6,23 @@ interface Props {
   control: Control<any, any>;
   fieldName: string;
   defaultValue: string;
+  errors: any;
 }
 
 function RichText(props: Props): JSX.Element {
-  const { fieldName, control, defaultValue = '' } = props;
+  const { fieldName, control, errors, defaultValue = '' } = props;
   return (
-    <Controller
-      name={fieldName}
-      control={control}
-      defaultValue={defaultValue}
-      render={({ field }) => (
-        <Editor defaultValue={defaultValue} onChange={field.onChange} />
-      )}
-    />
+    <div>
+      <Controller
+        name={fieldName}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field }) => (
+          <Editor defaultValue={defaultValue} onChange={field.onChange} />
+        )}
+      />
+      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+    </div>
   );
 }
 

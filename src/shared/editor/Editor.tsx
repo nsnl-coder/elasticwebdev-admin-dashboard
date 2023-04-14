@@ -34,13 +34,13 @@ const Editor = (props: Props) => {
       }),
     ],
     onUpdate: ({ editor }) => {
-      if (onChange) onChange(JSON.stringify(editor.getJSON()));
+      if (onChange) onChange(editor.getHTML());
     },
   });
 
   useEffect(() => {
     if (!defaultValue) return;
-    editor?.commands.setContent(JSON.parse(defaultValue));
+    editor?.commands.setContent(defaultValue);
   }, [defaultValue, editor]);
 
   return (

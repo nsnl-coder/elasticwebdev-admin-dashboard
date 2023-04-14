@@ -12,24 +12,16 @@ import HiddenInput from './HiddenInput';
 import Label from './Label';
 import FilePreview from '../filePreview/FilePreview';
 
-interface Props {
+interface SelectFilesProps {
   files: string[];
   setFiles: Dispatch<SetStateAction<string[]>>;
   maxFilesCount: number;
   allowedTypes: AllowedFilesTypes;
   className?: string;
-  heading?: string;
 }
 
-function SelectFiles(props: Props): JSX.Element {
-  const {
-    files,
-    setFiles,
-    className,
-    maxFilesCount,
-    heading = 'Media',
-    allowedTypes,
-  } = props;
+function SelectFiles(props: SelectFilesProps): JSX.Element {
+  const { files, setFiles, className, maxFilesCount, allowedTypes } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
   const {
@@ -54,10 +46,15 @@ function SelectFiles(props: Props): JSX.Element {
 
   return (
     <div
-      className={`${className} mx-auto bg-white p-6 my-12 shadow-lg rounded-md`}
+      className={`${className} ${
+        maxFilesCount > 3 ? 'shadow-lg rounded-md p-6 my-12' : ''
+      } mx-auto bg-white  `}
     >
-      <h3 className="font-semibold mb-6 text-lg capitalize">{heading}</h3>
-      <div className={`gap-4 ${maxFilesCount > 1 ? 'grid grid-cols-4' : ''}`}>
+      <div
+        className={`gap-4 grid ${
+          maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '
+        }`}
+      >
         <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
         {files.map((s3Key, index) => (
           <FileWrapper
@@ -88,3 +85,4 @@ function SelectFiles(props: Props): JSX.Element {
 }
 
 export default SelectFiles;
+export type { SelectFilesProps };

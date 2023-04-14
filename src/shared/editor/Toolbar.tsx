@@ -27,7 +27,7 @@ const Toolbar = (props: Props) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-x-2 gap-y-2 px-4 shadow-lg py-2">
+    <div className="flex flex-wrap gap-x-2 gap-y-2 px-4 py-2 border-b bg-gray-50 border-gray-400/80">
       <ToolbarItem
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}

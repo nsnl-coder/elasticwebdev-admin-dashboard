@@ -1,17 +1,11 @@
-const { object, number, string, boolean } = require('yup');
-const { reqQuery, reqParams, objectIdArray } = require('yup-schemas');
+import { object, string, boolean } from 'yup';
 
 const collectionSchema = object({
   name: string().max(255),
+  description: string().max(2000).label('description'),
   photo: string().max(255),
   isPinned: boolean(),
   status: string().oneOf(['draft', 'active']),
-  deleteList: objectIdArray,
-  updateList: objectIdArray,
-  // for testing only
-  test_string: string().max(240),
-  test_number: number().min(0).max(9999),
-  test_any: string().max(240),
 });
 
-module.exports = collectionSchema;
+export default collectionSchema;

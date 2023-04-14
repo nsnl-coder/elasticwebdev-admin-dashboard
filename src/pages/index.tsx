@@ -1,3 +1,4 @@
+import Editor from '@src/shared/editor/Editor';
 import SelectFiles from '@src/shared/selectFiles/SelectFiles';
 import { useState } from 'react';
 
@@ -6,6 +7,7 @@ export default function Home() {
 
   return (
     <div>
+      <Editor />
       <SelectFiles
         files={files}
         setFiles={setfiles}

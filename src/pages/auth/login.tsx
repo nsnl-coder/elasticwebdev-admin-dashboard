@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 //
 import loginSchema from '@src/yup/loginSchema';
-import Input from '@src/shared/input/Input';
+import Input from '@src/shared/form/Input';
 import useLogin from '@src/react-query/auth/useLogin';
 import RequireNotLogin from '@src/shared/hoc/RequireNotLogin';
 

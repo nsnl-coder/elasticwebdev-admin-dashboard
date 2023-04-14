@@ -47,9 +47,10 @@ function FileWrapper(props: Props): JSX.Element {
       {props.children}
       <div
         onClick={handleAddImage}
-        className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer ${
+        className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer tooltip tooltip-bottom ${
           isSelected ? 'opacity-100 flex justify-end items-start' : 'opacity-0'
         }`}
+        data-tip="Click to select"
       >
         {isSelected && (
           <input
@@ -65,7 +66,7 @@ function FileWrapper(props: Props): JSX.Element {
         {!isSelected && (
           <div
             data-tip="delete image"
-            className=" tooltip-right"
+            className="tooltip tooltip-right"
             onClick={handleRemoveS3File}
           >
             <TbTrashFilled

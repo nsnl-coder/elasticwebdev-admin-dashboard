@@ -6,7 +6,12 @@ export default function Home() {
 
   return (
     <div>
-      <SelectFiles files={files} setFiles={setfiles} />
+      <SelectFiles
+        files={files}
+        setFiles={setfiles}
+        maxFilesCount={4}
+        className="max-w-3xl"
+      />
     </div>
   );
 }

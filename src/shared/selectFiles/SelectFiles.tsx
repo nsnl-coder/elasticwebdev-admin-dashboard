@@ -12,10 +12,19 @@ import Skeleton from 'react-loading-skeleton';
 interface Props {
   files: string[];
   setFiles: Dispatch<SetStateAction<string[]>>;
+  maxFilesCount: number;
+  className?: string;
+  heading?: string;
 }
 
 function SelectFiles(props: Props): JSX.Element {
-  const { files, setFiles } = props;
+  const {
+    files,
+    setFiles,
+    className,
+    maxFilesCount,
+    heading = 'Media',
+  } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
   const {
@@ -36,10 +45,15 @@ function SelectFiles(props: Props): JSX.Element {
     }
   }, [key, isUploaded]);
 
+  const isMaxFilesCount = files.length >= maxFilesCount;
+
   return (
-    <div>
-      <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
-      <div className="grid grid-cols-4 max-w-3xl gap-4 bg-white p-6 mx-auto my-12 shadow-lg rounded-mdc">
+    <div
+      className={`${className} mx-auto bg-white p-6 my-12 shadow-lg rounded-md`}
+    >
+      <h3 className="font-semibold mb-6 text-lg capitalize">{heading}</h3>
+      <div className={`gap-4 ${maxFilesCount > 1 ? 'grid grid-cols-4' : ''}`}>
+        <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
         {files.map((s3Key, index) => (
           <FileWrapper
             key={s3Key}
@@ -51,8 +65,17 @@ function SelectFiles(props: Props): JSX.Element {
           </FileWrapper>
         ))}
         {isUploading && <Skeleton count={1} className="h-full" />}
-        <SelectFromGallery setFiles={setFiles} className="aspect-square" />
-        <Label htmlFor="select_file" className="aspect-square" />
+        {!isMaxFilesCount && (
+          <SelectFromGallery
+            setFiles={setFiles}
+            className="aspect-square"
+            maxFilesCount={maxFilesCount}
+            currentFilesCount={files.length}
+          />
+        )}
+        {!isMaxFilesCount && (
+          <Label htmlFor="select_file" className="aspect-square" />
+        )}
       </div>
     </div>
   );

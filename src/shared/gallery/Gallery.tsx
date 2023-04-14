@@ -33,12 +33,12 @@ function Gallery(): JSX.Element {
       onClick={reject}
     >
       <div
-        className="modal-box max-w-6xl relative w-screen h-screen rounded-md p-0"
+        className="modal-box max-w-6xl relative w-screen flex flex-col h-screen rounded-md p-0"
         onClick={(e) => e.stopPropagation()}
       >
         <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
         <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
-        <div className="p-8 overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
+        <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
           <GalleryLabel htmlFor="gallery_upload" />
           {(isUploading || (isFetching && isUploaded)) && (
             <GridSkeleton count={1} className="h-48" />

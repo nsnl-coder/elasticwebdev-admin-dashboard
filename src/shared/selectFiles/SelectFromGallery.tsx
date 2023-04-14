@@ -1,19 +1,25 @@
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
+import { toastError } from '@src/utils/toast';
 import { Dispatch, SetStateAction } from 'react';
 import { GrGallery } from 'react-icons/gr';
 
 interface Props {
   className?: string;
   setFiles: Dispatch<SetStateAction<string[]>>;
+  maxFilesCount: number;
+  currentFilesCount: number;
 }
 
 const SelectFromGallery = (props: Props) => {
+  const { className, setFiles, maxFilesCount, currentFilesCount } = props;
   const { selectFromGallery } = useSelectFromGallery();
-  const { className, setFiles } = props;
 
   const handleSelectFromGallery = async () => {
     const files = await selectFromGallery();
-    setFiles((prev) => [...prev, ...files]);
+    if (files.length + currentFilesCount > maxFilesCount) {
+      toastError(`Only allow maximum ${maxFilesCount} files!`);
+    }
+    setFiles((prev) => [...prev, ...files].slice(0, maxFilesCount));
   };
   return (
     <div

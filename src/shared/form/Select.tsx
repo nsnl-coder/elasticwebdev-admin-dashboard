@@ -1,4 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
+import Label, { LabelThemes } from './Label';
 
 interface Option {
   name: string;
@@ -12,6 +13,7 @@ interface Props {
   label?: string;
   required?: boolean;
   options: string[] | Option[];
+  labelTheme: LabelThemes;
 }
 
 function Select(props: Props): JSX.Element {
@@ -20,19 +22,19 @@ function Select(props: Props): JSX.Element {
     register,
     errors,
     label,
-    required = true,
+    required = false,
     options,
+    labelTheme,
   } = props;
 
   return (
     <div>
-      <label
-        htmlFor={fieldName}
-        className="capitalize flex gap-x-1 text-sm mb-3"
-      >
-        <span>{label || fieldName}</span>
-        {required && <span className="text-red-400">*</span>}
-      </label>
+      <Label
+        fieldName={fieldName}
+        label={label || fieldName}
+        theme={labelTheme}
+        required={required}
+      />
       <select
         {...register(fieldName)}
         id={fieldName}

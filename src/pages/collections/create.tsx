@@ -40,12 +40,14 @@ function Create(): JSX.Element {
             errors={errors}
             label="Name:"
             required={false}
+            labelTheme="light"
           />
           <RichText
             control={control}
             fieldName="description"
             defaultValue="<h1>Heading....</h1>"
             errors={errors}
+            labelTheme="light"
           />
         </Block>
         <Block>
@@ -54,6 +56,7 @@ function Create(): JSX.Element {
             errors={errors}
             fieldName="isPinned"
             label="Pin?"
+            labelTheme="bold"
             options={[
               { name: 'Do not pin', value: 'false' },
               { name: 'Pin to top', value: 'true' },
@@ -68,6 +71,7 @@ function Create(): JSX.Element {
             errors={errors}
             fieldName="status"
             options={['draft', 'active']}
+            labelTheme="bold"
           />
           <div className="flex justify-end mt-4">
             <SubmitBtn />
@@ -78,8 +82,9 @@ function Create(): JSX.Element {
             allowedTypes="image"
             control={control}
             fieldName="photo"
-            maxFilesCount={3}
+            maxFilesCount={1}
             errors={errors}
+            labelTheme="bold"
           />
         </Block>
       </SmallBlocks>

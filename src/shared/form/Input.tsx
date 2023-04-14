@@ -1,4 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
+import Label, { LabelThemes } from './Label';
 
 interface Props {
   fieldName: string;
@@ -8,6 +9,7 @@ interface Props {
   required?: boolean;
   type?: string;
   placeholder?: string;
+  labelTheme: LabelThemes;
 }
 
 function Input(props: Props): JSX.Element {
@@ -19,17 +21,17 @@ function Input(props: Props): JSX.Element {
     placeholder,
     required = true,
     type = 'text',
+    labelTheme,
   } = props;
 
   return (
     <div className="mb-8">
-      <label
-        htmlFor={fieldName}
-        className="capitalize flex gap-x-1 text-sm mb-3"
-      >
-        <span> {label || fieldName}</span>
-        {required && <span className="text-red-400">*</span>}
-      </label>
+      <Label
+        fieldName={fieldName}
+        label={label || fieldName}
+        theme={labelTheme}
+        required={required}
+      />
       <input
         type={type}
         id={fieldName}

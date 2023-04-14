@@ -6,7 +6,7 @@ import {
 } from 'react-icons/ai';
 import { FaUndo, FaRedo, FaMarker } from 'react-icons/fa';
 import { HiOutlineListBullet } from 'react-icons/hi2';
-import { BsListOl, BsFillFileCodeFill } from 'react-icons/bs';
+import { BsListOl, BsFillFileCodeFill, BsImages } from 'react-icons/bs';
 import { GrBlockQuote } from 'react-icons/gr';
 import { MdHorizontalRule } from 'react-icons/md';
 //
@@ -14,6 +14,9 @@ import Heading from './Heading';
 import ToolbarItem from './ToolbarItem';
 import { Editor } from '@tiptap/react';
 import Table from './Table';
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
+import imageOrVideo from '@src/utils/imageOrVideo';
+import getS3FileUrl from '@src/utils/getFileUrl';
 
 interface Props {
   editor: Editor | null;
@@ -21,13 +24,30 @@ interface Props {
 
 const Toolbar = (props: Props) => {
   const { editor } = props;
+  const { selectFromGallery } = useSelectFromGallery();
 
   if (!editor) {
     return null;
   }
 
+  const handleAddImage = async () => {
+    const files = await selectFromGallery();
+
+    if (files.length === 0) return;
+    if (imageOrVideo(files[0]) === 'video') return;
+
+    editor
+      .chain()
+      .focus()
+      .setImage({
+        src: getS3FileUrl(files[0]),
+        alt: 'demonstration',
+      })
+      .run();
+  };
+
   return (
-    <div className="flex flex-wrap gap-x-2 gap-y-2 px-4 py-2 border-b bg-gray-50 border-gray-400/80">
+    <div className="flex flex-wrap gap-x-2 gap-y-2 px-4 py-2 border-b bg-gray-50 border-gray-400/80 rounded-md">
       <ToolbarItem
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
@@ -75,6 +95,7 @@ const Toolbar = (props: Props) => {
         <BsListOl size={23} />
       </ToolbarItem>
 
+      <Heading editor={editor} />
       <Table editor={editor} />
 
       <ToolbarItem
@@ -98,7 +119,6 @@ const Toolbar = (props: Props) => {
       >
         <FaMarker />
       </ToolbarItem>
-      <Heading editor={editor} />
       <ToolbarItem
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
@@ -114,6 +134,9 @@ const Toolbar = (props: Props) => {
         }}
       >
         <AiOutlineClear size={20} />
+      </ToolbarItem>
+      <ToolbarItem onClick={handleAddImage}>
+        <BsImages size={18} />
       </ToolbarItem>
     </div>
   );

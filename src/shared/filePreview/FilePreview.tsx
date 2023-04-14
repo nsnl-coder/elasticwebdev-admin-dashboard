@@ -25,7 +25,7 @@ function FilePreview(props: Props): JSX.Element {
   }
 
   if (fileType === 'video') {
-    return <VideoPlayer src={src} />;
+    return <VideoPlayer src={src} className={className} />;
   }
 
   if (fileType === 'image') {

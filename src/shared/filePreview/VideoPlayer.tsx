@@ -55,8 +55,6 @@ function VideoPlayer(props: VideoProps): JSX.Element {
     }
 
     return () => {
-      console.log('this run');
-
       if (player) {
         player.dispose();
         playerRef.current = null;

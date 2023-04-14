@@ -51,8 +51,8 @@ function SelectFiles(props: Props): JSX.Element {
           </FileWrapper>
         ))}
         {isUploading && <Skeleton count={1} className="h-full" />}
-        <Label htmlFor="select_file" className="aspect-square" />
         <SelectFromGallery setFiles={setFiles} className="aspect-square" />
+        <Label htmlFor="select_file" className="aspect-square" />
       </div>
     </div>
   );

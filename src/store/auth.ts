@@ -17,8 +17,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logUserIn(state, { payload }: { payload: HttpResponse<User> }) {
-      const res = payload;
-      state.user = res.data;
+      state.user = payload.data;
       state.isLoggedIn = true;
     },
     failToLogin(state) {

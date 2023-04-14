@@ -11,7 +11,7 @@ function UiContainer(): JSX.Element {
       <Gallery />
       <ToastContainer />
       <ConfirmModal />
-      <PreviewOriginalFile />?
+      <PreviewOriginalFile />
     </div>
   );
 }

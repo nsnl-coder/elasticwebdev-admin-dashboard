@@ -1,8 +1,10 @@
 import useConfirm from '@src/hooks/useConfirm';
+import usePreviewOriginalFile from '@src/hooks/usePreviewOriginalFile';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import useDeleteFile from '@src/react-query/files/useDeleteFile';
 import { useIsMutating } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { AiFillEye } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
 
 interface Props {
@@ -17,6 +19,7 @@ function FileWrapper(props: Props): JSX.Element {
   const { deleteFile, isDeleting } = useDeleteFile();
   const { handleSelectFile, handleRemoveSelect, selectedFiles } =
     useSelectFromGallery();
+  const { openPreviewModal } = usePreviewOriginalFile();
 
   let isSelected = selectedFiles.includes(s3Key);
   const isDeletingFiles = useIsMutating(['delete-file']) && isSelected;
@@ -30,14 +33,14 @@ function FileWrapper(props: Props): JSX.Element {
     }
   };
 
-  const handleDeleteS3File = async () => {
+  const handleRemoveS3File = async () => {
     const confirm = await isConfirmed('Do you want to delete the file?');
     if (confirm) deleteFile({ key: s3Key });
   };
 
   return (
     <div
-      className={`group relative h-48 flex flex-col justify-center ${
+      className={`group relative h-48 flex flex-col justify-center bg-gray-200 ${
         isDeleting || isDeletingFiles ? 'opacity-60' : ''
       }`}
     >
@@ -63,7 +66,7 @@ function FileWrapper(props: Props): JSX.Element {
           <div
             data-tip="delete image"
             className=" tooltip-right"
-            onClick={handleDeleteS3File}
+            onClick={handleRemoveS3File}
           >
             <TbTrashFilled
               size={24}
@@ -71,6 +74,13 @@ function FileWrapper(props: Props): JSX.Element {
             />
           </div>
         )}
+      </div>
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tooltip tooltip-bottom cursor-pointer opacity-0 group-hover:opacity-100"
+        data-tip="view original"
+        onClick={() => openPreviewModal(s3Key)}
+      >
+        <AiFillEye size={42} className="text-gray-400 hover:text-gray-200" />
       </div>
     </div>
   );

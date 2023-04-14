@@ -1,4 +1,3 @@
-import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import SelectFiles from '@src/shared/selectFiles/SelectFiles';
 import { useState } from 'react';
 

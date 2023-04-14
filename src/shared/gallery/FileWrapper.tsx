@@ -33,22 +33,20 @@ function FileWrapper(props: Props): JSX.Element {
   let isSelected = selectedFiles.includes(s3Key);
   const isDeletingFiles = useIsMutating(['delete-file']) && isSelected;
   const fileType = imageOrVideo(s3Key);
-  const canSelect =
-    (allowedTypes === fileType || allowedTypes === '*') &&
-    selectedFiles.length < maxFilesCount;
+  const wrongType = allowedTypes !== fileType && allowedTypes !== '*';
+  const canToggle = !wrongType && selectedFiles.length < maxFilesCount;
 
   const handleAddImage = () => {
-    if (!canSelect) {
-      if (isSelected) handleRemoveSelect(s3Key);
-      else toastError('You haved reach the maximum files selections!');
-      return;
+    if (!canToggle && !isSelected) {
+      toastError('You haved reach the maximum files selections!');
     }
 
-    if (!isSelected) {
+    if (isSelected) handleRemoveSelect(s3Key);
+
+    if (canToggle && !isSelected) {
       handleSelectFile(s3Key);
     }
   };
-
   const handleRemoveS3File = async () => {
     const confirm = await isConfirmed('Do you want to delete the file?');
     if (confirm) deleteFile({ key: s3Key });
@@ -71,8 +69,14 @@ function FileWrapper(props: Props): JSX.Element {
         onClick={handleAddImage}
         className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 tooltip tooltip-bottom ${
           isSelected ? 'opacity-100 flex justify-end items-start' : 'opacity-0'
-        } ${!canSelect ? 'cursor-not-allowed opacity-90' : ''}`}
-        data-tip={canSelect ? 'Click to select' : 'Can not select more files!'}
+        } ${!canToggle ? 'cursor-not-allowed opacity-90' : ''}`}
+        data-tip={
+          canToggle
+            ? 'Click to select'
+            : wrongType
+            ? `Can not select ${fileType} file type!`
+            : `Only allow to select ${maxFilesCount} files!`
+        }
       >
         {isSelected && (
           <input

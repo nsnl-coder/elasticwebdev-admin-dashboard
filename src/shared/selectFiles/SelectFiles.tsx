@@ -70,6 +70,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
         {!isMaxFilesCount && (
           <SelectFromGallery
             allowedTypes={allowedTypes}
+            files={files}
             setFiles={setFiles}
             className="aspect-square"
             maxFilesCount={maxFilesCount}

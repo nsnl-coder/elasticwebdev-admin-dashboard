@@ -75,10 +75,10 @@ function Create(): JSX.Element {
         </Block>
         <Block>
           <FilesInput
-            allowedTypes="*"
+            allowedTypes="image"
             control={control}
             fieldName="photo"
-            maxFilesCount={1}
+            maxFilesCount={3}
             errors={errors}
           />
         </Block>

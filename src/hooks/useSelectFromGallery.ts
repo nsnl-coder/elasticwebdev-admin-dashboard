@@ -15,11 +15,12 @@ const useSelectFromGallery = () => {
   const selectFromGallery = (
     maxFilesCount: number,
     allowedTypes: AllowedFilesTypes = '*',
+    excludedFiles: string[] = [],
   ) => {
     const promise: Promise<string[]> = new Promise((resolve, reject) => {
       setState({
         isOpen: true,
-        selectedFiles: [],
+        selectedFiles: excludedFiles,
         resolve,
         reject,
         maxFilesCount,

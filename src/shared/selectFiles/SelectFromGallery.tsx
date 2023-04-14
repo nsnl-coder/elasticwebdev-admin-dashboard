@@ -6,6 +6,7 @@ import { GrGallery } from 'react-icons/gr';
 
 interface Props {
   className?: string;
+  files: string[];
   setFiles: Dispatch<SetStateAction<string[]>>;
   maxFilesCount: number;
   currentFilesCount: number;
@@ -15,6 +16,7 @@ interface Props {
 const SelectFromGallery = (props: Props) => {
   const {
     className,
+    files,
     setFiles,
     maxFilesCount,
     currentFilesCount,
@@ -23,14 +25,12 @@ const SelectFromGallery = (props: Props) => {
   const { selectFromGallery } = useSelectFromGallery();
 
   const handleSelectFromGallery = async () => {
-    const files = await selectFromGallery(
-      maxFilesCount - currentFilesCount,
+    const selectedFiles = await selectFromGallery(
+      maxFilesCount,
       allowedTypes,
+      files,
     );
-    if (files.length + currentFilesCount > maxFilesCount) {
-      toastError(`Only allow maximum ${maxFilesCount} files!`);
-    }
-    setFiles((prev) => [...prev, ...files].slice(0, maxFilesCount));
+    setFiles(selectedFiles);
   };
   return (
     <div

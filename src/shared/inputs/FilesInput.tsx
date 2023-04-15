@@ -1,15 +1,14 @@
 import { Controller, useController } from 'react-hook-form';
 import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 import { useEffect, useState } from 'react';
-import Label, { LabelThemes } from './Label';
+import Label from '../form/Label';
+import { LabelProps } from '../form/Label';
 
-interface Props extends Omit<SelectFilesProps, 'setFiles' | 'files'> {
-  fieldName: string;
+interface Props
+  extends Omit<SelectFilesProps, 'setFiles' | 'files'>,
+    LabelProps {
   control: any;
   errors: any;
-  label?: string;
-  labelTheme: LabelThemes;
-  required?: boolean;
 }
 
 function FilesInput(props: Props): JSX.Element {
@@ -42,7 +41,7 @@ function FilesInput(props: Props): JSX.Element {
       <Label
         fieldName={fieldName}
         label={label || fieldName}
-        theme={labelTheme}
+        labelTheme={labelTheme}
         required={required}
       />
       <Controller

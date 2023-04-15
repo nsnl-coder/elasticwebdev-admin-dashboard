@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 //
-import Collection from '@src/types/collection';
 import { HttpError, HttpResponse } from '@src/types/api';
 import axios from '@src/config/axios';
-import { withDefaultOnError } from '../queryClient';
 import { toastError } from '@src/utils/toast';
+import { Collection } from '@src/yup/collectionSchema';
+import { withDefaultOnError } from '../queryClient';
 
 type Response = HttpResponse<Collection[]>;
 

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 //
 import loginSchema from '@src/yup/loginSchema';
-import Input from '@src/shared/form/Input';
+import Input from '@src/shared/inputs/Input';
 import useLogin from '@src/react-query/auth/useLogin';
 import RequireNotLogin from '@src/shared/hoc/RequireNotLogin';
 
@@ -46,6 +46,7 @@ function Login(): JSX.Element {
               fieldName="email"
               errors={errors}
               label="Email:"
+              labelTheme="light"
             />
             <Input
               register={register}
@@ -53,6 +54,7 @@ function Login(): JSX.Element {
               errors={errors}
               label="Password:"
               type="password"
+              labelTheme="light"
             />
             {isValid && apiError?.message && (
               <div className="mb-6 text-sm text-red-400">

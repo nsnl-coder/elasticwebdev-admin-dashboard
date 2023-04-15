@@ -1,20 +1,20 @@
 type LabelThemes = 'light' | 'bold';
 
-interface Props {
-  theme: LabelThemes;
-  required: boolean;
-  label: string;
+interface LabelProps {
+  labelTheme: LabelThemes;
+  required?: boolean;
+  label?: string;
   fieldName: string;
 }
 
-function Label(props: Props): JSX.Element {
-  const { fieldName, required = false, theme = 'light', label } = props;
+function Label(props: LabelProps): JSX.Element {
+  const { fieldName, required = false, labelTheme = 'light', label } = props;
 
   return (
     <label
       htmlFor={fieldName}
       className={`${
-        theme === 'light'
+        labelTheme === 'light'
           ? 'capitalize flex gap-x-1 text-sm mb-3'
           : 'font-semibold mb-6 text-lg capitalize block'
       }`}
@@ -26,4 +26,4 @@ function Label(props: Props): JSX.Element {
 }
 
 export default Label;
-export type { LabelThemes };
+export type { LabelThemes, LabelProps };

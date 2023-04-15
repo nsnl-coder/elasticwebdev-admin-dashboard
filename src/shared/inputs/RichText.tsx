@@ -1,15 +1,11 @@
 import Editor from '../editor/Editor';
 import { Controller, Control } from 'react-hook-form';
-import Label, { LabelThemes } from './Label';
+import Label, { LabelProps, LabelThemes } from '../form/Label';
 
-interface Props {
+interface Props extends LabelProps {
   control: Control<any, any>;
-  fieldName: string;
   defaultValue: string;
   errors: any;
-  label?: string;
-  labelTheme: LabelThemes;
-  required?: boolean;
 }
 
 function RichText(props: Props): JSX.Element {
@@ -28,7 +24,7 @@ function RichText(props: Props): JSX.Element {
       <Label
         fieldName={fieldName}
         label={label || fieldName}
-        theme={labelTheme}
+        labelTheme={labelTheme}
         required={required}
       />
       <Controller

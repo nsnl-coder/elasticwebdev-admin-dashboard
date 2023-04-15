@@ -1,4 +1,4 @@
-import { object, string, boolean } from 'yup';
+import { object, string, boolean, InferType } from 'yup';
 
 const collectionSchema = object({
   name: string().max(255),
@@ -8,4 +8,7 @@ const collectionSchema = object({
   status: string().oneOf(['draft', 'active']),
 });
 
+interface Collection extends InferType<typeof collectionSchema> {}
+
 export default collectionSchema;
+export type { Collection };

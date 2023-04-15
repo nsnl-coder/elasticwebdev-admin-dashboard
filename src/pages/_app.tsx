@@ -12,6 +12,8 @@ import ContextProvider from '@src/contexts/ContextProvider';
 // css
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 import '@src/styles/globals.scss';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });

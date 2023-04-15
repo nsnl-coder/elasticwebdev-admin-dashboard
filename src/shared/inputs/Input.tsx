@@ -1,15 +1,11 @@
 import { UseFormRegister } from 'react-hook-form';
-import Label, { LabelThemes } from './Label';
+import Label, { LabelProps, LabelThemes } from '../form/Label';
 
-interface Props {
-  fieldName: string;
+interface Props extends LabelProps {
   register: UseFormRegister<any>;
   errors: any;
-  label?: string;
-  required?: boolean;
   type?: string;
   placeholder?: string;
-  labelTheme: LabelThemes;
 }
 
 function Input(props: Props): JSX.Element {
@@ -29,7 +25,7 @@ function Input(props: Props): JSX.Element {
       <Label
         fieldName={fieldName}
         label={label || fieldName}
-        theme={labelTheme}
+        labelTheme={labelTheme}
         required={required}
       />
       <input

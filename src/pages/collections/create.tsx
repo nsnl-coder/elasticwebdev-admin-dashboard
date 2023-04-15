@@ -4,14 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 //
 import BigBlocks from '@src/shared/form/BigBlocks';
 import Block from '@src/shared/form/Block';
-import Input from '@src/shared/form/Input';
-import Select from '@src/shared/form/Select';
 import SmallBlocks from '@src/shared/form/SmallBlocks';
 import SubmitBtn from '@src/shared/form/SubmitBtn';
-import Collection from '@src/types/collection';
-import collectionSchema from '@src/yup/collectionSchema';
-import RichText from '@src/shared/form/RichText';
-import FilesInput from '@src/shared/form/FilesInput';
+import collectionSchema, { Collection } from '@src/yup/collectionSchema';
+import RichText from '@src/shared/inputs/RichText';
+import Select from '@src/shared/inputs/Select';
+import FilesInput from '@src/shared/inputs/FilesInput';
+import Input from '@src/shared/inputs/Input';
 
 function Create(): JSX.Element {
   const {
@@ -39,7 +38,6 @@ function Create(): JSX.Element {
             fieldName="name"
             errors={errors}
             label="Name:"
-            required={false}
             labelTheme="light"
           />
           <RichText

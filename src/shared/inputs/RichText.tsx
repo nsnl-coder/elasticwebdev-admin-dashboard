@@ -1,6 +1,7 @@
 import Editor from '../editor/Editor';
 import { Controller, Control } from 'react-hook-form';
-import Label, { LabelProps, LabelThemes } from '../form/Label';
+import Label, { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
 
 interface Props extends LabelProps {
   control: Control<any, any>;
@@ -35,7 +36,7 @@ function RichText(props: Props): JSX.Element {
           <Editor defaultValue={defaultValue} onChange={field.onChange} />
         )}
       />
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+      <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>
   );
 }

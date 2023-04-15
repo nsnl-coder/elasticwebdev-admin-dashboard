@@ -1,5 +1,6 @@
 import { UseFormRegister } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
 
 interface Option {
   name: string;
@@ -24,7 +25,7 @@ function Select(props: Props): JSX.Element {
   } = props;
 
   return (
-    <div>
+    <div className="w-full">
       <Label
         fieldName={fieldName}
         label={label || fieldName}
@@ -34,7 +35,7 @@ function Select(props: Props): JSX.Element {
       <select
         {...register(fieldName)}
         id={fieldName}
-        className="select select-bordered h-10 min-h-0 w-full rounded-md"
+        className="select select-bordered h-10 min-h-0 w-full rounded-md text-sm font-normal"
       >
         {options.map((option) => {
           if (typeof option === 'string') {
@@ -52,7 +53,7 @@ function Select(props: Props): JSX.Element {
           }
         })}
       </select>
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+      <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>
   );
 }

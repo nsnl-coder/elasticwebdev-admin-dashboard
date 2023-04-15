@@ -16,7 +16,7 @@ function Label(props: LabelProps): JSX.Element {
       className={`${
         labelTheme === 'light'
           ? 'capitalize flex gap-x-1 text-sm mb-3'
-          : 'font-semibold mb-6 text-lg capitalize block'
+          : 'font-semibold mb-5 text-lg capitalize block'
       }`}
     >
       <span>{label || fieldName}</span>

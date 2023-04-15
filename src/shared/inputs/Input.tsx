@@ -1,11 +1,14 @@
 import { UseFormRegister } from 'react-hook-form';
-import Label, { LabelProps, LabelThemes } from '../form/Label';
+import Label, { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
+import { Children } from '@src/types/shared';
 
-interface Props extends LabelProps {
+interface Props extends LabelProps, Children {
   register: UseFormRegister<any>;
   errors: any;
   type?: string;
   placeholder?: string;
+  defaultValue?: string;
 }
 
 function Input(props: Props): JSX.Element {
@@ -15,27 +18,33 @@ function Input(props: Props): JSX.Element {
     errors,
     label,
     placeholder,
-    required = true,
+    required,
     type = 'text',
     labelTheme,
+    defaultValue,
+    children,
   } = props;
 
   return (
-    <div className="mb-8">
+    <div className="w-full">
       <Label
         fieldName={fieldName}
         label={label || fieldName}
         labelTheme={labelTheme}
         required={required}
       />
-      <input
-        type={type}
-        id={fieldName}
-        {...register(fieldName)}
-        className="border border-gray-400/80 h-10 px-3 w-full rounded-md"
-        placeholder={placeholder || fieldName}
-      />
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+      <div className="flex gap-x-4">
+        <input
+          type={type}
+          id={fieldName}
+          {...register(fieldName)}
+          className="border border-gray-400/80 h-10 px-3 w-full rounded-md placeholder:text-sm"
+          placeholder={placeholder || fieldName}
+          defaultValue={defaultValue}
+        />
+        {children}
+      </div>
+      <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>
   );
 }

@@ -1,19 +1,26 @@
 import { UseFormRegister } from 'react-hook-form';
-import Label, { LabelProps, LabelThemes } from '../form/Label';
-import Checkbox from './Checkbox';
+import Label, { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
+
+interface CheckBoxProps {
+  value: string;
+  register: UseFormRegister<any>;
+  name: string;
+  fieldName: string;
+}
 
 interface Checkbox {
   name: string;
   value: string;
 }
 
-interface Props extends LabelProps {
+interface CheckBoxesProps extends LabelProps {
   register: UseFormRegister<any>;
   errors: any;
   options: string[] | Checkbox[];
 }
 
-function CheckBoxes(props: Props): JSX.Element {
+function CheckBoxes(props: CheckBoxesProps): JSX.Element {
   const {
     register,
     errors,
@@ -41,6 +48,7 @@ function CheckBoxes(props: Props): JSX.Element {
                 value={option}
                 name={option}
                 key={option}
+                fieldName={fieldName}
               />
             );
           } else {
@@ -50,13 +58,30 @@ function CheckBoxes(props: Props): JSX.Element {
                 value={option.value}
                 name={option.name}
                 key={option.value}
+                fieldName={fieldName}
               />
             );
           }
         })}
       </div>
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+      <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>
+  );
+}
+
+function Checkbox(props: CheckBoxProps): JSX.Element {
+  const { name, register, value, fieldName } = props;
+
+  return (
+    <label className="flex items-center gap-x-3">
+      <input
+        className="checkbox checkbox-sm rounded-md"
+        type="checkbox"
+        {...register(fieldName)}
+        value={value}
+      />
+      <span className="inline-block mt-0.5">{name}</span>
+    </label>
   );
 }
 

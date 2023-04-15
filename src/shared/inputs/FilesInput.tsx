@@ -3,6 +3,7 @@ import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 import { useEffect, useState } from 'react';
 import Label from '../form/Label';
 import { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
 
 interface Props
   extends Omit<SelectFilesProps, 'setFiles' | 'files'>,
@@ -56,7 +57,7 @@ function FilesInput(props: Props): JSX.Element {
           />
         )}
       />
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
+      <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>
   );
 }

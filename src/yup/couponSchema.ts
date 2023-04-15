@@ -1,21 +1,35 @@
-import { object, number, string, date, boolean, InferType } from 'yup';
+import {
+  object,
+  number as originalNumber,
+  string,
+  date,
+  boolean,
+  InferType,
+} from 'yup';
+
+const number = () => {
+  return originalNumber().transform((value, originalValue) =>
+    originalValue.trim() === '' ? undefined : value,
+  );
+};
 
 const couponSchema = object({
-  couponCode: string().max(255).label('Coupon code'),
+  couponCode: string().max(255).label('Coupon code').required(),
   status: string().oneOf(['draft', 'active']).label('Coupon status'),
   discountUnit: string().oneOf(['$', '%']).label('discountUnit'),
   discountAmount: number()
     .when('discountUnit', ([discountUnit]: any[], schema: any) =>
       discountUnit === '%'
         ? schema
-            .moreThan(1, 'Discount percentage should be greater than 1!')
-            .max(100, 'Discount percentage should be less than 100!')
+            .min(0, 'Discount percentage should be greater than 0!')
+            .max(100, 'Discount percentage should be less than 100%!')
         : schema
-            .moreThan(0, 'Discount amount in dollar should be greater than 0')
-            .max(9999, 'Discount amount in dollar should be less than 9999'),
+            .min(0, 'Discount amount in dollar should be greater than 0')
+            .max(9999, 'Discount amount in dollar should be less than 9999$'),
     )
-    .label('discountAmount'),
-  couponQuantity: number().min(1).max(9999).label('couponQuantity'),
+    .label('discountAmount')
+    .required(),
+  couponQuantity: number().min(1).max(9999).label('couponQuantity').required(),
   isFreeshipping: boolean(),
   minimumOrder: number().moreThan(0).lessThan(100000),
   maximumOrder: number()
@@ -30,25 +44,26 @@ const couponSchema = object({
             .required('Maximum order is required when specified minimum order!')
         : schema,
     ),
-  startDate: date()
-    .min(
-      new Date(Date.now() - 15 * 60 * 1000),
-      'The discount start date can not be in the past!',
-    )
-    .label('Coupon start date'),
-  endDate: date()
-    .when('startDate', ([startDate]: any[], schema: any) =>
-      startDate
-        ? schema
-            .min(
-              startDate,
-              'The end date of coupon should be after the start date!',
-            )
-            .required('The end date is required when provided start date!')
-        : schema,
-    )
-    .label('Coupon end date'),
-  orderTotal: number().moreThan(0).max(999999),
+  discountTime: object({
+    startDate: date()
+      .min(
+        new Date(Date.now() - 15 * 60 * 1000),
+        'The discount start date can not be in the past!',
+      )
+      .label('Coupon start date'),
+    endDate: date()
+      .when('startDate', ([startDate]: any[], schema: any) =>
+        startDate
+          ? schema
+              .min(
+                startDate,
+                'The end date of coupon should be after the start date!',
+              )
+              .required('The end date is required when provided start date!')
+          : schema,
+      )
+      .label('Coupon end date'),
+  }),
 });
 
 interface Coupon extends InferType<typeof couponSchema> {}

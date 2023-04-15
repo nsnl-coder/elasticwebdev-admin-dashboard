@@ -3,6 +3,13 @@ import { Range } from 'react-date-range';
 import { DateRange } from 'react-date-range';
 import DateRangeFromNow from './date/DateRangeFromNow';
 import Label, { LabelProps } from '../form/Label';
+import ErrorMessage from '../form/ErrorMessage';
+import {
+  Controller,
+  ControllerRenderProps,
+  FieldValues,
+} from 'react-hook-form';
+import { addDays } from 'date-fns';
 
 interface Props extends LabelProps {
   control: any;
@@ -10,34 +17,63 @@ interface Props extends LabelProps {
 }
 
 function DateRangeInput(props: Props): JSX.Element {
-  const { fieldName, label, required = false, labelTheme, errors } = props;
+  const {
+    fieldName,
+    label,
+    required = false,
+    labelTheme,
+    errors,
+    control,
+  } = props;
 
-  const [range, setRange] = useState<Range>({
-    startDate: new Date(),
-    endDate: undefined,
-    key: 'selection',
-  });
+  const handleRangeChange = (
+    onChange: (...event: any[]) => void,
+    range: Range,
+  ) => {
+    onChange({
+      startDate: range.startDate,
+      endDate: range.endDate,
+      key: 'selection',
+    });
+  };
 
   return (
-    <div>
-      <Label
-        fieldName={fieldName}
-        label={label}
-        required={required}
-        labelTheme={labelTheme}
-      />
-      <div className="flex justify-center">
-        <DateRangeFromNow range={range} setRange={setRange} />
-        <DateRange
-          editableDateInputs={true}
-          onChange={(item) => setRange(item.selection)}
-          moveRangeOnFirstSelection={false}
-          ranges={[range]}
-          minDate={new Date()}
-        />
-      </div>
-      <p className="text-sm text-red-400 mt-1">{errors[fieldName]?.message}</p>
-    </div>
+    <Controller
+      name={fieldName}
+      control={control}
+      defaultValue={{
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection',
+      }}
+      render={({ field }) => (
+        <div>
+          <Label
+            fieldName={fieldName}
+            label={label}
+            required={required}
+            labelTheme={labelTheme}
+          />
+          <div className="flex justify-center">
+            <DateRangeFromNow
+              range={field.value}
+              handleRangeChange={handleRangeChange}
+              field={field}
+            />
+            <DateRange
+              editableDateInputs={true}
+              onChange={(item) =>
+                handleRangeChange(field.onChange, item.selection)
+              }
+              moveRangeOnFirstSelection={false}
+              ranges={[field.value]}
+              minDate={new Date()}
+            />
+          </div>
+          <ErrorMessage errors={errors} fieldName={fieldName} />
+        </div>
+      )}
+    />
   );
 }
 

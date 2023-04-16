@@ -45,11 +45,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
   const isMaxFilesCount = files.length >= maxFilesCount;
 
   return (
-    <div
-      className={`${className} ${
-        maxFilesCount > 3 ? 'shadow-lg rounded-md p-6 my-12' : ''
-      } mx-auto bg-white  `}
-    >
+    <div>
       <div
         className={`gap-4 grid ${
           maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '

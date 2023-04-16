@@ -9,7 +9,7 @@ const UploadLabel = (props: Props) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={`${className} flex items-center justify-center flex-col rounded-lg cursor-pointer border border-dashed font-medium px-4 gap-y-3 h-48 hover:bg-gray-100`}
+      className={`${className} flex items-center justify-center flex-col rounded-lg cursor-pointer border shadow-lg font-medium px-4 gap-y-3 h-32 hover:bg-gray-100`}
     >
       <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
         <span className="text-blue-800 px-4 py-0.5 rounded-md bg-slate-100 hover:text-black">

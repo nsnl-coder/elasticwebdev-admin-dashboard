@@ -51,10 +51,12 @@ function SingleSelect(props: Props): JSX.Element {
     });
   };
 
+  const isOpen = currentFilter === queryField;
+
   return (
     <div
       className={`dropdown dropdown-start text-paragraph ${
-        currentFilter === queryField ? 'dropdown-open' : ''
+        isOpen ? 'dropdown-open' : ''
       }`}
     >
       <label

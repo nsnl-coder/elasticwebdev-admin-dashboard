@@ -66,7 +66,9 @@ const couponSchema = object({
   }),
 });
 
-interface Coupon extends InferType<typeof couponSchema> {}
+interface Coupon extends InferType<typeof couponSchema> {
+  _id?: string;
+}
 
 export default couponSchema;
 export type { Coupon };

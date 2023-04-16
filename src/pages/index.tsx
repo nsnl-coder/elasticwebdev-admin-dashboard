@@ -1,4 +1,3 @@
-import Editor from '@src/shared/editor/Editor';
 import SelectFiles from '@src/shared/selectFiles/SelectFiles';
 import { useState } from 'react';
 

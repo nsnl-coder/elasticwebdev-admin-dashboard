@@ -11,7 +11,7 @@ import GalleryContent from './GalleryContent';
 import GridSkeleton from '../skeleton/GridSkeleton';
 import useInfiniteFetch from '@src/hooks/useInfiniteFetch';
 
-function Gallery(): JSX.Element {
+function Gallery(): JSX.Element | null {
   const { isOpen, reject } = useSelectFromGallery();
   const { s3Files, isLoading, isFetching, hasNextPage, fetchNextPage } =
     useGetFiles(isOpen);
@@ -38,7 +38,7 @@ function Gallery(): JSX.Element {
       >
         <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
         <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
-        <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-start gap-4 items-center">
+        <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 content-start gap-4 items-center">
           <GalleryLabel htmlFor="gallery_upload" />
           {(isUploading || (isFetching && isUploaded)) && (
             <GridSkeleton count={1} className="h-48" />

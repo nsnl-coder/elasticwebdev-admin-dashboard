@@ -8,7 +8,9 @@ const collectionSchema = object({
   status: string().oneOf(['draft', 'active']),
 });
 
-interface Collection extends InferType<typeof collectionSchema> {}
+interface Collection extends InferType<typeof collectionSchema> {
+  _id?: string;
+}
 
 export default collectionSchema;
 export type { Collection };

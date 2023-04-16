@@ -120,6 +120,18 @@ function Create(): JSX.Element {
             label="Free shipping"
             errors={errors}
           />
+          <Select
+            errors={errors}
+            register={register}
+            fieldName="isFreeshipping"
+            labelTheme="light"
+            options={[
+              { name: 'Freeship', value: 'true' },
+              { name: 'Do not freeship', value: 'false' },
+            ]}
+            label="Free shipping?"
+            defaultValue="false"
+          />
         </Block>
         <Block>
           <DateRangeInput

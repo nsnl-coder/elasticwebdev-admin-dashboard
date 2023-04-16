@@ -4,7 +4,7 @@ import {
   defaultState,
 } from '@src/contexts/GalleryContextProvider';
 
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 
 const useSelectFromGallery = () => {
   const galleryContext = useContext(GalleryContext);
@@ -12,37 +12,74 @@ const useSelectFromGallery = () => {
   const { state, setState, handleSelectFile, handleRemoveSelect } =
     galleryContext;
 
-  const selectFromGallery = (
-    maxFilesCount: number,
-    allowedTypes: AllowedFilesTypes = '*',
-    excludedFiles: string[] = [],
-  ) => {
-    const promise: Promise<string[]> = new Promise((resolve, reject) => {
-      setState({
-        isOpen: true,
-        selectedFiles: excludedFiles,
-        resolve,
-        reject,
-        maxFilesCount,
-        allowedTypes,
+  // const selectFromGallery = (
+  //   maxFilesCount: number,
+  //   allowedTypes: AllowedFilesTypes = '*',
+  //   excludedFiles: string[] = [],
+  // ) => {
+  //   const promise: Promise<string[]> = new Promise((resolve, reject) => {
+  //     setState({
+  //       isOpen: true,
+  //       selectedFiles: excludedFiles,
+  //       resolve,
+  //       reject,
+  //       maxFilesCount,
+  //       allowedTypes,
+  //     });
+  //   });
+
+  //   const cleanup = () => {
+  //     setState(defaultState);
+  //   };
+
+  //   return promise.then(
+  //     (files) => {
+  //       cleanup();
+  //       return files;
+  //     },
+  //     () => {
+  //       cleanup();
+  //       return [];
+  //     },
+  //   );
+  // };
+
+  const selectFromGallery = useCallback(
+    (
+      maxFilesCount: number,
+      allowedTypes: AllowedFilesTypes = '*',
+      excludedFiles: string[] = [],
+    ) => {
+      const promise: Promise<string[]> = new Promise((resolve, reject) => {
+        setState({
+          isOpen: true,
+          selectedFiles: excludedFiles,
+          resolve,
+          reject,
+          maxFilesCount,
+          allowedTypes,
+        });
       });
-    });
 
-    const cleanup = () => {
-      setState(defaultState);
-    };
+      const cleanup = () => {
+        setState(defaultState);
+      };
 
-    return promise.then(
-      (files) => {
-        cleanup();
-        return files;
-      },
-      () => {
-        cleanup();
-        return [];
-      },
-    );
-  };
+      return promise.then(
+        (files) => {
+          cleanup();
+          return files;
+        },
+        () => {
+          cleanup();
+          return [];
+        },
+      );
+    },
+    [],
+  );
+
+  const haha = '1111';
 
   return {
     handleSelectFile,
@@ -54,6 +91,7 @@ const useSelectFromGallery = () => {
     selectedFiles: state.selectedFiles,
     maxFilesCount: state.maxFilesCount,
     allowedTypes: state.allowedTypes,
+    haha,
   };
 };
 

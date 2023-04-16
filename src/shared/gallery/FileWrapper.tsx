@@ -37,6 +37,11 @@ function FileWrapper(props: Props): JSX.Element {
   const canToggle = !wrongType && selectedFiles.length < maxFilesCount;
 
   const handleAddImage = () => {
+    if (wrongType) {
+      toastError('File type is not allowed!');
+      return;
+    }
+
     if (!canToggle && !isSelected) {
       toastError('You haved reach the maximum files selections!');
     }
@@ -60,23 +65,35 @@ function FileWrapper(props: Props): JSX.Element {
 
   return (
     <div
-      className={`group relative h-48 flex flex-col justify-center bg-gray-200 ${
+      className={`group relative h-32 flex flex-col justify-center bg-gray-200 shadow-sm rounded-xl overflow-hidden ${
         isDeleting || isDeletingFiles ? 'opacity-60' : ''
       }`}
     >
       {props.children}
+      {!isSelected && canToggle && (
+        <div className="group-hover:opacity-100 z-20 opacity-0 absolute left-0 top-0 w-full flex justify-between p-3 items-center peer">
+          <div onClick={() => openPreviewModal(s3Key)}>
+            <AiFillEye size={30} className="text-white hover:text-gray-200" />
+          </div>
+          <div onClick={handleRemoveS3File}>
+            <TbTrashFilled
+              size={26}
+              className="text-white hover:text-red-400 cursor-pointer"
+            />
+          </div>
+        </div>
+      )}
       <div
         onClick={handleAddImage}
-        className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 tooltip tooltip-bottom ${
-          isSelected ? 'opacity-100 flex justify-end items-start' : 'opacity-0'
-        } ${!canToggle ? 'cursor-not-allowed opacity-90' : ''}`}
-        data-tip={
-          canToggle
-            ? 'Click to select'
-            : wrongType
-            ? `Can not select ${fileType} file type!`
-            : `Only allow to select ${maxFilesCount} files!`
-        }
+        className={`absolute inset-0 z-10 opacity-0 peer-hover:opacity-100 peer-hover:bg-black/50 group-hover:opacity-100 ${
+          isSelected
+            ? 'opacity-100 flex justify-end items-start bg-black/50'
+            : 'opacity-0'
+        } ${
+          !canToggle && !isSelected
+            ? 'cursor-not-allowed opacity-90'
+            : 'hover:bg-black/50'
+        }`}
       >
         {isSelected && (
           <input
@@ -87,27 +104,6 @@ function FileWrapper(props: Props): JSX.Element {
             onClick={(e) => e.stopPropagation()}
           />
         )}
-      </div>
-      <div className="group-hover:opacity-100 opacity-0 absolute left-0 top-0 w-12 flex justify-between p-3">
-        {!isSelected && (
-          <div
-            data-tip="delete image"
-            className="tooltip tooltip-right"
-            onClick={handleRemoveS3File}
-          >
-            <TbTrashFilled
-              size={24}
-              className="text-white  tooltip-bottom hover:text-red-400 cursor-pointer"
-            />
-          </div>
-        )}
-      </div>
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tooltip tooltip-bottom cursor-pointer opacity-0 group-hover:opacity-100"
-        data-tip="view original"
-        onClick={() => openPreviewModal(s3Key)}
-      >
-        <AiFillEye size={42} className="text-gray-400 hover:text-gray-200" />
       </div>
     </div>
   );

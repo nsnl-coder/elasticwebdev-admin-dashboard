@@ -10,9 +10,9 @@ function Block(props: Props): JSX.Element {
 
   return (
     <div
-      className={`w-full rounded-lg p-5 shadow-lg bg-white space-y-6 ${className}`}
+      className={`w-full rounded-lg py-6 px-6 shadow-lg bg-white flex flex-col gap-y-6 ${className}`}
     >
-      <h2 className="font-medium">{blockTitle}</h2>
+      {blockTitle && <h2 className="font-medium">{blockTitle}</h2>}
       {props.children}
     </div>
   );

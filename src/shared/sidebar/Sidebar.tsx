@@ -1,6 +1,5 @@
 import {
   AiFillHome,
-  AiOutlineMessage,
   AiOutlineUserSwitch,
   AiOutlineMail,
   AiFillStar,
@@ -20,6 +19,7 @@ import { BsMenuButtonWideFill, BsFillChatDotsFill } from 'react-icons/bs';
 import Logo from './Logo';
 import Section from './Section';
 import SidebarItem from './SidebarItem';
+import React from 'react';
 
 function Sidebar(): JSX.Element {
   return (
@@ -41,7 +41,11 @@ function Sidebar(): JSX.Element {
           <SidebarItem text="gallery" href="/gallery" icon={<ImImages />} />
         </Section>
         <Section sectionName="Shop">
-          <SidebarItem text="products" href="/" icon={<FaProductHunt />} />
+          <SidebarItem
+            text="products"
+            href="/products/create"
+            icon={<FaProductHunt />}
+          />
           <SidebarItem
             text="collections"
             href="/collections"
@@ -71,4 +75,4 @@ function Sidebar(): JSX.Element {
   );
 }
 
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -1,5 +1,7 @@
-interface Children {
+export interface Children {
   children?: JSX.Element | JSX.Element[] | string;
 }
 
-export type { Children };
+export interface CollectedProps {
+  isDragging: boolean;
+}

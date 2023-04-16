@@ -46,6 +46,7 @@ function Toolbar(): JSX.Element {
         <SearchBar
           showSearch={displayTool.showSearch}
           setDisplayTool={setDisplayTool}
+          searchBy="name"
         />
         <SortBar
           sort={sort}

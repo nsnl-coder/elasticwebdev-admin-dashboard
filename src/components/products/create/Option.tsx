@@ -155,7 +155,6 @@ function OptionInputs(props: Props): JSX.Element {
       id={option.id}
       itemType={DRAG_TYPES.OPTION}
       swapOn="hover"
-      draggingClassName="border shaddow-lg"
       payload={option}
     >
       <div className="flex gap-x-4 pl-12 group py-4">
@@ -221,7 +220,7 @@ function OptionInputs(props: Props): JSX.Element {
           >
             <HiPlusCircle size={25} />
           </button>
-          <button className="text-zinc-600/40 group-hover:text-zinc-600">
+          <button className="text-zinc-600/40 group-hover:text-zinc-600 cursor-move">
             <TbGridDots size={23} />
           </button>
         </div>

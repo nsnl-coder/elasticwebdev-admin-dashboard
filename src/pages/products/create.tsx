@@ -11,7 +11,7 @@ import Select from '@src/shared/inputs/Select';
 import RichText from '@src/shared/inputs/RichText';
 import Textarea from '@src/shared/inputs/Textarea';
 import FilesInput from '@src/shared/inputs/FilesInput';
-import Variants from '@src/components/products/create/Variants';
+import VariantsInput from '@src/components/products/create/VariantsInput';
 
 function Create(): JSX.Element {
   const {
@@ -30,12 +30,9 @@ function Create(): JSX.Element {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto flex gap-x-5 justify-center my-8 px-6"
+      className="mx-auto flex gap-x-5 justify-center mt-8 mb-16 px-6"
     >
       <BigBlocks>
-        <Block>
-          <Variants />
-        </Block>
         <Block>
           <Input
             register={register}
@@ -105,6 +102,15 @@ function Create(): JSX.Element {
             maxFilesCount={10}
           />
           <p className="text-red-400">Collection select here</p>
+        </Block>
+        <Block>
+          <VariantsInput
+            errors={errors}
+            fieldName="variants"
+            control={control}
+            defaultValue={[]}
+            labelTheme="bold"
+          />
         </Block>
       </BigBlocks>
 

@@ -1,6 +1,5 @@
 import { TOption } from './Option';
 import OptionInputs from './Option';
-import { RxDragHandleDots2 } from 'react-icons/rx';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { Dispatch, SetStateAction } from 'react';
 import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
@@ -52,13 +51,13 @@ function Variant(props: Props): JSX.Element {
       itemType={DRAG_TYPES.VARIANT}
       id={variant.id}
       swapPosition={swapPosition}
-      className="bg-gray-50 py-10 rounded-md px-6 overflow-hidden"
+      className="bg-gray-50 py-10 rounded-md px-6 overflow-hidden shadow-md"
       isOverClassName="border border-blue-500"
       swapOn="drop"
       payload={variant}
     >
       <div className="flex items-center mb-6 gap-x-6">
-        <div className="h-10 self-end flex items-center cursor-pointer">
+        <div className="h-10 self-end flex items-center cursor-move">
           <TbGridDots size={24} />
         </div>
         <div className="flex-grow">

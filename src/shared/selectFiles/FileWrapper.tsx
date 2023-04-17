@@ -6,111 +6,56 @@ import { useDrag, useDrop } from 'react-dnd';
 import { DRAG_TYPES } from '@src/types/enum';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { CollectedProps } from '@src/types/shared';
+import SwapWrapper from '../swapWrapper/SwapWrapper';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
   s3Key: string;
   index: number;
   setFiles: Dispatch<SetStateAction<string[]>>;
-  swapPostion: (dragKey: string, dropKey: string) => void;
-}
-
-interface DragPayload {
-  s3Key: string;
-  ref: any;
+  swapPosition: (dragKey: string, dropKey: string) => void;
 }
 
 function FileWrapper(props: Props): JSX.Element {
-  const { s3Key, index, setFiles, swapPostion } = props;
+  const { s3Key, index, setFiles, swapPosition } = props;
 
   const { openPreviewModal } = usePreviewOriginalFile();
-
-  const handlePinImage = () => {
-    setFiles((prev) => [s3Key, ...prev.filter((key) => key !== s3Key)]);
-  };
 
   const handleRemoveFile = async () => {
     setFiles((prev) => prev.filter((key) => key !== s3Key));
   };
 
-  const ref = useRef<null | HTMLDivElement>(null);
-
-  // enable drag
-  const [{ isDragging }, drag, preview] = useDrag(
-    () => ({
-      type: DRAG_TYPES.FILE,
-      item: {
-        s3Key,
-        ref,
-      },
-      collect: (monitor) => ({ isDragging: monitor.isDragging() }),
-    }),
-    [ref],
-  );
-
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, []);
-
-  // accept drop
-  const [{ canDrop }, drop] = useDrop<DragPayload, any, CollectedProps>(
-    () => ({
-      accept: DRAG_TYPES.FILE,
-      collect: (monitor) => ({
-        canDrop: monitor.canDrop(),
-        isOver: monitor.isOver(),
-      }),
-      canDrop(item) {
-        return item.s3Key !== s3Key;
-      },
-      hover(item) {
-        if (item.s3Key === s3Key) return;
-        swapPostion(item.s3Key, s3Key);
-      },
-    }),
-    [ref],
-  );
   return (
-    <div
+    <SwapWrapper
       className={`relative border group rounded-md shadow-sm flex items-center justify-center aspect-square overflow-hidden bg-gray-50 ${
         index === 0 ? 'col-span-2 row-span-2' : ''
       }`}
-      ref={(node) => {
-        drag(node);
-        drop(node);
-        ref.current = node;
-      }}
+      swapPosition={swapPosition}
+      itemType={DRAG_TYPES.FILE}
+      id={s3Key}
     >
-      {isDragging && <div className="w-full h-full bg-gray-300"></div>}
-      {!isDragging && (
-        <div>
-          {props.children}
-          <div
-            className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer`}
-          ></div>
-          <div
-            onClick={handleRemoveFile}
-            className="tooltip tooltip-right group-hover:opacity-100 opacity-0 absolute left-0 top-0 w-full flex justify-between p-3 "
-            data-tip="remove image"
-          >
-            <TbTrashFilled
-              size={24}
-              className="text-gray-400  tooltip-bottom hover:text-red-400 cursor-pointer"
-            />
-          </div>
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tooltip tooltip-bottom cursor-pointer opacity-0 group-hover:opacity-100"
-            data-tip="view original"
-            onClick={() => openPreviewModal(s3Key)}
-          >
-            <AiFillEye
-              size={42}
-              className="text-gray-400 hover:text-gray-200"
-            />
-          </div>
+      <div>
+        {props.children}
+        <div
+          className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer`}
+        ></div>
+        <div
+          onClick={handleRemoveFile}
+          className="group-hover:opacity-100 opacity-0 absolute left-0 top-0 w-full flex justify-between p-3 "
+        >
+          <TbTrashFilled
+            size={24}
+            className="text-gray-400  tooltip-bottom hover:text-red-400 cursor-pointer"
+          />
         </div>
-      )}
-    </div>
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100"
+          onClick={() => openPreviewModal(s3Key)}
+        >
+          <AiFillEye size={42} className="text-gray-400 hover:text-gray-200" />
+        </div>
+      </div>
+    </SwapWrapper>
   );
 }
 

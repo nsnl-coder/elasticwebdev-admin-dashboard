@@ -1,37 +1,27 @@
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import getS3FileUrl from '@src/utils/getFileUrl';
 import { Option } from '@src/yup/productSchema';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
-import {
-  BsFillArrowDownCircleFill,
-  BsFillArrowUpCircleFill,
-} from 'react-icons/bs';
+import { HiPlusCircle } from 'react-icons/hi2';
 import { IoMdRemoveCircle } from 'react-icons/io';
+import { TVariant } from './Variant';
+import { v4 } from 'uuid';
 
 export interface TOption extends Option {
   id: string;
+  variantId: string;
 }
 
 interface Props {
   option: TOption;
-  index: number;
-  lastIndex: number;
-  handleRemoveOption: (id: string) => void;
-  handleUpdateOption: (option: TOption) => void;
-  handleSwapElement: (index1: number, index2: number) => void;
+  setVariants: Dispatch<SetStateAction<TVariant[]>>;
+  variantId: string;
 }
 
 function OptionInputs(props: Props): JSX.Element {
-  const {
-    handleRemoveOption,
-    option,
-    handleUpdateOption,
-    index,
-    lastIndex,
-    handleSwapElement,
-  } = props;
+  const { option, setVariants, variantId } = props;
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -41,8 +31,79 @@ function OptionInputs(props: Props): JSX.Element {
       value = '';
     }
 
-    const newOption = { ...option, [fieldName]: value };
-    handleUpdateOption(newOption);
+    const newOption = { ...option, [fieldName]: value, variantId };
+    updateOption(newOption);
+  };
+
+  const updateOption = (newOption: TOption) => {
+    setVariants((variants) => {
+      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      if (variantIndex === -1) return variants;
+
+      const variant = variants[variantIndex];
+      const optionIndex = variant.options.findIndex(
+        (o) => o.id === newOption.id,
+      );
+      if (optionIndex === -1) return variants;
+
+      variant.options[optionIndex] = newOption;
+
+      return [
+        ...variants.slice(0, variantIndex),
+        variant,
+        ...variants.slice(variantIndex + 1),
+      ];
+    });
+  };
+
+  const handleRemoveOption = () => {
+    setVariants((variants) => {
+      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      if (variantIndex === -1) return variants;
+
+      const variant = variants[variantIndex];
+      const optionIndex = variant.options.findIndex((o) => o.id === option.id);
+      if (optionIndex === -1) return variants;
+
+      variant.options.splice(optionIndex, 1);
+
+      return [
+        ...variants.slice(0, variantIndex),
+        variant,
+        ...variants.slice(variantIndex + 1),
+      ];
+    });
+  };
+
+  const handleAddMoreOption = () => {
+    setVariants((variants) => {
+      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      if (variantIndex === -1) return variants;
+
+      let variant = variants[variantIndex];
+      const options = variant.options;
+
+      const optionIndex = variant.options.findIndex((o) => o.id === option.id);
+      if (optionIndex === -1) return variants;
+
+      variant = {
+        ...variant,
+        options: [
+          ...options.slice(0, optionIndex + 1),
+          {
+            id: v4(),
+            variantId,
+          },
+          ...options.slice(optionIndex + 1),
+        ],
+      };
+
+      return [
+        ...variants.slice(0, variantIndex),
+        variant,
+        ...variants.slice(variantIndex + 1),
+      ];
+    });
   };
 
   const { selectFromGallery } = useSelectFromGallery();
@@ -52,22 +113,12 @@ function OptionInputs(props: Props): JSX.Element {
 
     if (s3Keys.length === 0) return;
     const newOption = { ...option, photo: s3Keys[0] };
-    handleUpdateOption(newOption);
+    updateOption(newOption);
   };
 
   const handleRemoveOptionImage = () => {
     const newOption = { ...option, photo: '' };
-    handleUpdateOption(newOption);
-  };
-
-  const handleIncreaseIndex = () => {
-    if (index === lastIndex) return;
-    handleSwapElement(index, index + 1);
-  };
-
-  const handleDecreaseIndex = () => {
-    if (index === 0) return;
-    handleSwapElement(index, index - 1);
+    updateOption(newOption);
   };
 
   return (
@@ -124,31 +175,17 @@ function OptionInputs(props: Props): JSX.Element {
       <div className="flex gap-x-4 items-center self-end h-8">
         <button
           type="button"
-          className="hover:text-red-400 cursor-pointer tooltip tooltip-top"
-          data-tip="remove option"
-          onClick={() => handleRemoveOption(option.id)}
+          className="hover:text-red-400 cursor-pointer"
+          onClick={() => handleRemoveOption()}
         >
           <AiTwotoneDelete size={26} />
         </button>
         <button
           type="button"
-          className={`hover:text-primary -pointer tooltip tooltip-top ${
-            index === 0 ? 'pointer-events-none text-gray-400' : ''
-          }`}
-          data-tip="go up"
-          onClick={handleDecreaseIndex}
+          className="hover:text-blue-500 cursor-pointer"
+          onClick={() => handleAddMoreOption()}
         >
-          <BsFillArrowUpCircleFill size={22} />
-        </button>
-        <button
-          type="button"
-          className={`hover:text-primary cursor-pointer tooltip tooltip-top ${
-            index === lastIndex ? 'pointer-events-none text-gray-400' : ''
-          }`}
-          data-tip="go down"
-          onClick={handleIncreaseIndex}
-        >
-          <BsFillArrowDownCircleFill size={22} />
+          <HiPlusCircle size={25} />
         </button>
       </div>
     </div>

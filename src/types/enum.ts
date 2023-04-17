@@ -1,5 +1,6 @@
 enum DRAG_TYPES {
   FILE = 'ITEM_OF_SELECT_FILES',
+  VARIANT = 'PRODUCT_VARIANT',
 }
 
 export { DRAG_TYPES };

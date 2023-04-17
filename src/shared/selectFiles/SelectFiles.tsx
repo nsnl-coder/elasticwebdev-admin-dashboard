@@ -44,7 +44,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
 
   const isMaxFilesCount = files.length >= maxFilesCount;
 
-  const swapPostion = (dragKey: string, dropKey: string) => {
+  const swapPosition = (dragKey: string, dropKey: string) => {
     setFiles((files) => {
       const copyFiles = [...files];
 
@@ -75,7 +75,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
           s3Key={s3Key}
           index={index}
           setFiles={setFiles}
-          swapPostion={swapPostion}
+          swapPosition={swapPosition}
         >
           <FilePreview src={s3Key} />
         </FileWrapper>

@@ -33,6 +33,7 @@ function FileWrapper(props: Props): JSX.Element {
       swapPosition={swapPosition}
       itemType={DRAG_TYPES.FILE}
       id={s3Key}
+      swapOn="hover"
     >
       <div>
         {props.children}

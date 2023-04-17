@@ -2,11 +2,10 @@ import { TOption } from './Option';
 import OptionInputs from './Option';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { AiTwotoneDelete } from 'react-icons/ai';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
+import { Dispatch, SetStateAction } from 'react';
 import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
+import { TbGridDots } from 'react-icons/tb';
 
 export interface TVariant {
   id: string;
@@ -26,24 +25,50 @@ function Variant(props: Props): JSX.Element {
     setVariants((variants) => variants.filter((v) => v.id !== variant.id));
   };
 
+  const swapPosition = (dragId: string, dropId: string) => {
+    setVariants((variants) => {
+      const copyVariants = [...variants];
+
+      const dragIndex = copyVariants.findIndex(
+        (variant) => variant.id === dragId,
+      );
+      const dropIndex = copyVariants.findIndex(
+        (variant) => variant.id === dropId,
+      );
+
+      if (dragIndex === -1 || dropIndex == -1) return variants;
+
+      [copyVariants[dragIndex], copyVariants[dropIndex]] = [
+        copyVariants[dropIndex],
+        copyVariants[dragIndex],
+      ];
+
+      return copyVariants;
+    });
+  };
+
   return (
     <SwapWrapper
       itemType={DRAG_TYPES.VARIANT}
       id={variant.id}
-      swapPosition={() => console.log('swaping')}
+      swapPosition={swapPosition}
+      className="bg-gray-50 py-10 rounded-md px-6 overflow-hidden"
+      isOverClassName="border border-blue-500"
+      swapOn="drop"
+      payload={variant}
     >
       <div className="flex items-center mb-6 gap-x-6">
-        <div className="h-8 self-end flex items-center cursor-pointer">
-          <RxDragHandleDots2 size={24} />
+        <div className="h-10 self-end flex items-center cursor-pointer">
+          <TbGridDots size={24} />
         </div>
         <div className="flex-grow">
-          <label className="block mb-2">Variant Name:</label>
-          <input className="border h-8 w-full px-4" />
+          <label className="block mb-2 text-sm">Variant Name:</label>
+          <input className="h-10 w-full px-4 text-lg" />
         </div>
         <div className="flex self-end h-9 items-center">
           <button
             type="button"
-            className="hover:text-danger tooltip tooltip-bottom"
+            className="hover:text-danger"
             onClick={() => handleDeleteVariant()}
             data-tip="remove collection"
           >

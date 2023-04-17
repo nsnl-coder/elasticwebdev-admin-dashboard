@@ -6,13 +6,27 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 interface Props extends Children {
   id: string;
   className?: string;
+  isOverClassName?: string;
   payload?: any;
-  swapPosition: (id1: string, id2: string) => void;
   itemType: string;
+  swapOn: 'hover' | 'drop';
+  disableGrayBg?: boolean;
+
+  swapPosition: (id1: string, id2: string) => void;
 }
 
 function SwapWrapper(props: Props): JSX.Element {
-  const { id, swapPosition, children, className, payload, itemType } = props;
+  const {
+    id,
+    swapPosition,
+    children,
+    className,
+    payload,
+    itemType,
+    swapOn = 'hover',
+    disableGrayBg,
+    isOverClassName,
+  } = props;
   const ref = useRef<null | HTMLDivElement>(null);
 
   // enable drag
@@ -26,7 +40,7 @@ function SwapWrapper(props: Props): JSX.Element {
       },
       collect: (monitor) => ({ isDragging: monitor.isDragging() }),
     }),
-    [ref],
+    [ref, payload],
   );
 
   useEffect(() => {
@@ -34,7 +48,7 @@ function SwapWrapper(props: Props): JSX.Element {
   }, []);
 
   // accept drop
-  const [{ canDrop }, drop] = useDrop<any, any, any>(
+  const [{ isOver }, drop] = useDrop<any, any, any>(
     () => ({
       accept: itemType,
       collect: (monitor) => ({
@@ -46,6 +60,14 @@ function SwapWrapper(props: Props): JSX.Element {
       },
       hover(item) {
         if (item.id === id) return;
+        if (swapOn !== 'hover') return;
+
+        swapPosition(item.id, id);
+      },
+      drop(item) {
+        if (item.id === id) return;
+        if (swapOn !== 'drop') return;
+
         swapPosition(item.id, id);
       },
     }),
@@ -64,11 +86,12 @@ function SwapWrapper(props: Props): JSX.Element {
         drag(node);
         ref.current = node;
       }}
-      className={className}
+      className={`relative ${className} z-20 ${isOver ? isOverClassName : ''}`}
     >
-      {/* {isDragging && <div className="w-full h-full bg-gray-300"></div>} */}
-      {/* <div>dsaaaaaaaaaaaa</div> */}
       {children}
+      {isDragging && !disableGrayBg && (
+        <div className="w-full h-full bg-gray-200 absolute top-0 left-0 z-20"></div>
+      )}
     </div>
   );
 }

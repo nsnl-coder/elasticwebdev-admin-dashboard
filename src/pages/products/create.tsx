@@ -11,7 +11,7 @@ import Select from '@src/shared/inputs/Select';
 import RichText from '@src/shared/inputs/RichText';
 import Textarea from '@src/shared/inputs/Textarea';
 import FilesInput from '@src/shared/inputs/FilesInput';
-import Variants from '@src/components/products/Variants';
+import Variants from '@src/components/products/create/Variants';
 
 function Create(): JSX.Element {
   const {

@@ -14,7 +14,7 @@ function Variants(): JSX.Element {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-y-12">
       {variants.map((variant) => (
         <Variant key={variant.id} variant={variant} setVariants={setVariants} />
       ))}

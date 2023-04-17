@@ -8,6 +8,9 @@ import { HiPlusCircle } from 'react-icons/hi2';
 import { IoMdRemoveCircle } from 'react-icons/io';
 import { TVariant } from './Variant';
 import { v4 } from 'uuid';
+import { TbGridDots } from 'react-icons/tb';
+import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
+import { DRAG_TYPES } from '@src/types/enum';
 
 export interface TOption extends Option {
   id: string;
@@ -121,74 +124,109 @@ function OptionInputs(props: Props): JSX.Element {
     updateOption(newOption);
   };
 
-  return (
-    <div className="flex gap-x-4 px-10">
-      {!option.photo && (
-        <div
-          className="flex items-center justify-center bg-gray-100 cursor-pointer hover:bg-gray-200 tooltip tooltip-bottom w-16 aspect-square"
-          data-tip="Select option image"
-          onClick={handleSelectOptionImage}
-        >
-          <BiImageAdd fontSize={36} />
-        </div>
-      )}
-      {option.photo && (
-        <div className="relative bg-gray-100 w-16 aspect-square">
-          <img
-            className="object-contain w-full h-full"
-            src={getS3FileUrl(option.photo)}
-          />
-          <span
-            onClick={handleRemoveOptionImage}
-            className="absolute -top-2 -right-2 hover:text-red-400 cursor-pointer"
-          >
-            <IoMdRemoveCircle size={24} />
-          </span>
-        </div>
-      )}
+  const swapPosition = (dragId: string, dropId: string) => {
+    setVariants((variants) => {
+      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      const variant = variants[variantIndex];
+      const options = variant.options;
 
-      <div className="flex flex-col justify-between flex-grow">
-        <label htmlFor="" className="block">
-          Option name:
-        </label>
-        <input
-          className="border outline-none h-7 px-3 w-full rounded-sm placeholder:text-sm"
-          name="optionName"
-          value={option.optionName || ''}
-          onChange={handleInputChange}
-        />
+      const dragIndex = options.findIndex((option) => option.id === dragId);
+
+      const dropIndex = options.findIndex((option) => option.id === dropId);
+
+      if (dragIndex === -1 || dropIndex == -1) return variants;
+
+      [options[dragIndex], options[dropIndex]] = [
+        options[dropIndex],
+        options[dragIndex],
+      ];
+
+      return [
+        ...variants.slice(0, variantIndex),
+        variant,
+        ...variants.slice(variantIndex + 1),
+      ];
+    });
+  };
+
+  return (
+    <SwapWrapper
+      swapPosition={swapPosition}
+      id={option.id}
+      itemType={DRAG_TYPES.OPTION}
+      swapOn="hover"
+      draggingClassName="border shaddow-lg"
+      payload={option}
+    >
+      <div className="flex gap-x-4 pl-12 group py-4">
+        {!option.photo && (
+          <div
+            className="flex items-center justify-center bg-gray-100 cursor-pointer hover:bg-gray-200 w-16 aspect-square"
+            onClick={handleSelectOptionImage}
+          >
+            <BiImageAdd fontSize={36} />
+          </div>
+        )}
+        {option.photo && (
+          <div className="relative bg-gray-100 w-16 aspect-square">
+            <img
+              className="object-contain w-full h-full"
+              src={getS3FileUrl(option.photo)}
+            />
+            <span
+              onClick={handleRemoveOptionImage}
+              className="absolute -top-2 -right-2 hover:text-red-400 cursor-pointer"
+            >
+              <IoMdRemoveCircle size={24} />
+            </span>
+          </div>
+        )}
+        <div className="flex flex-col justify-between flex-grow">
+          <label htmlFor="" className="block">
+            Option name:
+          </label>
+          <input
+            className="border outline-none h-7 px-3 w-full rounded-sm placeholder:text-sm"
+            name="optionName"
+            value={option.optionName || ''}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="flex flex-col justify-between">
+          <label htmlFor="" className="block">
+            Price:
+          </label>
+          <input
+            type="number"
+            name="price"
+            onChange={handleInputChange}
+            value={option.price || ''}
+            min="0"
+            max="99999"
+            className="border outline-none h-7 px-3 w-36 rounded-sm placeholder:text-sm"
+          />
+        </div>
+        <div className="flex gap-x-4 items-center self-end h-8 text-zinc-600">
+          <button
+            type="button"
+            className="hover:text-red-400 cursor-pointer"
+            onClick={() => handleRemoveOption()}
+          >
+            <AiTwotoneDelete size={26} />
+          </button>
+          <button
+            type="button"
+            className="hover:text-blue-500 cursor-pointer"
+            onClick={() => handleAddMoreOption()}
+          >
+            <HiPlusCircle size={25} />
+          </button>
+          <button className="text-zinc-600/40 group-hover:text-zinc-600">
+            <TbGridDots size={23} />
+          </button>
+        </div>
       </div>
-      <div className="flex flex-col justify-between">
-        <label htmlFor="" className="block">
-          Price:
-        </label>
-        <input
-          type="number"
-          name="price"
-          onChange={handleInputChange}
-          value={option.price || ''}
-          min="0"
-          max="99999"
-          className="border outline-none h-7 px-3 w-36 rounded-sm placeholder:text-sm"
-        />
-      </div>
-      <div className="flex gap-x-4 items-center self-end h-8">
-        <button
-          type="button"
-          className="hover:text-red-400 cursor-pointer"
-          onClick={() => handleRemoveOption()}
-        >
-          <AiTwotoneDelete size={26} />
-        </button>
-        <button
-          type="button"
-          className="hover:text-blue-500 cursor-pointer"
-          onClick={() => handleAddMoreOption()}
-        >
-          <HiPlusCircle size={25} />
-        </button>
-      </div>
-    </div>
+    </SwapWrapper>
   );
 }
 

@@ -1,3 +1,5 @@
+import Tooltip from './Tooltip';
+
 type LabelThemes = 'light' | 'bold';
 
 interface LabelProps {
@@ -5,23 +7,37 @@ interface LabelProps {
   required?: boolean;
   label?: string;
   fieldName: string;
+  tooltip?: string;
 }
 
 function Label(props: LabelProps): JSX.Element {
-  const { fieldName, required = false, labelTheme = 'light', label } = props;
+  const {
+    fieldName,
+    tooltip,
+    required = false,
+    labelTheme = 'light',
+    label,
+  } = props;
 
   return (
-    <label
-      htmlFor={fieldName}
-      className={`${
-        labelTheme === 'light'
-          ? 'capitalize flex gap-x-1 text-sm mb-3'
-          : 'font-semibold mb-5 text-lg capitalize block'
+    <div
+      className={`flex gap-x-3 items-center ${
+        labelTheme === 'light' ? 'mb-3' : 'mb-6'
       }`}
     >
-      <span>{label || fieldName}</span>
-      {required && <span className="text-red-400">*</span>}
-    </label>
+      <label
+        htmlFor={fieldName}
+        className={`${
+          labelTheme === 'light'
+            ? 'flex gap-x-1 text-sm'
+            : 'font-semibold text-lg capitalize block'
+        }`}
+      >
+        <span>{label || fieldName}</span>
+        {required && <span className="text-red-400">*</span>}
+      </label>
+      {tooltip && <Tooltip dataTip={tooltip} />}
+    </div>
   );
 }
 

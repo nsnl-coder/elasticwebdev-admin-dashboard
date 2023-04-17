@@ -18,7 +18,7 @@ const useGetFiles = (isOpen: boolean) => {
       method: 'get',
       url: '/api/files',
       params: {
-        limit: 5,
+        limit: 20,
         startAfter: pageParam,
       },
     });

@@ -51,14 +51,22 @@ function Sidebar(): JSX.Element {
             href="/collections"
             icon={<BiCategoryAlt />}
           />
-          <SidebarItem text="orders" href="/" icon={<RiBillLine />} />
+          <SidebarItem
+            text="orders"
+            href="/orders/create"
+            icon={<RiBillLine />}
+          />
           <SidebarItem text="reviews" href="/" icon={<AiFillStar />} />
           <SidebarItem
             text="coupons"
             href="/coupons/create"
             icon={<TbDiscountCheckFilled />}
           />
-          <SidebarItem text="shippings" href="/" icon={<FaShippingFast />} />
+          <SidebarItem
+            text="shippings"
+            href="/shippings/create"
+            icon={<FaShippingFast />}
+          />
         </Section>
         <Section sectionName="Blog">
           <SidebarItem text="posts" href="/" icon={<AiFillPushpin />} />

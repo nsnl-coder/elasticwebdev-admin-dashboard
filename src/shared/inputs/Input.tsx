@@ -2,6 +2,7 @@ import { UseFormRegister } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 import { Children } from '@src/types/shared';
+import Tooltip from '../form/Tooltip';
 
 interface Props extends LabelProps, Children {
   register: UseFormRegister<any>;
@@ -9,6 +10,7 @@ interface Props extends LabelProps, Children {
   type?: string;
   placeholder?: string;
   defaultValue?: string;
+  className?: string;
 }
 
 function Input(props: Props): JSX.Element {
@@ -23,6 +25,8 @@ function Input(props: Props): JSX.Element {
     labelTheme,
     defaultValue,
     children,
+    className,
+    tooltip,
   } = props;
 
   return (
@@ -32,13 +36,14 @@ function Input(props: Props): JSX.Element {
         label={label || fieldName}
         labelTheme={labelTheme}
         required={required}
+        tooltip={tooltip}
       />
       <div className="flex gap-x-4">
         <input
           type={type}
           id={fieldName}
           {...register(fieldName)}
-          className={`border border-gray-400/80 h-10 px-3 w-full rounded-md placeholder:text-sm ${
+          className={`${className} border border-gray-400/80 h-10 px-3 w-full rounded-md placeholder:text-sm ${
             errors[fieldName] ? 'border border-red-400' : ''
           }`}
           placeholder={placeholder || fieldName}

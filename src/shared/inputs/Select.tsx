@@ -12,6 +12,7 @@ interface Props extends LabelProps {
   errors: any;
   options: string[] | Option[];
   defaultValue?: string;
+  className?: string;
 }
 
 function Select(props: Props): JSX.Element {
@@ -24,6 +25,7 @@ function Select(props: Props): JSX.Element {
     options,
     labelTheme,
     defaultValue,
+    className,
   } = props;
 
   return (
@@ -37,7 +39,9 @@ function Select(props: Props): JSX.Element {
       <select
         {...register(fieldName)}
         id={fieldName}
-        className="select select-bordered h-10 min-h-0 w-full rounded-md text-sm font-normal"
+        className={`select select-bordered h-10 min-h-0 w-full rounded-md text-sm font-normal ${className} ${
+          errors[fieldName] ? 'border-red-400' : ''
+        }`}
         defaultValue={defaultValue}
       >
         {options.map((option) => {

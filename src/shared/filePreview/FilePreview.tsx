@@ -4,21 +4,15 @@ import getS3FileUrl from '@src/utils/getFileUrl';
 
 interface Props extends VideoProps {
   src: string;
-  type: string;
   className?: string;
 }
 
 function FilePreview(props: Props): JSX.Element {
-  let { src, type, className } = props;
+  let { src, className = 'h-full w-full object-cover' } = props;
 
   let fileType: 'video' | 'image' | undefined;
 
-  if (type?.startsWith('image')) fileType = 'image';
-  if (type?.startsWith('video')) fileType = 'video';
-
-  if (!type || type === 'unknown') {
-    fileType = imageOrVideo(src);
-  }
+  fileType = imageOrVideo(src);
 
   if (!src.startsWith('http') && !src.startsWith('blob')) {
     src = getS3FileUrl(src);

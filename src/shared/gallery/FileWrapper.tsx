@@ -71,14 +71,23 @@ function FileWrapper(props: Props): JSX.Element {
     >
       {props.children}
       {!isSelected && canToggle && (
-        <div className="group-hover:opacity-100 z-20 opacity-0 absolute left-0 top-0 w-full flex justify-between p-3 items-center peer">
-          <div onClick={() => openPreviewModal(s3Key)}>
-            <AiFillEye size={30} className="text-white hover:text-gray-200" />
+        <div className="peer">
+          <div
+            className="absolute z-20 top-2 right-3 opacity-0 group-hover:opacity-100"
+            onClick={() => openPreviewModal(s3Key)}
+          >
+            <AiFillEye
+              size={30}
+              className="text-gray-300 hover:text-gray-200"
+            />
           </div>
-          <div onClick={handleRemoveS3File}>
+          <div
+            className="absolute z-20 top-2 left-3 opacity-0 group-hover:opacity-100"
+            onClick={handleRemoveS3File}
+          >
             <TbTrashFilled
               size={26}
-              className="text-white hover:text-red-400 cursor-pointer"
+              className="text-gray-300 hover:text-red-400 cursor-pointer"
             />
           </div>
         </div>

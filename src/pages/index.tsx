@@ -5,13 +5,12 @@ export default function Home() {
   const [files, setfiles] = useState<string[]>([]);
 
   return (
-    <div>
+    <div className="max-w-2xl mx-auto border p-6">
       <SelectFiles
         files={files}
         setFiles={setfiles}
-        maxFilesCount={1}
+        maxFilesCount={4}
         allowedTypes="*"
-        className="max-w-3xl"
       />
     </div>
   );

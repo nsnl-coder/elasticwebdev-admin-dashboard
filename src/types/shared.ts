@@ -3,5 +3,6 @@ export interface Children {
 }
 
 export interface CollectedProps {
-  isDragging: boolean;
+  canDrop: boolean;
+  isOver: boolean;
 }

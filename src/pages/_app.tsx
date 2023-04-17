@@ -33,8 +33,6 @@ function App(props: AppProps): JSX.Element {
     pageProps,
   }: { Component: NextApplicationPage; pageProps: any } = props;
 
-  console.log('render');
-
   return (
     <ContextProvider>
       <main className={publicSans.className}>

@@ -44,39 +44,56 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
 
   const isMaxFilesCount = files.length >= maxFilesCount;
 
+  const swapPostion = (dragKey: string, dropKey: string) => {
+    setFiles((files) => {
+      const copyFiles = [...files];
+
+      const dragIndex = copyFiles.findIndex((s3Key) => s3Key === dragKey);
+      const dropIndex = copyFiles.findIndex((s3Key) => s3Key === dropKey);
+
+      if (dragIndex === -1 || dropIndex == -1) return files;
+
+      [copyFiles[dragIndex], copyFiles[dropIndex]] = [
+        copyFiles[dropIndex],
+        copyFiles[dragIndex],
+      ];
+
+      return copyFiles;
+    });
+  };
+
   return (
-    <div>
-      <div
-        className={`gap-4 grid ${
-          maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '
-        }`}
-      >
-        <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
-        {files.map((s3Key, index) => (
-          <FileWrapper
-            key={s3Key}
-            s3Key={s3Key}
-            index={index}
-            setFiles={setFiles}
-          >
-            <FilePreview src={s3Key} type="unknown" />
-          </FileWrapper>
-        ))}
-        {isUploading && <Skeleton count={1} className="h-full" />}
-        {!isMaxFilesCount && (
-          <SelectFromGallery
-            allowedTypes={allowedTypes}
-            files={files}
-            setFiles={setFiles}
-            className="aspect-square"
-            maxFilesCount={maxFilesCount}
-            currentFilesCount={files.length}
-          />
-        )}
-        {!isMaxFilesCount && (
-          <Label htmlFor="select_file" className="aspect-square" />
-        )}
-      </div>
+    <div
+      className={`gap-4 grid ${
+        maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '
+      }`}
+    >
+      <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
+      {files.map((s3Key, index) => (
+        <FileWrapper
+          key={s3Key}
+          s3Key={s3Key}
+          index={index}
+          setFiles={setFiles}
+          swapPostion={swapPostion}
+        >
+          <FilePreview src={s3Key} />
+        </FileWrapper>
+      ))}
+      {isUploading && <Skeleton count={1} className="h-full" />}
+      {!isMaxFilesCount && (
+        <SelectFromGallery
+          allowedTypes={allowedTypes}
+          files={files}
+          setFiles={setFiles}
+          className="aspect-square"
+          maxFilesCount={maxFilesCount}
+          currentFilesCount={files.length}
+        />
+      )}
+      {!isMaxFilesCount && (
+        <Label htmlFor="select_file" className="aspect-square" />
+      )}
     </div>
   );
 }

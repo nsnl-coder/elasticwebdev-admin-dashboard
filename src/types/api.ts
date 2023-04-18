@@ -15,6 +15,11 @@ interface ApiError {
   errors?: string[];
 }
 
+interface HttpSuccess {
+  status: string;
+  message: string;
+}
+
 type HttpError = AxiosError<ApiError>;
 
-export type { HttpError, HttpResponse };
+export type { HttpError, HttpResponse, HttpSuccess };

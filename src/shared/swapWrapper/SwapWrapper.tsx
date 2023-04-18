@@ -74,11 +74,6 @@ function SwapWrapper(props: Props): JSX.Element {
     [ref],
   );
 
-  useEffect(() => {
-    console.log(ref.current?.offsetWidth);
-    console.log(ref.current?.offsetHeight);
-  }, [ref.current?.offsetWidth]);
-
   return (
     <div
       ref={(node) => {

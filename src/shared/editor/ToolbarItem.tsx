@@ -16,6 +16,7 @@ function ToolbarItem(props: Props): JSX.Element {
         isActive ? 'bg-primary/10' : ''
       } ${disabled ? 'opacity-25' : ''}`}
       disabled={disabled}
+      type="button"
     >
       {children}
     </button>

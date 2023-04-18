@@ -5,7 +5,7 @@ import ErrorMessage from '../form/ErrorMessage';
 
 interface Props extends LabelProps {
   control: Control<any, any>;
-  defaultValue: string;
+  defaultValue?: string | undefined;
   errors: any;
 }
 

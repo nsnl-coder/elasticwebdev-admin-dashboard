@@ -8,7 +8,7 @@ interface Props {
 function SelectItem(props: Props): JSX.Element {
   const { value, queryField } = props;
   const router = useRouter();
-  const query = useRouter().query;
+  const query = router.query;
 
   const onClickHandler = () => {
     let oldFilter = query[queryField];
@@ -44,7 +44,7 @@ function SelectItem(props: Props): JSX.Element {
         type="checkbox"
         className="checkbox checkbox-sm rounded-sm group-hover:border-gray-400 border-2"
         name="checkbox"
-        checked={isChecked ? true : false}
+        checked={isChecked}
         readOnly
       />
       <span>{value}</span>

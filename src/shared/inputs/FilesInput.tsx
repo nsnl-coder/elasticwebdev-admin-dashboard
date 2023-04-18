@@ -10,6 +10,7 @@ interface Props
     LabelProps {
   control: any;
   errors: any;
+  defaultValue: string[] | undefined | string;
 }
 
 function FilesInput(props: Props): JSX.Element {
@@ -22,6 +23,7 @@ function FilesInput(props: Props): JSX.Element {
     labelTheme,
     required = false,
     allowedTypes,
+    defaultValue,
   } = props;
 
   const [files, setFiles] = useState<string[]>([]);
@@ -36,6 +38,17 @@ function FilesInput(props: Props): JSX.Element {
     }
     field.onChange(files);
   }, [files]);
+
+  useEffect(() => {
+    console.log('render');
+    if (!defaultValue) return;
+
+    if (typeof defaultValue === 'string') {
+      setFiles([defaultValue]);
+      return;
+    }
+    setFiles(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div>

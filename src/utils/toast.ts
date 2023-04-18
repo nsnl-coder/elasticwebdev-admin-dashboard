@@ -14,7 +14,7 @@ const toastError = (message?: string) => {
 };
 
 const toastSuccess = (content: string) => {
-  toast(content, {
+  toast.success(content, {
     position: 'top-right',
     autoClose: 5000,
     hideProgressBar: false,

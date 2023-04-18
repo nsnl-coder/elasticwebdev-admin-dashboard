@@ -1,14 +1,35 @@
-import useGetCollections from '@src/react-query/collections/useGetCollections';
+import useBulkActions from '@src/hooks/useBulkActions';
+import useGetOnes from '@src/react-query/query/useGetOnes';
+import queryConfig from '@src/react-query/queryConfig';
+import FilePreview from '@src/shared/filePreview/FilePreview';
 import ContentWrapper from '@src/shared/hoc/ContentWrapper';
+import BulkActions from '@src/shared/table/bulkActions/BulkActions';
+import Checkbox from '@src/shared/table/bulkActions/Checkbox';
+import HeaderCheckbox from '@src/shared/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/shared/table/pagination/Pagination';
+import RowAction from '@src/shared/table/rowAction/RowAction';
 import Toolbar from '@src/shared/table/toolbar/Toolbar';
+import getS3FileUrl from '@src/utils/getFileUrl';
+import { Collection } from '@src/yup/collectionSchema';
 import Link from 'next/link';
 
 const CollectionTable = (): JSX.Element => {
-  const { collections, pagination, isLoading } = useGetCollections();
+  const {
+    data: collections,
+    pagination,
+    isLoading,
+  } = useGetOnes<Collection>(queryConfig.collections);
+
+  const {
+    handleCheckBoxChange,
+    checkedBoxesIds,
+    updateAllCheckBoxes,
+    isCheckedAll,
+    toggleRowSelection,
+  } = useBulkActions(collections);
 
   return (
-    <ContentWrapper className="pb-8">
+    <ContentWrapper className="pb-32">
       <div className="flex justify-between py-6">
         <h2 className="font-semibold text-xl">Collections</h2>
         <Link
@@ -25,19 +46,43 @@ const CollectionTable = (): JSX.Element => {
         <table className="shared-table">
           <thead className="bg-gray-50">
             <tr>
+              <th>
+                <HeaderCheckbox
+                  updateAllCheckBoxes={updateAllCheckBoxes}
+                  isChecked={isCheckedAll}
+                />
+              </th>
               <th>Photo</th>
               <th>Name</th>
               <th>status</th>
               <th>Slug</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {collections?.map((collection) => (
-              <tr key={collection._id}>
+              <tr
+                key={collection._id}
+                onClick={() => toggleRowSelection(collection._id)}
+                className={
+                  !!collection._id && checkedBoxesIds.includes(collection._id)
+                    ? 'bg-gray-100'
+                    : ''
+                }
+              >
                 <td>
-                  <div className="w-16 border">
-                    <img src={collection.photo} />
-                  </div>
+                  <Checkbox
+                    checkedBoxesIds={checkedBoxesIds}
+                    handleCheckBoxChange={handleCheckBoxChange}
+                    id={collection._id}
+                  />
+                </td>
+                <td>
+                  {collection.photo && (
+                    <div className="w-12 rounded-md overflow-hidden border ">
+                      <FilePreview src={collection.photo} />
+                    </div>
+                  )}
                 </td>
                 <td>{collection.name}</td>
                 <td>
@@ -52,10 +97,22 @@ const CollectionTable = (): JSX.Element => {
                 <td>
                   <p className="truncate max-w-md">{collection.slug}</p>
                 </td>
+                <td>
+                  <RowAction
+                    requestConfig={queryConfig.collections}
+                    id={collection._id}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {checkedBoxesIds.length > 0 && (
+          <BulkActions
+            checkedBoxesIds={checkedBoxesIds}
+            requestConfig={queryConfig.collections}
+          />
+        )}
         <Pagination pagination={pagination} isLoading={isLoading} />
       </div>
     </ContentWrapper>

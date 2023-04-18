@@ -13,7 +13,6 @@ function Create(): JSX.Element {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<Shipping>({
     resolver: yupResolver(shippingSchema),

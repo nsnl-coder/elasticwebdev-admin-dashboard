@@ -24,24 +24,25 @@ interface Props {
 
 const Toolbar = (props: Props) => {
   const { editor } = props;
-  const haha = useSelectFromGallery().haha;
+
+  const { selectFromGallery } = useSelectFromGallery();
 
   if (!editor) {
     return null;
   }
 
   const handleAddImage = async () => {
-    // const files = await selectFromGallery(1, '*');
-    // if (files.length === 0) return;
-    // if (imageOrVideo(files[0]) === 'video') return;
-    // editor
-    //   .chain()
-    //   .focus()
-    //   .setImage({
-    //     src: getS3FileUrl(files[0]),
-    //     alt: 'demonstration',
-    //   })
-    //   .run();
+    const files = await selectFromGallery(1, '*');
+    if (files.length === 0) return;
+    if (imageOrVideo(files[0]) === 'video') return;
+    editor
+      .chain()
+      .focus()
+      .setImage({
+        src: getS3FileUrl(files[0]),
+        alt: 'demonstration',
+      })
+      .run();
   };
 
   return (

@@ -21,7 +21,7 @@ interface SelectFilesProps {
 }
 
 function SelectFiles(props: SelectFilesProps): JSX.Element {
-  const { files, setFiles, className, maxFilesCount, allowedTypes } = props;
+  const { files, setFiles, maxFilesCount, allowedTypes } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
   const {
@@ -77,7 +77,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
           setFiles={setFiles}
           swapPosition={swapPosition}
         >
-          <FilePreview src={s3Key} />
+          <FilePreview src={s3Key} fallback="text" />
         </FileWrapper>
       ))}
       {isUploading && <Skeleton count={1} className="h-full" />}

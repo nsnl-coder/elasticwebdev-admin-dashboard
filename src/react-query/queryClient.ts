@@ -17,10 +17,10 @@ const defaultOnError = (err: unknown) => {
   }
 };
 
-const withDefaultOnError = (onError: OnErrorFn) => {
+const withDefaultOnError = (onError?: OnErrorFn) => {
   return (error: HttpError) => {
     defaultOnError(error);
-    onError(error);
+    if (onError) onError(error);
   };
 };
 
@@ -29,9 +29,11 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       onError: defaultOnError,
+      retry: 0,
     },
     mutations: {
       onError: defaultOnError,
+      retry: 0,
     },
   },
 });

@@ -5,7 +5,9 @@ interface Props extends Children {
 }
 
 function ContentWrapper(props: Props): JSX.Element {
-  return <div className={`px-12 ${props.className}`}>{props.children}</div>;
+  return (
+    <div className={`px-12 ${props.className} mx-auto`}>{props.children}</div>
+  );
 }
 
 export default ContentWrapper;

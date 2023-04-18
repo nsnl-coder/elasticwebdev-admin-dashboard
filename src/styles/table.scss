@@ -10,16 +10,21 @@
   object-position: center;
 }
 
+.shared-table tr:hover {
+  background: hsla(0, 0%, 86%, 0.45);
+  cursor: pointer;
+}
+
 .shared-table th {
   text-align: start;
-  padding: 6px 10px;
+  padding: 10px 10px;
   border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
   /* background: #000; */
 }
 
 .shared-table td {
   border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
-  padding: 8px 10px;
+  padding: 10px 10px;
   text-transform: lowercase;
 }
 

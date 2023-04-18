@@ -42,7 +42,7 @@ function FileWrapper(props: Props): JSX.Element {
         ></div>
         <div
           onClick={handleRemoveFile}
-          className="group-hover:opacity-100 opacity-0 absolute left-0 top-0 w-full flex justify-between p-3 "
+          className="absolute top-4 left-4 opacity-0 group-hover:opacity-100"
         >
           <TbTrashFilled
             size={24}

@@ -2,7 +2,7 @@ import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/api';
 import { useMutation } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
-import { toastSuccess } from '@src/utils/toast';
+import { toastError, toastSuccess } from '@src/utils/toast';
 import { useRouter } from 'next/router';
 import { RequestConfig } from '../queryConfig';
 
@@ -29,7 +29,9 @@ const useCreateOne = <T extends { _id?: string }>(
     }
   };
 
-  const onError = () => {};
+  const onError = () => {
+    toastError(`Can not create ${requestConfig.singularName}`);
+  };
 
   const mutation = useMutation<HttpResponse<T>, HttpError, T>({
     mutationFn,

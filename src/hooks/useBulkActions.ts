@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 export interface Checkbox {
   checked: boolean;
   id: string;
+  isPinned?: boolean;
 }
 
 interface TRowData {
   _id?: string;
+  isPinned?: boolean;
 }
 
 const useBulkActions = (data: TRowData[] | undefined) => {
@@ -21,7 +23,13 @@ const useBulkActions = (data: TRowData[] | undefined) => {
   useEffect(() => {
     if (!data) return;
     const rows = data.filter((row) => row._id) as Required<TRowData>[];
-    setCheckBoxes(rows.map((row) => ({ id: row._id, checked: false })));
+    setCheckBoxes(
+      rows.map((row) => ({
+        id: row._id,
+        checked: false,
+        isPinned: row.isPinned,
+      })),
+    );
   }, [data]);
 
   const getCheckboxIndex = (id: string) => {

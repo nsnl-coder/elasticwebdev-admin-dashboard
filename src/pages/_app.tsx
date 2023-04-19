@@ -4,7 +4,6 @@ import { NextComponentType, NextPageContext } from 'next';
 import axios from 'axios';
 import Router from 'next/router';
 import nprogress from 'nprogress';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // src
 import CommonLayout from '@src/shared/layout/CommonLayout';
 import RequireAdmin from '@src/shared/requireAdmin/RequireAdmin';
@@ -18,6 +17,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import '@src/styles/globals.scss';
 import 'nprogress/nprogress.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
 axios.defaults.baseURL = 'http://localhost:5000';
@@ -53,7 +53,7 @@ function App(props: AppProps): JSX.Element {
           </RequireAdmin>
         )}
         <UiContainer />
-        {/* <ReactQueryDevtools /> */}
+        <ReactQueryDevtools />
       </main>
     </ContextProvider>
   );

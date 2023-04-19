@@ -19,7 +19,7 @@ function Heading(props: Props): JSX.Element {
   };
 
   return (
-    <div className="flex gap-x-5 my-4 text-zinc-">
+    <div className="flex gap-x-5 my-4">
       <div className="flex-grow flex items-center gap-x-4">
         <Link
           href={`/${requestConfig.pluralName}`}

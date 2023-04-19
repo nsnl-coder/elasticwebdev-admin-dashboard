@@ -25,7 +25,7 @@ const variantSchema = object({
 });
 
 const productSchema = object({
-  name: string().max(255).label('Product name'),
+  name: string().min(1).max(255).label('Product name'),
   status: string().oneOf(['draft', 'active']).label('Product status'),
   overview: string().max(5000).label('overview'),
   description: string().max(20000).label('description'),
@@ -36,14 +36,21 @@ const productSchema = object({
       schema.max(price, 'Discount price must be smaller than current price'),
     )
     .label('discountPrice'),
-  images: array().max(20).of(string().max(255)).label('Product images'),
-  previewImages: array().max(2).of(string().max(255)).label('Preview images'),
+  images: array()
+    .max(20)
+    .of(string().max(255).required())
+    .label('Product images'),
+  previewImages: array()
+    .max(2)
+    .of(string().max(255).required())
+    .label('Preview images'),
   collections: array().max(100).label('collections ids'),
   variants: array().of(variantSchema).max(100).label('Product variants'),
 });
 
 interface Product extends InferType<typeof productSchema> {
   _id?: string;
+  slug: string;
 }
 
 interface Option extends InferType<typeof optionSchema> {

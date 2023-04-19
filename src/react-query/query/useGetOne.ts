@@ -6,6 +6,7 @@ import { HttpError, HttpResponse } from '@src/types/api';
 import { useRouter } from 'next/router';
 import { FieldValues, UseFormReset } from 'react-hook-form';
 import { RequestConfig } from '../queryConfig';
+import { toastError } from '@src/utils/toast';
 
 const useGetOne = <T extends FieldValues>(
   requestConfig: RequestConfig,
@@ -21,7 +22,9 @@ const useGetOne = <T extends FieldValues>(
     return data;
   };
 
-  const onError = (err: HttpError) => {};
+  const onError = (err: HttpError) => {
+    toastError(`Can not get ${requestConfig.singularName}`);
+  };
 
   const onSuccess = (res: HttpResponse<T>) => {
     reset(res.data);

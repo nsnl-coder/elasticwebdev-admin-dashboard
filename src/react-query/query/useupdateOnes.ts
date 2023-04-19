@@ -1,8 +1,8 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpResponse, HttpSuccess } from '@src/types/api';
+import { HttpError, HttpSuccess } from '@src/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
-import { toastSuccess } from '@src/utils/toast';
+import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
 
 interface Response extends HttpSuccess {
@@ -37,7 +37,9 @@ const useUpdateOnes = (requestConfig: RequestConfig) => {
     queryClient.invalidateQueries([requestConfig.pluralName]);
   };
 
-  const onError = () => {};
+  const onError = () => {
+    toastError(`Can not update ${requestConfig.pluralName}`);
+  };
 
   const mutation = useMutation<Response, HttpError, Payload>({
     mutationKey: [requestConfig.pluralName],

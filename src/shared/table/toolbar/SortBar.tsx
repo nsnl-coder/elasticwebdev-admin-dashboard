@@ -43,6 +43,15 @@ function SortBar(props: Props): JSX.Element {
   const sortDirection = router.query.sort?.includes('-') ? 'desc' : 'asc';
   const currentSort = sort.find((item) => router.query.sort?.includes(item[0]));
 
+  const clearFilter = () => {
+    const query = router.query;
+    delete query.sort;
+
+    router.push({
+      query,
+    });
+  };
+
   return (
     <div className={`dropdown dropdown-end text-paragraph`}>
       <label
@@ -53,7 +62,7 @@ function SortBar(props: Props): JSX.Element {
       </label>
       <div
         tabIndex={0}
-        className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1"
+        className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1 dropdown-open"
       >
         <div className="py-3 px-3">
           <h3 className="font-semibold">Sort by</h3>
@@ -62,6 +71,15 @@ function SortBar(props: Props): JSX.Element {
               <SortItem key={item[0]} sortBy={item[0]} />
             ))}
           </ul>
+          <div className="flex justify-center">
+            <button
+              type="button"
+              className="mt-2 text-sm text-blue-600 hover:underline"
+              onClick={() => clearFilter()}
+            >
+              Clear filter
+            </button>
+          </div>
         </div>
         <ul className="px-3 py-4 space-y-2 cursor-pointer">
           <li

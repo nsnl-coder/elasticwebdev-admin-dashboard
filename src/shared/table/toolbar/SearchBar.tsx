@@ -3,6 +3,7 @@ import {
   FormEvent,
   InputHTMLAttributes,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -16,8 +17,8 @@ interface Props {
 
 function SearchBar(props: Props): JSX.Element {
   const { searchBy } = props;
-  const [showSearch, setShowSearch] = useState<boolean>(false);
   const router = useRouter();
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const keywordRef = useRef<null | HTMLInputElement>(null);
 
   const searchHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -47,6 +48,12 @@ function SearchBar(props: Props): JSX.Element {
     if (isSearched) router.push({ query });
   };
 
+  useEffect(() => {
+    if (router.query.searchBy || router.query.keyword) {
+      if (!showSearch) setShowSearch(true);
+    }
+  }, []);
+
   return (
     <form onSubmit={searchHandler} className="flex-grow flex justify-end">
       {showSearch && (
@@ -55,6 +62,7 @@ function SearchBar(props: Props): JSX.Element {
             type="text"
             className="py-2 px-2 border flex-grow"
             ref={keywordRef}
+            defaultValue={router.query.keyword}
           />
           <button
             onClick={() => handleHideSearch()}

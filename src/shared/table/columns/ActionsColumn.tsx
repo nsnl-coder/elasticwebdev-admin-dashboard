@@ -9,7 +9,7 @@ interface Props {
   id: string | undefined;
 }
 
-function RowAction(props: Props): JSX.Element {
+function ActionsColumn(props: Props): JSX.Element {
   const { requestConfig, id } = props;
   const { deleteOne } = useDeleteOne(requestConfig);
 
@@ -42,4 +42,4 @@ function RowAction(props: Props): JSX.Element {
   );
 }
 
-export default RowAction;
+export default ActionsColumn;

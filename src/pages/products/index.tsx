@@ -10,19 +10,18 @@ import Checkbox from '@src/shared/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/shared/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/shared/table/pagination/Pagination';
 import Toolbar from '@src/shared/table/toolbar/Toolbar';
-import { Collection } from '@src/yup/collectionSchema';
+import { Product } from '@src/yup/productSchema';
 import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
-import StatusColumn from '@src/shared/table/columns/StatusColumn';
-import IsPinnedColumn from '@src/shared/table/columns/IsPinnedColumn';
 
-const CollectionTable = (): JSX.Element => {
-  const requestConfig = queryConfig.collections;
+const ProductTable = (): JSX.Element => {
+  const requestConfig = queryConfig.products;
+
   const {
-    data: collections,
+    data: products,
     pagination,
     isLoading,
-  } = useGetOnes<Collection>(requestConfig);
+  } = useGetOnes<Product>(requestConfig);
 
   const {
     handleCheckBoxChange,
@@ -30,18 +29,18 @@ const CollectionTable = (): JSX.Element => {
     updateAllCheckBoxes,
     isCheckedAll,
     toggleRowSelection,
-  } = useBulkActions(collections);
+  } = useBulkActions(products);
 
   return (
     <TableWrapper className="pb-32">
       <div className="flex justify-between py-6">
-        <h2 className="font-semibold text-xl">Collections</h2>
+        <h2 className="font-semibold text-xl">Products</h2>
         <Link
-          href={'/collections/create'}
+          href={'/products/create'}
           type="button"
           className="bg-primary text-white px-2 py-2"
         >
-          Add collection
+          Add product
         </Link>
       </div>
 
@@ -58,19 +57,18 @@ const CollectionTable = (): JSX.Element => {
               </th>
               <th>Photo</th>
               <th>Name</th>
-              <th>Pinned?</th>
-              <th>status</th>
               <th>Slug</th>
+              <th>status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {collections?.map((collection) => (
+            {products?.map((product) => (
               <tr
-                key={collection._id}
-                onClick={() => toggleRowSelection(collection._id)}
+                key={product._id}
+                onClick={() => toggleRowSelection(product._id)}
                 className={
-                  !!collection._id && checkedBoxesIds.includes(collection._id)
+                  !!product._id && checkedBoxesIds.includes(product._id)
                     ? 'bg-gray-100'
                     : ''
                 }
@@ -79,45 +77,40 @@ const CollectionTable = (): JSX.Element => {
                   <Checkbox
                     checkedBoxesIds={checkedBoxesIds}
                     handleCheckBoxChange={handleCheckBoxChange}
-                    id={collection._id}
+                    id={product._id}
                   />
                 </td>
                 <td>
-                  {collection.photo && (
+                  {!!product.previewImages?.length && (
                     <div className="w-12 rounded-md overflow-hidden border ">
-                      <FilePreview src={collection.photo} />
+                      <FilePreview src={product.previewImages[0]} />
                     </div>
                   )}
                 </td>
                 <td className="font-semibold hover:underline">
                   <Link
-                    href={`/${requestConfig.pluralName}/${collection._id}`}
+                    href={`/${requestConfig.pluralName}/${product._id}`}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {collection.name}
+                    {product.name}
                   </Link>
                 </td>
                 <td>
-                  <IsPinnedColumn
-                    requestConfig={requestConfig}
-                    id={collection._id}
-                    isPinned={collection.isPinned}
-                  />
+                  <p className="truncate max-w-md">{product.slug}</p>
                 </td>
                 <td>
-                  <StatusColumn
-                    requestConfig={requestConfig}
-                    status={collection.status}
-                    id={collection._id}
-                  />
-                </td>
-                <td>
-                  <p className="truncate max-w-md">{collection.slug}</p>
+                  <span
+                    className={`badge text-white border-none ${
+                      product.status === 'active' ? 'bg-green-600' : ''
+                    }`}
+                  >
+                    {product.status}
+                  </span>
                 </td>
                 <td>
                   <ActionsColumn
                     requestConfig={requestConfig}
-                    id={collection._id}
+                    id={product._id}
                   />
                 </td>
               </tr>
@@ -141,4 +134,4 @@ const CollectionTable = (): JSX.Element => {
   );
 };
 
-export default CollectionTable;
+export default ProductTable;

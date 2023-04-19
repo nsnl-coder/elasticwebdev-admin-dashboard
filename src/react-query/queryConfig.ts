@@ -4,6 +4,11 @@ const queryConfig = {
     pluralName: 'collections',
     url: '/api/collections',
   },
+  products: {
+    singularName: 'product',
+    pluralName: 'products',
+    url: '/api/products',
+  },
 };
 
 interface RequestConfig {

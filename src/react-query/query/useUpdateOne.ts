@@ -2,10 +2,10 @@ import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/api';
 import { useMutation } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
-import { toastSuccess } from '@src/utils/toast';
+import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
 
-const useUpdateOne = <T extends { _id?: string }>(
+const useUpdateOne = <T extends { _id?: string } = any>(
   requestConfig: RequestConfig,
 ) => {
   const mutationFn = async (payload: T) => {
@@ -22,7 +22,9 @@ const useUpdateOne = <T extends { _id?: string }>(
     toastSuccess(`${requestConfig.singularName} has been updated!`);
   };
 
-  const onError = () => {};
+  const onError = () => {
+    toastError(`Can not update ${requestConfig.singularName}!`);
+  };
 
   const mutation = useMutation<HttpResponse<T>, HttpError, T>({
     mutationKey: [requestConfig.pluralName],
@@ -42,6 +44,7 @@ const useUpdateOne = <T extends { _id?: string }>(
   return {
     isLoading: mutation.isLoading,
     updateOne,
+    isSuccess: mutation.isSuccess,
   };
 };
 

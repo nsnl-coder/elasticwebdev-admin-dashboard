@@ -1,8 +1,10 @@
+import Link from 'next/link';
+//
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
 import FilePreview from '@src/shared/filePreview/FilePreview';
-import ContentWrapper from '@src/shared/hoc/ContentWrapper';
+import TableWrapper from '@src/shared/table/TableWrapper';
 import BulkActions from '@src/shared/table/bulkActions/BulkActions';
 import Checkbox from '@src/shared/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/shared/table/bulkActions/HeaderCheckbox';
@@ -10,14 +12,11 @@ import Pagination from '@src/shared/table/pagination/Pagination';
 import RowAction from '@src/shared/table/rowAction/RowAction';
 import Toolbar from '@src/shared/table/toolbar/Toolbar';
 import { Collection } from '@src/yup/collectionSchema';
-import Link from 'next/link';
 
 const CollectionTable = (): JSX.Element => {
-  const {
-    data: collections,
-    pagination,
-    isLoading,
-  } = useGetOnes<Collection>(queryConfig.collections);
+  const { data: collections, pagination } = useGetOnes<Collection>(
+    queryConfig.collections,
+  );
 
   const {
     handleCheckBoxChange,
@@ -28,7 +27,7 @@ const CollectionTable = (): JSX.Element => {
   } = useBulkActions(collections);
 
   return (
-    <ContentWrapper className="pb-32">
+    <TableWrapper className="pb-32">
       <div className="flex justify-between py-6">
         <h2 className="font-semibold text-xl">Collections</h2>
         <Link
@@ -121,7 +120,7 @@ const CollectionTable = (): JSX.Element => {
         )}
         <Pagination pagination={pagination} />
       </div>
-    </ContentWrapper>
+    </TableWrapper>
   );
 };
 

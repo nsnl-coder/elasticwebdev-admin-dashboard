@@ -1,11 +1,11 @@
 import useLogOut from '@src/react-query/auth/useLogOut';
-import ContentWrapper from '../hoc/ContentWrapper';
+import TableWrapper from '../table/TableWrapper';
 
 function Header(): JSX.Element {
   const { logout, isLoggingOut } = useLogOut();
 
   return (
-    <ContentWrapper className="h-16 bg-white border-b flex items-center justify-end pr-16">
+    <TableWrapper className="h-16 bg-white border-b flex items-center justify-end pr-16">
       <button
         onClick={() => logout()}
         type="button"
@@ -15,7 +15,7 @@ function Header(): JSX.Element {
       >
         Logout
       </button>
-    </ContentWrapper>
+    </TableWrapper>
   );
 }
 

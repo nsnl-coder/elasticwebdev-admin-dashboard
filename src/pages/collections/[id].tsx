@@ -11,11 +11,12 @@ import Select from '@src/shared/inputs/Select';
 import FilesInput from '@src/shared/inputs/FilesInput';
 import Input from '@src/shared/inputs/Input';
 import { useRouter } from 'next/router';
-import Heading from '@src/shared/form/Heading';
 import queryConfig from '@src/react-query/queryConfig';
 import useGetOne from '@src/react-query/query/useGetOne';
 import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useCreateOne from '@src/react-query/query/useCreateOne';
+import Heading from '@src/shared/createPage/Heading';
+import CreatePageWrapper from '@src/shared/createPage/CreatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -48,7 +49,7 @@ function Create(): JSX.Element {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6">
+    <CreatePageWrapper>
       <Heading
         title={collection?.name || 'Add collection'}
         requestConfig={queryConfig.collections}
@@ -120,7 +121,7 @@ function Create(): JSX.Element {
           </Block>
         </SmallBlocks>
       </form>
-    </div>
+    </CreatePageWrapper>
   );
 }
 

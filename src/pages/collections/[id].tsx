@@ -15,11 +15,12 @@ import queryConfig from '@src/react-query/queryConfig';
 import useGetOne from '@src/react-query/query/useGetOne';
 import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useCreateOne from '@src/react-query/query/useCreateOne';
-import Heading from '@src/shared/createPage/Heading';
-import CreatePageWrapper from '@src/shared/createPage/CreatePageWrapper';
+import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
+import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
+  const requestConfig = queryConfig.collections;
 
   const {
     register,
@@ -31,16 +32,13 @@ function Create(): JSX.Element {
     resolver: yupResolver(collectionSchema),
   });
 
-  const { createOne: createCollection } = useCreateOne<Collection>(
-    queryConfig.collections,
-  );
-  const { updateOne: updateCollection } = useUpdateOne<Collection>(
-    queryConfig.collections,
-  );
-  const { data: collection } = useGetOne<Collection>(
-    queryConfig.collections,
-    reset,
-  );
+  const { createOne: createCollection } =
+    useCreateOne<Collection>(requestConfig);
+
+  const { updateOne: updateCollection } =
+    useUpdateOne<Collection>(requestConfig);
+
+  const { data: collection } = useGetOne<Collection>(requestConfig, reset);
 
   const onSubmit = (data: Collection) => {
     // already check if should create or update
@@ -49,10 +47,10 @@ function Create(): JSX.Element {
   };
 
   return (
-    <CreatePageWrapper isDirty={isDirty}>
-      <Heading
+    <UpdatePageWrapper isDirty={isDirty}>
+      <UpdatePageHeading
         title={collection?.name || 'Add collection'}
-        requestConfig={queryConfig.collections}
+        requestConfig={requestConfig}
         id={collection?._id}
         status={collection?.status}
       />
@@ -122,7 +120,7 @@ function Create(): JSX.Element {
           </Block>
         </SmallBlocks>
       </form>
-    </CreatePageWrapper>
+    </UpdatePageWrapper>
   );
 }
 

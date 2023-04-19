@@ -1,3 +1,4 @@
+import { subDays } from 'date-fns';
 import {
   object,
   number as originalNumber,
@@ -8,12 +9,15 @@ import {
 } from 'yup';
 
 const number = () => {
-  return originalNumber().transform((value, originalValue) =>
-    originalValue.trim() === '' ? undefined : value,
-  );
+  return originalNumber().transform((value, originalValue) => {
+    if (typeof originalValue === 'string' && originalValue.trim() === '')
+      return undefined;
+    return value;
+  });
 };
 
 const couponSchema = object({
+  name: string().min(1).max(255),
   couponCode: string().max(255).label('Coupon code').required(),
   status: string().oneOf(['draft', 'active']).label('Coupon status'),
   discountUnit: string().oneOf(['$', '%']).label('discountUnit'),
@@ -44,30 +48,30 @@ const couponSchema = object({
             .required('Maximum order is required when specified minimum order!')
         : schema,
     ),
-  discountTime: object({
-    startDate: date()
-      .min(
-        new Date(Date.now() - 15 * 60 * 1000),
-        'The discount start date can not be in the past!',
-      )
-      .label('Coupon start date'),
-    endDate: date()
-      .when('startDate', ([startDate]: any[], schema: any) =>
-        startDate
-          ? schema
-              .min(
-                startDate,
-                'The end date of coupon should be after the start date!',
-              )
-              .required('The end date is required when provided start date!')
-          : schema,
-      )
-      .label('Coupon end date'),
-  }),
+  startDate: date()
+    .min(
+      subDays(new Date(), 1),
+      'The discount start date can not be in the past!',
+    )
+    .label('Coupon start date'),
+  endDate: date()
+    .when('startDate', ([startDate]: any[], schema: any) =>
+      startDate
+        ? schema
+            .min(
+              startDate,
+              'The end date of coupon should be after the start date!',
+            )
+            .required('The end date is required when provided start date!')
+        : schema,
+    )
+    .label('Coupon end date'),
 });
 
 interface Coupon extends InferType<typeof couponSchema> {
   _id?: string;
+  expiredIn?: string;
+  usedCoupons?: number;
 }
 
 export default couponSchema;

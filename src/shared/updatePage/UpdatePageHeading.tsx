@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
 import { IoMdTrash } from 'react-icons/io';
 import StatusColumn from '../table/columns/StatusColumn';
-import { useCallback, useEffect } from 'react';
-import { Router, useRouter } from 'next/router';
 
 interface Props {
   title: string;
@@ -14,7 +12,7 @@ interface Props {
   status: 'active' | 'draft' | undefined;
 }
 
-function Heading(props: Props): JSX.Element {
+function UpdatePageHeading(props: Props): JSX.Element {
   const { title, requestConfig, id, status } = props;
   const { deleteOne } = useDeleteOne(requestConfig);
 
@@ -54,4 +52,4 @@ function Heading(props: Props): JSX.Element {
   );
 }
 
-export default Heading;
+export default UpdatePageHeading;

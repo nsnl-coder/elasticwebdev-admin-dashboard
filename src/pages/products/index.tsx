@@ -15,6 +15,7 @@ import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
 import StatusColumn from '@src/shared/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/shared/table/columns/IsPinnedColumn';
+import Thead from '@src/shared/table/thead/Thead';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -58,10 +59,10 @@ const ProductTable = (): JSX.Element => {
                 />
               </th>
               <th>Photo</th>
-              <th>Name</th>
-              <th>Pin?</th>
-              <th>status</th>
-              <th>Slug</th>
+              <Thead fieldName="Name" sortBy="name" />
+              <Thead fieldName="Pin?" sortBy="isPinned" />
+              <Thead fieldName="Status" sortBy="status" />
+              <Thead fieldName="Slug" sortBy="slug" />
               <th>Actions</th>
             </tr>
           </thead>
@@ -72,7 +73,7 @@ const ProductTable = (): JSX.Element => {
                 onClick={() => toggleRowSelection(product._id)}
                 className={
                   !!product._id && checkedBoxesIds.includes(product._id)
-                    ? 'bg-gray-100'
+                    ? 'selected-row'
                     : ''
                 }
               >

@@ -15,6 +15,7 @@ import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
 import StatusColumn from '@src/shared/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/shared/table/columns/IsPinnedColumn';
+import Thead from '@src/shared/table/thead/Thead';
 
 const CollectionTable = (): JSX.Element => {
   const requestConfig = queryConfig.collections;
@@ -57,10 +58,10 @@ const CollectionTable = (): JSX.Element => {
                 />
               </th>
               <th>Photo</th>
-              <th>Name</th>
-              <th>Pinned?</th>
-              <th>status</th>
-              <th>Slug</th>
+              <Thead fieldName="Name" sortBy="name" />
+              <Thead fieldName="Pin?" sortBy="isPinned" />
+              <Thead fieldName="status" sortBy="status" />
+              <Thead fieldName="slug" sortBy="slug" />
               <th>Actions</th>
             </tr>
           </thead>
@@ -71,7 +72,7 @@ const CollectionTable = (): JSX.Element => {
                 onClick={() => toggleRowSelection(collection._id)}
                 className={
                   !!collection._id && checkedBoxesIds.includes(collection._id)
-                    ? 'bg-gray-100'
+                    ? 'selected-row'
                     : ''
                 }
               >

@@ -1,9 +1,4 @@
-import {
-  QueryFunctionContext,
-  QueryKey,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 //
 import { HttpError, HttpResponse } from '@src/types/api';

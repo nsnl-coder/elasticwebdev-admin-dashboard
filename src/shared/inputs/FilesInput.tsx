@@ -30,7 +30,6 @@ function FilesInput(props: Props): JSX.Element {
   const files = field.value || [];
   const setFiles = (fn: (files: string[]) => string[]) => {
     const updatedFiles = fn(files);
-    console.log(updatedFiles);
     field.onChange(updatedFiles);
   };
 

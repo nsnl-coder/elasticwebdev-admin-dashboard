@@ -25,7 +25,7 @@ function SortItem(props: Props): JSX.Element {
           type="radio"
           className="radio radio-sm py-2 group-hover:border-gray-400 border-2"
           name="sortBy"
-          checked={router.query.sort?.includes(sortBy)}
+          checked={router.query.sort?.includes(sortBy) ? true : false}
           readOnly
         />
         <label

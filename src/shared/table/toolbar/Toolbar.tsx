@@ -21,7 +21,7 @@ function Toolbar(props: Props): JSX.Element {
   const {
     sortOptions = [['name', 'a-z', 'z-a']],
     searchBy = 'name',
-    showStatusFilter,
+    showStatusFilter = true,
   } = props;
 
   const sort: Sort = [

@@ -11,33 +11,24 @@
 }
 
 .shared-table tr:hover {
-  background: hsla(0, 0%, 86%, 0.45);
+  background: #f9fafb;
   cursor: pointer;
 }
 
 .shared-table th {
   text-align: start;
-  padding: 10px 10px;
+  padding: 12px 10px;
   border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
-  background: hsla(0, 0%, 86%, 0.3);
+  background: #f9fafb;
   font-weight: 400;
 }
 
 .shared-table td {
   border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
-  padding: 10px 10px;
+  padding: 16px 10px;
   text-transform: lowercase;
 }
 
-.dragLayer > img {
-  display: none;
-}
-.dragLayer > img[src*='data:image/png;base64'] {
-  display: none;
-}
-.dragLayer > img {
-  visibility: hidden;
-}
-.dragLayer > img {
-  opacity: 0;
+.shared-table tr.selected-row {
+  background: #f9fafb;
 }

@@ -8,9 +8,11 @@ import {
 } from 'yup';
 
 const number = () => {
-  return originalNumber().transform((value, originalValue) =>
-    originalValue === '' ? undefined : value,
-  );
+  return originalNumber().transform((value, originalValue) => {
+    if (typeof originalValue === 'string' && originalValue.trim() === '')
+      return undefined;
+    return value;
+  });
 };
 
 const optionSchema = object({

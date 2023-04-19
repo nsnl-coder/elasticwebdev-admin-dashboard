@@ -17,17 +17,18 @@ import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useGetOne from '@src/react-query/query/useGetOne';
 import queryConfig from '@src/react-query/queryConfig';
 import { useRouter } from 'next/router';
-import CreatePageWrapper from '@src/shared/createPage/CreatePageWrapper';
-import Heading from '@src/shared/createPage/Heading';
+import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
+import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
 import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import { Collection } from '@src/yup/collectionSchema';
-import PageHeader from '@src/shared/createPage/PageHeader';
+import UpdatePageHeader from '@src/shared/updatePage/UpdatePageHeader';
 import { useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
+  const requestConfig = queryConfig.products;
 
   const {
     register,
@@ -39,12 +40,11 @@ function Create(): JSX.Element {
     resolver: yupResolver(productSchema),
   });
 
-  const { createOne: createProduct } = useCreateOne<Product>(
-    queryConfig.products,
-  );
+  const { createOne: createProduct } = useCreateOne<Product>(requestConfig);
   const { updateOne: updateProduct, error: updateError } =
-    useUpdateOne<Product>(queryConfig.products);
-  const { data: product } = useGetOne<Product>(queryConfig.products, reset);
+    useUpdateOne<Product>(requestConfig);
+
+  const { data: product } = useGetOne<Product>(requestConfig, reset);
 
   const { data: collections } = useGetOnes<Collection>(
     queryConfig.collections,
@@ -73,11 +73,11 @@ function Create(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <CreatePageWrapper isDirty={isDirty}>
-        <PageHeader reset={reset} isDirty={isDirty} />
-        <Heading
+      <UpdatePageWrapper isDirty={isDirty}>
+        <UpdatePageHeader reset={reset} isDirty={isDirty} />
+        <UpdatePageHeading
           title={product?.name || 'Add product'}
-          requestConfig={queryConfig.products}
+          requestConfig={requestConfig}
           id={product?._id}
           status={product?.status}
         />
@@ -199,7 +199,7 @@ function Create(): JSX.Element {
             </Block>
           </SmallBlocks>
         </div>
-      </CreatePageWrapper>
+      </UpdatePageWrapper>
     </form>
   );
 }

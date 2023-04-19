@@ -9,7 +9,7 @@ interface Props extends Children {
   isDirty: boolean;
 }
 
-function CreatePageWrapper(props: Props): JSX.Element {
+function UpdatePageWrapper(props: Props): JSX.Element {
   const { isDirty } = props;
   const { isConfirmed } = useConfirm();
   const [nextPath, setNextPath] = useState<string | null>(null);
@@ -48,6 +48,9 @@ function CreatePageWrapper(props: Props): JSX.Element {
   }, [nextPath]);
 
   useEffect(() => {
+    if (!router.query.id) return;
+    if (router.query.id === 'create') return;
+
     router.events.on('routeChangeStart', onRouteChangeStart);
 
     return () => {
@@ -56,10 +59,10 @@ function CreatePageWrapper(props: Props): JSX.Element {
   }, [onRouteChangeStart]);
 
   return (
-    <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32`}>
+    <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32 `}>
       {props.children}
     </div>
   );
 }
 
-export default CreatePageWrapper;
+export default UpdatePageWrapper;

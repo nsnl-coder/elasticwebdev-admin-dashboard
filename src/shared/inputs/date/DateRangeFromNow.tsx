@@ -1,15 +1,13 @@
 import { DefinedRange, Range } from 'react-date-range';
 import { addDays } from 'date-fns';
-import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface Props {
   range: Range;
-  handleRangeChange: (onChange: any, range: Range) => void;
-  field: ControllerRenderProps<FieldValues, string>;
+  handleRangeChange: (range: Range) => void;
 }
 
 function DateRangeFromNow(props: Props): JSX.Element {
-  const { range, handleRangeChange, field } = props;
+  const { range, handleRangeChange } = props;
 
   return (
     <div>
@@ -17,7 +15,7 @@ function DateRangeFromNow(props: Props): JSX.Element {
         Duration from now
       </h3>
       <DefinedRange
-        onChange={(item) => handleRangeChange(field.onChange, item.selection)}
+        onChange={(item) => handleRangeChange(item.selection)}
         ranges={[range]}
         staticRanges={[
           {

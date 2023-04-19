@@ -1,3 +1,9 @@
+interface QueryConfig {
+  singularName: string;
+  pluralName: string;
+  url: string;
+}
+
 const queryConfig = {
   collections: {
     singularName: 'collection',
@@ -8,6 +14,11 @@ const queryConfig = {
     singularName: 'product',
     pluralName: 'products',
     url: '/api/products',
+  },
+  coupons: {
+    singularName: 'coupon',
+    pluralName: 'coupons',
+    url: '/api/coupons',
   },
 };
 

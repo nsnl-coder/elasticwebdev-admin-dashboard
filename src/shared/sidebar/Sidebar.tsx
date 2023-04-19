@@ -59,7 +59,7 @@ function Sidebar(): JSX.Element {
           <SidebarItem text="reviews" href="/" icon={<AiFillStar />} />
           <SidebarItem
             text="coupons"
-            href="/coupons/create"
+            href="/coupons"
             icon={<TbDiscountCheckFilled />}
           />
           <SidebarItem

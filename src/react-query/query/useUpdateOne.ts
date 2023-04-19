@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
+import { UseFormReset } from 'react-hook-form';
 
 const useUpdateOne = <T extends { _id?: string } = any>(
   requestConfig: RequestConfig,
@@ -22,10 +23,7 @@ const useUpdateOne = <T extends { _id?: string } = any>(
 
   const onSuccess = (res: HttpResponse<T>) => {
     toastSuccess(`${requestConfig.singularName} has been updated!`);
-    queryClient.setQueryData(
-      [requestConfig.pluralName, res.data?._id],
-      res.data,
-    );
+    queryClient.invalidateQueries([requestConfig.pluralName, res.data?._id]);
   };
 
   const onError = () => {

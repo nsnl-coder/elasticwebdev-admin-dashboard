@@ -1,18 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
-import { AiFillEye, AiFillPushpin } from 'react-icons/ai';
+import { AiFillEye } from 'react-icons/ai';
 import usePreviewOriginalFile from '@src/hooks/usePreviewOriginalFile';
-import { useDrag, useDrop } from 'react-dnd';
 import { DRAG_TYPES } from '@src/types/enum';
-import { getEmptyImage } from 'react-dnd-html5-backend';
-import { CollectedProps } from '@src/types/shared';
 import SwapWrapper from '../swapWrapper/SwapWrapper';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
   s3Key: string;
   index: number;
-  setFiles: Dispatch<SetStateAction<string[]>>;
+  setFiles: (fn: (files: string[]) => string[]) => void;
   swapPosition: (dragKey: string, dropKey: string) => void;
 }
 

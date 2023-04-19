@@ -23,6 +23,8 @@ import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import { Collection } from '@src/yup/collectionSchema';
 import PageHeader from '@src/shared/createPage/PageHeader';
+import { useEffect } from 'react';
+import { toastError } from '@src/utils/toast';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -40,10 +42,8 @@ function Create(): JSX.Element {
   const { createOne: createProduct } = useCreateOne<Product>(
     queryConfig.products,
   );
-  const { updateOne: updateProduct } = useUpdateOne<Product>(
-    queryConfig.products,
-    reset,
-  );
+  const { updateOne: updateProduct, error: updateError } =
+    useUpdateOne<Product>(queryConfig.products);
   const { data: product } = useGetOne<Product>(queryConfig.products, reset);
 
   const { data: collections } = useGetOnes<Collection>(
@@ -58,6 +58,18 @@ function Create(): JSX.Element {
     updateProduct(data, id);
     createProduct(data, id);
   };
+
+  useEffect(() => {
+    if (!updateError) return;
+    if (
+      updateError.response?.data.message ===
+      'Can not find collections with provided ids'
+    ) {
+      toastError(
+        'Can not find collections with provided ids! Check if you deleted the collection!',
+      );
+    }
+  }, [updateError]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -149,7 +161,6 @@ function Create(): JSX.Element {
                 fieldName="collections"
                 labelTheme="bold"
                 options={collections?.map((c) => ({ id: c._id, name: c.name }))}
-                defaultSelections={product?.collections}
               />
               <VariantsInput
                 errors={errors}
@@ -160,7 +171,6 @@ function Create(): JSX.Element {
               />
             </Block>
           </BigBlocks>
-
           <SmallBlocks>
             <Block>
               <Select

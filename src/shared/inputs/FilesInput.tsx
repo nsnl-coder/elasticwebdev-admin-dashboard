@@ -23,31 +23,16 @@ function FilesInput(props: Props): JSX.Element {
     labelTheme,
     required = false,
     allowedTypes,
-    defaultValue,
   } = props;
 
-  const [files, setFiles] = useState<string[]>([]);
   const { field } = useController({ name: fieldName, control });
 
-  useEffect(() => {
-    if (!files.length) return;
-
-    if (maxFilesCount === 1) {
-      field.onChange(files[0]);
-      return;
-    }
-    field.onChange(files);
-  }, [files]);
-
-  useEffect(() => {
-    if (!defaultValue) return;
-
-    if (typeof defaultValue === 'string') {
-      setFiles([defaultValue]);
-      return;
-    }
-    setFiles(defaultValue);
-  }, [defaultValue]);
+  const files = field.value || [];
+  const setFiles = (fn: (files: string[]) => string[]) => {
+    const updatedFiles = fn(files);
+    console.log(updatedFiles);
+    field.onChange(updatedFiles);
+  };
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 //
 import useUploadFiles from '@src/hooks/useUploadFiles';
@@ -14,7 +14,7 @@ import FilePreview from '../filePreview/FilePreview';
 
 interface SelectFilesProps {
   files: string[];
-  setFiles: Dispatch<SetStateAction<string[]>>;
+  setFiles: (fn: (files: string[]) => string[]) => void;
   maxFilesCount: number;
   allowedTypes: AllowedFilesTypes;
   className?: string;
@@ -37,7 +37,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
     if (!isUploaded) return;
 
     if (key) {
-      setFiles((prev) => [...prev, key]);
+      setFiles((files: string[]) => [...files, key]);
       resetCreatePresignedUrl();
       resetUploadFile();
     }

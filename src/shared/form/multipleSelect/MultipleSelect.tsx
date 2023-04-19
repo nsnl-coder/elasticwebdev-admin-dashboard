@@ -1,6 +1,6 @@
 import { AiOutlineDown } from 'react-icons/ai';
 import MultipleSelectItem from './MultipleSelectItem';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Label, { LabelProps } from '../Label';
 import SelectedOptions from './SelectedOptions';
 import ErrorMessage from '../ErrorMessage';
@@ -16,7 +16,6 @@ interface Props extends LabelProps {
   options: Option[] | undefined;
   fieldName: string;
   control: any;
-  defaultSelections: string[] | undefined;
 }
 
 function MultipleSelect(props: Props): JSX.Element {
@@ -28,9 +27,8 @@ function MultipleSelect(props: Props): JSX.Element {
     label,
     errors,
     control,
-    defaultSelections,
   } = props;
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+
   const [keyword, setKeyword] = useState<string>('');
   const [focusList, setFocusList] = useState(false);
 
@@ -39,23 +37,12 @@ function MultipleSelect(props: Props): JSX.Element {
   );
 
   const { field } = useController({ name: fieldName, control });
+  const selectedOptions: string[] = field.value || [];
 
-  useEffect(() => {
-    if (selectedOptions.length > 0) {
-      field.onChange(selectedOptions.map((o) => o.id));
-    }
-  }, [selectedOptions.length]);
-
-  useEffect(() => {
-    if (!defaultSelections) return;
-    if (selectedOptions.length > 0) return;
-    if (options.length === 0) return;
-
-    const defaultOptions = options.filter(
-      (o) => o.id && defaultSelections.includes(o.id),
-    );
-    setSelectedOptions(defaultOptions);
-  }, [defaultSelections, options]);
+  const setSelectedOptions = (fn: (options: string[]) => string[]) => {
+    const newOptions = fn(selectedOptions);
+    field.onChange(newOptions);
+  };
 
   return (
     <div className="w-full">
@@ -65,10 +52,7 @@ function MultipleSelect(props: Props): JSX.Element {
         label={label}
         required={required}
       />
-      <div
-        className="dropdown w-full"
-        onClick={() => console.log(document.activeElement)}
-      >
+      <div className="dropdown w-full">
         <label tabIndex={0} className="group">
           <div className="py-2 px-4 border rounded-md ">
             <input
@@ -83,6 +67,7 @@ function MultipleSelect(props: Props): JSX.Element {
               <SelectedOptions
                 setSelectedOptions={setSelectedOptions}
                 selectedOptions={selectedOptions}
+                options={options}
               />
               <span>
                 <AiOutlineDown />

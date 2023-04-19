@@ -3,8 +3,8 @@ import { Option } from './MultipleSelect';
 
 interface Props {
   option: Option;
-  setSelectedOptions: Dispatch<SetStateAction<Option[]>>;
-  selectedOptions: Option[];
+  setSelectedOptions: (fn: (options: string[]) => string[]) => void;
+  selectedOptions: string[];
 }
 
 function MultipleSelectItem(props: Props): JSX.Element {
@@ -12,15 +12,17 @@ function MultipleSelectItem(props: Props): JSX.Element {
 
   const handleToggleSelection = () => {
     setSelectedOptions((prev) => {
-      const index = prev.findIndex((o) => o.id === option.id);
-      if (index === -1) return [...prev, option];
+      const index = prev.findIndex((id) => id === option.id);
+      if (!option.id) return prev;
+
+      if (index === -1) return [...prev, option.id];
       else {
         return [...prev.slice(0, index), ...prev.slice(index + 1)];
       }
     });
   };
 
-  const isChecked = selectedOptions.findIndex((o) => o.id === option.id) !== -1;
+  const isChecked = selectedOptions.findIndex((id) => id === option.id) !== -1;
 
   return (
     <div

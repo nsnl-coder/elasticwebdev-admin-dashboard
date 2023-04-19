@@ -29,7 +29,7 @@ const useCreateOne = <T extends { _id?: string }>(
     }
   };
 
-  const onError = () => {
+  const onError = (err: HttpError) => {
     toastError(`Can not create ${requestConfig.singularName}`);
   };
 
@@ -46,6 +46,7 @@ const useCreateOne = <T extends { _id?: string }>(
   return {
     isLoading: mutation.isLoading,
     createOne,
+    error: mutation.error,
   };
 };
 

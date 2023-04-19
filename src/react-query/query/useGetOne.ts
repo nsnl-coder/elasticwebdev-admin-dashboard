@@ -31,7 +31,7 @@ const useGetOne = <T extends FieldValues>(
   };
 
   const res = useQuery<any, HttpError, HttpResponse<T>>({
-    queryKey: ['collections', id],
+    queryKey: [requestConfig.pluralName, id],
     queryFn,
     enabled: !!id && id != 'create',
     onError: withDefaultOnError(onError),

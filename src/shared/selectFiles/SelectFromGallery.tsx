@@ -1,27 +1,18 @@
 import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
-import { toastError } from '@src/utils/toast';
-import { Dispatch, SetStateAction, useRef } from 'react';
 import { GrGallery } from 'react-icons/gr';
 
 interface Props {
   className?: string;
   files: string[];
-  setFiles: Dispatch<SetStateAction<string[]>>;
+  setFiles: (fn: (files: string[]) => string[]) => void;
   maxFilesCount: number;
   currentFilesCount: number;
   allowedTypes: AllowedFilesTypes;
 }
 
 const SelectFromGallery = (props: Props) => {
-  const {
-    className,
-    files,
-    setFiles,
-    maxFilesCount,
-    currentFilesCount,
-    allowedTypes,
-  } = props;
+  const { className, files, setFiles, maxFilesCount, allowedTypes } = props;
   const { selectFromGallery } = useSelectFromGallery();
 
   const handleSelectFromGallery = async () => {
@@ -30,7 +21,7 @@ const SelectFromGallery = (props: Props) => {
       allowedTypes,
       files,
     );
-    if (selectedFiles.length > 0) setFiles(selectedFiles);
+    if (selectedFiles.length > 0) setFiles(() => selectedFiles);
   };
   return (
     <div

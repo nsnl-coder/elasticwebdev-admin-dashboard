@@ -24,7 +24,6 @@ function Select(props: Props): JSX.Element {
     required = false,
     options,
     labelTheme,
-    defaultValue,
     className,
   } = props;
 

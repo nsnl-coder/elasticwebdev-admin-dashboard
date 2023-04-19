@@ -9,7 +9,6 @@ import HeaderCheckbox from '@src/shared/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/shared/table/pagination/Pagination';
 import RowAction from '@src/shared/table/rowAction/RowAction';
 import Toolbar from '@src/shared/table/toolbar/Toolbar';
-import getS3FileUrl from '@src/utils/getFileUrl';
 import { Collection } from '@src/yup/collectionSchema';
 import Link from 'next/link';
 
@@ -44,7 +43,7 @@ const CollectionTable = (): JSX.Element => {
       <div className="bg-white shadow-lg ">
         <Toolbar />
         <table className="shared-table">
-          <thead className="bg-gray-50">
+          <thead>
             <tr>
               <th>
                 <HeaderCheckbox
@@ -84,7 +83,14 @@ const CollectionTable = (): JSX.Element => {
                     </div>
                   )}
                 </td>
-                <td>{collection.name}</td>
+                <td className="font-semibold hover:underline">
+                  <Link
+                    href={`/${queryConfig.collections.pluralName}/${collection._id}`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {collection.name}
+                  </Link>
+                </td>
                 <td>
                   <span
                     className={`badge text-white border-none ${
@@ -113,7 +119,7 @@ const CollectionTable = (): JSX.Element => {
             requestConfig={queryConfig.collections}
           />
         )}
-        <Pagination pagination={pagination} isLoading={isLoading} />
+        <Pagination pagination={pagination} />
       </div>
     </ContentWrapper>
   );

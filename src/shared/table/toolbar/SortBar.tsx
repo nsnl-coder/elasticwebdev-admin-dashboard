@@ -1,19 +1,15 @@
-import { Dispatch, SetStateAction, useState } from 'react';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { BiSortAlt2 } from 'react-icons/bi';
 //
 import { Sort } from '@src/types/table';
 import SortItem from './SortItem';
-import { DisplayTool } from './Toolbar';
 interface Props {
   sort: Sort;
-  showSort: boolean;
-  setDisplayTool: Dispatch<SetStateAction<DisplayTool>>;
 }
 
 function SortBar(props: Props): JSX.Element {
-  const { showSort, sort, setDisplayTool } = props;
+  const { sort } = props;
   const router = useRouter();
 
   const sortAscHandler = () => {
@@ -47,23 +43,18 @@ function SortBar(props: Props): JSX.Element {
   const sortDirection = router.query.sort?.includes('-') ? 'desc' : 'asc';
   const currentSort = sort.find((item) => router.query.sort?.includes(item[0]));
 
-  const toggleSortbar = () => {
-    setDisplayTool((prev) => ({ ...prev, showSort: !prev.showSort }));
-  };
-
   return (
-    <div
-      className={`dropdown dropdown-end text-paragraph ${
-        showSort ? 'dropdown-open' : ''
-      }`}
-    >
+    <div className={`dropdown dropdown-end text-paragraph`}>
       <label
-        onClick={toggleSortbar}
+        tabIndex={0}
         className="border p-1 block cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-sm"
       >
         <BiSortAlt2 size={23} />
       </label>
-      <div className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1">
+      <div
+        tabIndex={0}
+        className="dropdown-content bg-base-100 w-52 shadow divide-y mt-1"
+      >
         <div className="py-3 px-3">
           <h3 className="font-semibold">Sort by</h3>
           <ul>

@@ -5,23 +5,16 @@ import PaginationItem from './PaginationItem';
 
 interface Props {
   pagination: Partial<Pagination> | undefined;
-  isLoading: boolean;
 }
 
-function Pagination(props: Props): JSX.Element {
+function Pagination(props: Props): JSX.Element | null {
   let totalPages = props.pagination?.totalPages;
   let itemsPerPage = props.pagination?.itemsPerPage || 10;
   let currentPage = props.pagination?.currentPage;
   let totalResults = props.pagination?.totalResults;
   let results = props.pagination?.results || 0;
 
-  if (props.isLoading) {
-    return <div>Loading....</div>;
-  }
-
-  if (!totalPages || !currentPage) {
-    return <div>No</div>;
-  }
+  if (!totalPages || !currentPage) return null;
 
   const pagesArray = getPagesArray(currentPage, totalPages);
 

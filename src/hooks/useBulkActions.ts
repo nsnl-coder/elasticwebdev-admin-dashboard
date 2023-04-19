@@ -76,7 +76,8 @@ const useBulkActions = (data: TRowData[] | undefined) => {
     updateAllCheckBoxes,
     checkedBoxesIds,
     toggleRowSelection,
-    isCheckedAll: checkedBoxesIds.length === checkBoxes.length,
+    isCheckedAll:
+      checkedBoxesIds.length === checkBoxes.length && checkBoxes.length > 0,
   };
 };
 

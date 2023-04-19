@@ -8,41 +8,16 @@ interface Props {
   displayText?: string;
   queryField: string;
   fieldValues: string[];
-  currentFilter: string | undefined;
-  setDisplayTool: Dispatch<SetStateAction<DisplayTool>>;
 }
 
 function MultipleSelect(props: Props): JSX.Element {
   const router = useRouter();
   const query = router.query;
 
-  const {
-    displayText,
-    queryField,
-    fieldValues,
-    currentFilter,
-    setDisplayTool,
-  } = props;
-
-  const openFilter = () => {
-    setDisplayTool((prev) => {
-      let newFilter;
-      if (currentFilter === queryField) {
-        newFilter = undefined;
-      } else {
-        newFilter = queryField;
-      }
-
-      return {
-        ...prev,
-        currentFilter: newFilter,
-      };
-    });
-  };
+  const { displayText, queryField, fieldValues } = props;
 
   const clearFilter = () => {
     delete query[queryField];
-
     router.push({
       query: {
         ...query,
@@ -51,16 +26,10 @@ function MultipleSelect(props: Props): JSX.Element {
     });
   };
 
-  const isOpen = currentFilter === queryField;
-
   return (
-    <div
-      className={`dropdown dropdown-start text-paragraph ${
-        isOpen ? 'dropdown-open' : ''
-      }`}
-    >
+    <div className={`dropdown dropdown-start text-paragraph`}>
       <label
-        onClick={openFilter}
+        tabIndex={0}
         className="border px-4 py-0.5 bg-gray-50 hover:bg-gray-100 cursor-pointer rounded-full border-dashed flex items-center gap-x-1"
       >
         <span>{displayText || queryField}</span>
@@ -69,7 +38,7 @@ function MultipleSelect(props: Props): JSX.Element {
         </span>
       </label>
       <div className="dropdown-content p-4 shadow border bg-base-100 w-52 mt-1.5">
-        <ul>
+        <ul tabIndex={0}>
           {fieldValues.map((value) => (
             <MultipleSelectItem
               key={value}

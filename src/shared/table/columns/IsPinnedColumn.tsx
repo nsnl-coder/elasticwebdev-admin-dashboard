@@ -22,6 +22,12 @@ function IsPinnedColumn(props: Props): JSX.Element {
     setIsPinned(!isPinned);
   };
 
+  useEffect(() => {
+    if (props.isPinned !== undefined) {
+      setIsPinned(props.isPinned);
+    }
+  }, [props.isPinned]);
+
   return (
     <div>
       {isPinned && (

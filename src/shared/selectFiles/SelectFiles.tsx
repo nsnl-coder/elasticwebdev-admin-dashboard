@@ -18,10 +18,11 @@ interface SelectFilesProps {
   maxFilesCount: number;
   allowedTypes: AllowedFilesTypes;
   className?: string;
+  fieldName: string;
 }
 
 function SelectFiles(props: SelectFilesProps): JSX.Element {
-  const { files, setFiles, maxFilesCount, allowedTypes } = props;
+  const { files, setFiles, maxFilesCount, allowedTypes, fieldName } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
   const {
@@ -68,7 +69,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
         maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '
       }`}
     >
-      <HiddenInput id="select_file" selectFiles={selectLocalFiles} />
+      <HiddenInput id={fieldName} selectFiles={selectLocalFiles} />
       {files.map((s3Key, index) => (
         <FileWrapper
           key={s3Key}
@@ -80,7 +81,11 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
           <FilePreview src={s3Key} fallback="text" />
         </FileWrapper>
       ))}
-      {isUploading && <Skeleton count={1} className="h-full" />}
+      {isUploading && (
+        <div className="w-full">
+          <Skeleton count={1} className="h-full" />
+        </div>
+      )}
       {!isMaxFilesCount && (
         <SelectFromGallery
           allowedTypes={allowedTypes}
@@ -92,7 +97,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
         />
       )}
       {!isMaxFilesCount && (
-        <Label htmlFor="select_file" className="aspect-square" />
+        <Label htmlFor={fieldName} className="aspect-square" />
       )}
     </div>
   );

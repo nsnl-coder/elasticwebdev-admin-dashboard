@@ -19,6 +19,10 @@ import queryConfig from '@src/react-query/queryConfig';
 import { useRouter } from 'next/router';
 import CreatePageWrapper from '@src/shared/createPage/CreatePageWrapper';
 import Heading from '@src/shared/createPage/Heading';
+import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
+import useGetOnes from '@src/react-query/query/useGetOnes';
+import { Collection } from '@src/yup/collectionSchema';
+import PageHeader from '@src/shared/createPage/PageHeader';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -28,7 +32,7 @@ function Create(): JSX.Element {
     handleSubmit,
     control,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<Product>({
     resolver: yupResolver(productSchema),
   });
@@ -38,8 +42,16 @@ function Create(): JSX.Element {
   );
   const { updateOne: updateProduct } = useUpdateOne<Product>(
     queryConfig.products,
+    reset,
   );
   const { data: product } = useGetOne<Product>(queryConfig.products, reset);
+
+  const { data: collections } = useGetOnes<Collection>(
+    queryConfig.collections,
+    {
+      limit: 999,
+    },
+  );
 
   const onSubmit = (data: Product) => {
     // already check if should create or update
@@ -47,130 +59,138 @@ function Create(): JSX.Element {
     createProduct(data, id);
   };
 
-  const hihi: Product = {};
-
   return (
-    <CreatePageWrapper>
-      <Heading
-        title={product?.name || 'Add product'}
-        requestConfig={queryConfig.products}
-        id={product?._id}
-      />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto flex gap-x-5 justify-center mt-8"
-      >
-        <BigBlocks>
-          <Block>
-            <Input
-              register={register}
-              errors={errors}
-              fieldName="name"
-              labelTheme="light"
-              placeholder="T-shirt for man....."
-              label="Name:"
-            />
-            <Textarea
-              register={register}
-              errors={errors}
-              fieldName="overview"
-              labelTheme="light"
-              placeholder="short description about your product"
-              label="Overview:"
-            />
-            <div className="flex gap-3">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <CreatePageWrapper isDirty={isDirty}>
+        <PageHeader reset={reset} isDirty={isDirty} />
+        <Heading
+          title={product?.name || 'Add product'}
+          requestConfig={queryConfig.products}
+          id={product?._id}
+          status={product?.status}
+        />
+        <div className="mx-auto flex gap-x-5 justify-center mt-8">
+          <BigBlocks>
+            <Block>
               <Input
                 register={register}
                 errors={errors}
-                fieldName="price"
+                fieldName="name"
                 labelTheme="light"
-                placeholder="19.99"
-                label="Price:"
-                type="number"
+                placeholder="T-shirt for man....."
+                label="Name:"
               />
-              <Input
+              <Textarea
                 register={register}
                 errors={errors}
-                fieldName="discountPrice"
+                fieldName="overview"
                 labelTheme="light"
-                placeholder="9.99"
-                label="Discount price:"
-                type="number"
+                placeholder="short description about your product"
+                label="Overview:"
               />
-            </div>
-          </Block>
-          <Block>
-            <RichText
-              control={control}
-              defaultValue=""
-              errors={errors}
-              fieldName="description"
-              labelTheme="light"
-              label="Description:"
-            />
-            <Select
-              errors={errors}
-              register={register}
-              fieldName="isPinned"
-              labelTheme="light"
-              options={[
-                { name: 'pin', value: 'true' },
-                { name: 'Do not pin', value: 'false' },
-              ]}
-              label="Pin to top?"
-            />
-          </Block>
-          <Block>
-            <FilesInput
-              fieldName="images"
-              allowedTypes="*"
-              control={control}
-              labelTheme="bold"
-              errors={errors}
-              maxFilesCount={10}
-              defaultValue={product?.images}
-            />
-            <p className="text-red-400">Collection select here</p>
-          </Block>
-          <Block>
-            <VariantsInput
-              errors={errors}
-              fieldName="variants"
-              control={control}
-              defaultValue={[]}
-              labelTheme="bold"
-            />
-          </Block>
-        </BigBlocks>
+              <div className="flex gap-3">
+                <Input
+                  register={register}
+                  errors={errors}
+                  fieldName="price"
+                  labelTheme="light"
+                  placeholder="19.99"
+                  label="Price:"
+                  type="number"
+                />
+                <Input
+                  register={register}
+                  errors={errors}
+                  fieldName="discountPrice"
+                  labelTheme="light"
+                  placeholder="9.99"
+                  label="Discount price:"
+                  type="number"
+                />
+              </div>
+            </Block>
+            <Block>
+              <RichText
+                control={control}
+                defaultValue=""
+                errors={errors}
+                fieldName="description"
+                labelTheme="light"
+                label="Description:"
+              />
+              <Select
+                errors={errors}
+                register={register}
+                fieldName="isPinned"
+                labelTheme="light"
+                options={[
+                  { name: 'pin', value: 'true' },
+                  { name: 'Do not pin', value: 'false' },
+                ]}
+                label="Pin to top?"
+              />
+            </Block>
+            <Block>
+              <FilesInput
+                fieldName="images"
+                allowedTypes="*"
+                control={control}
+                labelTheme="bold"
+                errors={errors}
+                maxFilesCount={10}
+                defaultValue={product?.images}
+                key={1}
+              />
+            </Block>
+            <Block>
+              <MultipleSelect
+                errors={errors}
+                control={control}
+                fieldName="collections"
+                labelTheme="bold"
+                options={collections?.map((c) => ({ id: c._id, name: c.name }))}
+                defaultSelections={product?.collections}
+              />
+              <VariantsInput
+                errors={errors}
+                fieldName="variants"
+                control={control}
+                defaultValue={[]}
+                labelTheme="bold"
+              />
+            </Block>
+          </BigBlocks>
 
-        <SmallBlocks>
-          <Block>
-            <Select
-              errors={errors}
-              register={register}
-              fieldName="status"
-              labelTheme="bold"
-              options={['draft', 'active']}
-              label="status"
-            />
-            <div className="flex justify-end mt-4">
-              <SubmitBtn />
-            </div>
-          </Block>
-          <Block>
-            <FilesInput
-              fieldName="previewImages"
-              allowedTypes="image"
-              control={control}
-              labelTheme="bold"
-              errors={errors}
-              maxFilesCount={2}
-              defaultValue={product?.previewImages}
-            />
-          </Block>
-        </SmallBlocks>
-      </form>
-    </CreatePageWrapper>
+          <SmallBlocks>
+            <Block>
+              <Select
+                errors={errors}
+                register={register}
+                fieldName="status"
+                labelTheme="bold"
+                options={['draft', 'active']}
+                label="status"
+              />
+              <div className="flex justify-end mt-4">
+                <SubmitBtn />
+              </div>
+            </Block>
+            <Block>
+              <FilesInput
+                fieldName="previewImages"
+                allowedTypes="*"
+                control={control}
+                labelTheme="bold"
+                errors={errors}
+                maxFilesCount={2}
+                defaultValue={product?.previewImages}
+                key={2}
+              />
+            </Block>
+          </SmallBlocks>
+        </div>
+      </CreatePageWrapper>
+    </form>
   );
 }
 

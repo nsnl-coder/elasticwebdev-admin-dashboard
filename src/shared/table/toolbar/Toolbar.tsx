@@ -11,9 +11,21 @@ interface DisplayTool {
   currentFilter: string | undefined;
 }
 
-function Toolbar(): JSX.Element {
+interface Props {
+  sortOptions?: string[][];
+  searchBy?: string;
+  showStatusFilter?: boolean;
+}
+
+function Toolbar(props: Props): JSX.Element {
+  const {
+    sortOptions = [['name', 'a-z', 'z-a']],
+    searchBy = 'name',
+    showStatusFilter,
+  } = props;
+
   const sort: Sort = [
-    ['name', 'a-z', 'z-a'],
+    ...sortOptions,
     ['created', 'Oldest first', 'Newest first'],
     ['updated', 'Oldest first', 'Newest first'],
   ];
@@ -21,7 +33,12 @@ function Toolbar(): JSX.Element {
   return (
     <div className="py-3 px-4 border-b flex items-center justify-between gap-12">
       <div className="flex items-center gap-x-3">
-        <MultipleSelect queryField="status" fieldValues={['draft', 'active']} />
+        {showStatusFilter && (
+          <MultipleSelect
+            queryField="status"
+            fieldValues={['draft', 'active']}
+          />
+        )}
         <SingleSelect
           displayText={'rows per page'}
           queryField="itemsPerPage"
@@ -30,7 +47,7 @@ function Toolbar(): JSX.Element {
       </div>
 
       <div className="flex items-center gap-x-4 flex-grow justify-end">
-        <SearchBar searchBy="name" />
+        <SearchBar searchBy={searchBy} />
         <SortBar sort={sort} />
       </div>
     </div>

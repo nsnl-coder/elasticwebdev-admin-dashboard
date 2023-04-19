@@ -43,7 +43,7 @@ function Sidebar(): JSX.Element {
         <Section sectionName="Shop">
           <SidebarItem
             text="products"
-            href="/products/create"
+            href="/products"
             icon={<FaProductHunt />}
           />
           <SidebarItem

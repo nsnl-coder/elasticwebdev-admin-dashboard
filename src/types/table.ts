@@ -1,3 +1,3 @@
-type Sort = [string, string, string][];
+type Sort = string[][];
 
 export type { Sort };

@@ -4,8 +4,8 @@ const collectionSchema = object({
   name: string().max(255),
   description: string().max(10000).label('description'),
   photo: string().max(255),
-  isPinned: boolean(),
-  status: string().oneOf(['draft', 'active']),
+  isPinned: boolean().label('Is pinned?'),
+  status: string().oneOf(['draft', 'active']).label('Collection status'),
 });
 
 interface Collection extends InferType<typeof collectionSchema> {

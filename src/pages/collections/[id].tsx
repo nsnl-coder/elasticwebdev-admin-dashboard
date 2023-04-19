@@ -26,7 +26,7 @@ function Create(): JSX.Element {
     handleSubmit,
     control,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<Collection>({
     resolver: yupResolver(collectionSchema),
   });
@@ -49,11 +49,12 @@ function Create(): JSX.Element {
   };
 
   return (
-    <CreatePageWrapper>
+    <CreatePageWrapper isDirty={isDirty}>
       <Heading
         title={collection?.name || 'Add collection'}
         requestConfig={queryConfig.collections}
         id={collection?._id}
+        status={collection?.status}
       />
       <form
         onSubmit={handleSubmit(onSubmit)}

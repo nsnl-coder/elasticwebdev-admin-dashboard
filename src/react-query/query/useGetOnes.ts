@@ -13,15 +13,15 @@ import { RequestConfig } from '../queryConfig';
 import { useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
 
-const useGetOnes = <T>(requestConfig: RequestConfig) => {
+const useGetOnes = <T>(requestConfig: RequestConfig, optionalQuery?: any) => {
   const queryClient = useQueryClient();
   const { query } = useRouter();
 
-  const queryFn = async ({ queryKey }: QueryFunctionContext<QueryKey, any>) => {
+  const queryFn = async () => {
     const { data } = await axios<HttpResponse<T[]>>({
       method: 'get',
       url: requestConfig.url,
-      params: queryKey[1],
+      params: optionalQuery || query,
     });
     return data;
   };
@@ -31,7 +31,7 @@ const useGetOnes = <T>(requestConfig: RequestConfig) => {
   };
 
   const res = useQuery<any, HttpError, HttpResponse<T[]>>({
-    queryKey: [requestConfig.pluralName, query],
+    queryKey: [requestConfig.pluralName, optionalQuery || query],
     queryFn,
     onError: withDefaultOnError(onError),
     keepPreviousData: true,

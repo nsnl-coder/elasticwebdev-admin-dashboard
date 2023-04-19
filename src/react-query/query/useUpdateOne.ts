@@ -1,12 +1,14 @@
 import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/api';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
+import { UseFormReset } from 'react-hook-form';
 
 const useUpdateOne = <T extends { _id?: string } = any>(
   requestConfig: RequestConfig,
+  reset?: UseFormReset<T>,
 ) => {
   const mutationFn = async (payload: T) => {
     const { data } = await axios<HttpResponse<T>>({
@@ -20,6 +22,8 @@ const useUpdateOne = <T extends { _id?: string } = any>(
 
   const onSuccess = (res: HttpResponse<T>) => {
     toastSuccess(`${requestConfig.singularName} has been updated!`);
+    const id = res.data?._id;
+    if (reset) reset(res.data);
   };
 
   const onError = () => {

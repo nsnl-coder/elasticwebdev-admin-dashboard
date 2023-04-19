@@ -9,7 +9,7 @@ import {
 
 const number = () => {
   return originalNumber().transform((value, originalValue) =>
-    originalValue.trim() === '' ? undefined : value,
+    originalValue === '' ? undefined : value,
   );
 };
 
@@ -25,7 +25,7 @@ const variantSchema = object({
 });
 
 const productSchema = object({
-  name: string().min(1).max(255).label('Product name'),
+  name: string().trim().min(1).max(255).label('Product name'),
   status: string().oneOf(['draft', 'active']).label('Product status'),
   overview: string().max(5000).label('overview'),
   description: string().max(20000).label('description'),

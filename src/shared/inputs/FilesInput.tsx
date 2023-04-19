@@ -1,4 +1,4 @@
-import { Controller, useController } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 import { useEffect, useState } from 'react';
 import Label from '../form/Label';
@@ -40,7 +40,6 @@ function FilesInput(props: Props): JSX.Element {
   }, [files]);
 
   useEffect(() => {
-    console.log('render');
     if (!defaultValue) return;
 
     if (typeof defaultValue === 'string') {
@@ -58,17 +57,12 @@ function FilesInput(props: Props): JSX.Element {
         labelTheme={labelTheme}
         required={required}
       />
-      <Controller
-        name={fieldName}
-        control={control}
-        render={({ field }) => (
-          <SelectFiles
-            allowedTypes={allowedTypes}
-            files={files}
-            setFiles={setFiles}
-            maxFilesCount={maxFilesCount}
-          />
-        )}
+      <SelectFiles
+        allowedTypes={allowedTypes}
+        files={files}
+        setFiles={setFiles}
+        maxFilesCount={maxFilesCount}
+        fieldName={fieldName}
       />
       <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>

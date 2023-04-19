@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Range } from 'react-date-range';
 import { DateRange } from 'react-date-range';
-import DateRangeFromNow from './date/DateRangeFromNow';
-import Label, { LabelProps } from '../form/Label';
-import ErrorMessage from '../form/ErrorMessage';
+import DateRangeFromNow from './DateRangeFromNow';
+import Label, { LabelProps } from '../../form/Label';
+import ErrorMessage from '../../form/ErrorMessage';
 import {
   Controller,
   ControllerRenderProps,

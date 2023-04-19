@@ -3,13 +3,14 @@ import { RequestConfig } from '@src/react-query/queryConfig';
 import { useEffect, useState } from 'react';
 
 interface Props {
-  status: string | undefined;
+  status: 'draft' | 'active' | undefined;
   requestConfig: RequestConfig;
   id: string | undefined;
+  className?: string;
 }
 
 function StatusColumn(props: Props): JSX.Element {
-  let { requestConfig, id } = props;
+  let { requestConfig, id, className } = props;
   const [status, setStatus] = useState<string>();
 
   const isActive = status === 'active';
@@ -17,7 +18,7 @@ function StatusColumn(props: Props): JSX.Element {
 
   const { updateOne } = useUpdateOne(requestConfig);
 
-  const toggleStatus = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const toggleStatus = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     const newStatus = status === 'active' ? 'draft' : 'active';
     updateOne({ status: newStatus }, id);
@@ -29,13 +30,16 @@ function StatusColumn(props: Props): JSX.Element {
   }, [props.status]);
 
   return (
-    <div
-      className={`badge text-white border-none ${
-        isActive ? 'bg-green-600' : isDraft ? '' : 'bg-transparent'
-      }`}
-      onClick={toggleStatus}
-    >
-      {isActive ? 'active' : isDraft ? 'draft' : 'unknown'}
+    <div data-tip="toggle status" className={`tooltip ${className}`}>
+      <button
+        className={`badge text-white border-none ${
+          isActive ? 'bg-green-600' : isDraft ? '' : 'bg-transparent'
+        }`}
+        onClick={toggleStatus}
+        type="button"
+      >
+        {isActive ? 'active' : isDraft ? 'draft' : 'unknown'}
+      </button>
     </div>
   );
 }

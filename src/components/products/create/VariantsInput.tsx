@@ -49,7 +49,7 @@ function Variants(props: Props): JSX.Element {
             <button
               type="button"
               onClick={addNewVariant}
-              className="duration-150 border py-2 font-medium hover:font-semibold flex gap-x-3 justify-center hover:bg-gray-50 group"
+              className="duration-150 border py-2 font-medium hover:font-semibold flex gap-x-3 justify-center hover:bg-gray-50 group text-green-700"
             >
               <span>Add new variant</span>
               <span className="text-2xl">

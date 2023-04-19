@@ -10,7 +10,7 @@ import Input from '@src/shared/inputs/Input';
 import Select from '@src/shared/inputs/Select';
 import Checkbox from '@src/shared/inputs/Checkbox';
 import generateCouponCode from '@src/utils/generateCouponCode';
-import DateRangeInput from '@src/shared/inputs/DateRangeInput';
+import DateRangeInput from '@src/shared/inputs/date/DateRangeInput';
 import CouponSummary from '@src/components/coupons/CouponSummary';
 
 function Create(): JSX.Element {

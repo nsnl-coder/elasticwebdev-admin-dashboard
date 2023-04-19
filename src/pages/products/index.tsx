@@ -13,6 +13,8 @@ import Toolbar from '@src/shared/table/toolbar/Toolbar';
 import { Product } from '@src/yup/productSchema';
 import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
+import StatusColumn from '@src/shared/table/columns/StatusColumn';
+import IsPinnedColumn from '@src/shared/table/columns/IsPinnedColumn';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -57,8 +59,9 @@ const ProductTable = (): JSX.Element => {
               </th>
               <th>Photo</th>
               <th>Name</th>
-              <th>Slug</th>
+              <th>Pin?</th>
               <th>status</th>
+              <th>Slug</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,16 +99,22 @@ const ProductTable = (): JSX.Element => {
                   </Link>
                 </td>
                 <td>
-                  <p className="truncate max-w-md">{product.slug}</p>
+                  <IsPinnedColumn
+                    requestConfig={requestConfig}
+                    isPinned={product.isPinned}
+                    id={product._id}
+                  />
                 </td>
                 <td>
-                  <span
-                    className={`badge text-white border-none ${
-                      product.status === 'active' ? 'bg-green-600' : ''
-                    }`}
-                  >
-                    {product.status}
-                  </span>
+                  <StatusColumn
+                    id={product._id}
+                    requestConfig={requestConfig}
+                    status={product.status}
+                  />
+                </td>
+
+                <td>
+                  <p className="truncate max-w-md">{product.slug}</p>
                 </td>
                 <td>
                   <ActionsColumn

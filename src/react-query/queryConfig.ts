@@ -20,6 +20,11 @@ const queryConfig = {
     pluralName: 'coupons',
     url: '/api/coupons',
   },
+  shippings: {
+    singularName: 'shipping',
+    pluralName: 'shippings',
+    url: '/api/shippings',
+  },
 };
 
 interface RequestConfig {

@@ -9,7 +9,8 @@ const number = () => {
 };
 
 const shippingSchema = object({
-  display_name: string().max(255).label('name'),
+  display_name: string().min(1).max(255).label('name'),
+  status: string().oneOf(['draft', 'active']).label('status'),
   fees: number().min(0).max(9999).label('Delivery fees'),
   freeshipOrderOver: number()
     .min(0)

@@ -64,7 +64,7 @@ function Sidebar(): JSX.Element {
           />
           <SidebarItem
             text="shippings"
-            href="/shippings/create"
+            href="/shippings"
             icon={<FaShippingFast />}
           />
         </Section>

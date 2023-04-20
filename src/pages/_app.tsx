@@ -1,7 +1,6 @@
 import { Public_Sans } from 'next/font/google';
 import type { AppProps } from 'next/app';
 import { NextComponentType, NextPageContext } from 'next';
-import axios from 'axios';
 import Router from 'next/router';
 import nprogress from 'nprogress';
 // src
@@ -20,7 +19,6 @@ import 'nprogress/nprogress.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 Router.events.on('routeChangeStart', nprogress.start);
 Router.events.on('routeChangeError', nprogress.done);

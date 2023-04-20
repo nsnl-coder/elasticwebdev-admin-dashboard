@@ -43,12 +43,14 @@ function Thead(props: Props): JSX.Element {
     }
 
     sort = newSortArr.join(',');
-    router.push({
-      query: {
-        ...query,
-        sort,
-      },
-    });
+    if (sort.length > 0) {
+      router.push({
+        query: {
+          ...query,
+          sort,
+        },
+      });
+    }
   }, [sortDirection]);
 
   return (

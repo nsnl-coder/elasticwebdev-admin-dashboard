@@ -20,10 +20,17 @@ import Logo from './Logo';
 import Section from './Section';
 import SidebarItem from './SidebarItem';
 import React from 'react';
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 
 function Sidebar(): JSX.Element {
+  const { selectFromGallery } = useSelectFromGallery();
+
+  const handleOpenGallery = async () => {
+    const files = await selectFromGallery(20, '*');
+  };
+
   return (
-    <div className="w-60 h-screen pr-0 flex flex-col group">
+    <div className="w-60 h-screen pr-0 flex flex-col group shrink-0">
       <Logo />
       <div className="flex-grow overflow-y-auto hidden-scrollbar hover:small-scrollbar py-6 px-5">
         <Section sectionName="quick link">
@@ -38,7 +45,14 @@ function Sidebar(): JSX.Element {
         <Section sectionName="Resources">
           <SidebarItem text="users" href="/" icon={<AiOutlineUserSwitch />} />
           <SidebarItem text="emails" href="/" icon={<AiOutlineMail />} />
-          <SidebarItem text="gallery" href="/gallery" icon={<ImImages />} />
+          <button
+            onClick={() => handleOpenGallery()}
+            type="button"
+            className="py-2 hover:bg-gray-100 px-4 rounded-md capitalize flex items-center gap-x-3 w-full"
+          >
+            <ImImages />
+            Gallery
+          </button>
         </Section>
         <Section sectionName="Shop">
           <SidebarItem
@@ -75,7 +89,11 @@ function Sidebar(): JSX.Element {
         </Section>
         <Section sectionName="settings">
           <SidebarItem text="general" href="/" icon={<IoIosSettings />} />
-          <SidebarItem text="main menu" href="/" icon={<AiOutlineMenu />} />
+          <SidebarItem
+            text="main menu"
+            href="/menus"
+            icon={<AiOutlineMenu />}
+          />
           <SidebarItem text="footer" href="/" icon={<BsMenuButtonWideFill />} />
         </Section>
       </div>

@@ -96,7 +96,6 @@ function Create(): JSX.Element {
                   labelTheme="light"
                   placeholder="99"
                   label="Discount amount:"
-                  type="number"
                   required={true}
                 />
                 <Select

@@ -10,7 +10,6 @@ interface Props
     LabelProps {
   control: any;
   errors: any;
-  defaultValue: string[] | undefined | string;
 }
 
 function FilesInput(props: Props): JSX.Element {
@@ -27,11 +26,22 @@ function FilesInput(props: Props): JSX.Element {
 
   const { field } = useController({ name: fieldName, control });
 
-  const files = field.value || [];
   const setFiles = (fn: (files: string[]) => string[]) => {
     const updatedFiles = fn(files);
+
+    if (maxFilesCount === 1) {
+      field.onChange(updatedFiles.at(-1));
+      return;
+    }
+
     field.onChange(updatedFiles);
   };
+
+  let files = field.value || [];
+
+  if (typeof field.value === 'string') {
+    files = [files];
+  }
 
   return (
     <div>

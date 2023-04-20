@@ -16,24 +16,31 @@ interface Props extends LabelProps {
   options: Option[] | undefined;
   fieldName: string;
   control: any;
+  tooltip?: string;
+  excludes?: string[] | undefined;
 }
 
 function MultipleSelect(props: Props): JSX.Element {
   const {
     options = [],
+    excludes = [],
     required,
     fieldName,
     labelTheme,
     label,
     errors,
     control,
+    tooltip,
   } = props;
 
   const [keyword, setKeyword] = useState<string>('');
   const [focusList, setFocusList] = useState(false);
 
-  const matchedOptions = options.filter((option) =>
-    option.name?.toLowerCase().includes(keyword.toLowerCase()),
+  const matchedOptions = options.filter(
+    (option) =>
+      option.name?.toLowerCase().includes(keyword.toLowerCase()) &&
+      option.id &&
+      !excludes.includes(option.id),
   );
 
   const { field } = useController({ name: fieldName, control });
@@ -51,7 +58,9 @@ function MultipleSelect(props: Props): JSX.Element {
         labelTheme={labelTheme}
         label={label}
         required={required}
+        tooltip={tooltip}
       />
+
       <div className="dropdown w-full">
         <label tabIndex={0} className="group">
           <div className="py-2 px-4 border rounded-md ">

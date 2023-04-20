@@ -108,7 +108,6 @@ function Create(): JSX.Element {
                   labelTheme="light"
                   placeholder="19.99"
                   label="Price:"
-                  type="number"
                 />
                 <Input
                   register={register}
@@ -117,7 +116,6 @@ function Create(): JSX.Element {
                   labelTheme="light"
                   placeholder="9.99"
                   label="Discount price:"
-                  type="number"
                 />
               </div>
             </Block>
@@ -150,7 +148,6 @@ function Create(): JSX.Element {
                 labelTheme="bold"
                 errors={errors}
                 maxFilesCount={10}
-                defaultValue={product?.images}
                 key={1}
               />
             </Block>
@@ -193,7 +190,6 @@ function Create(): JSX.Element {
                 labelTheme="bold"
                 errors={errors}
                 maxFilesCount={2}
-                defaultValue={product?.previewImages}
                 key={2}
               />
             </Block>

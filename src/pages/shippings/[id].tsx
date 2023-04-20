@@ -78,7 +78,6 @@ function Create(): JSX.Element {
                 labelTheme="light"
                 label="Freeship order over:"
                 placeholder="199"
-                type="number"
                 tooltip="Leave empty if you not want freeship for all orders!"
               />
             </Block>

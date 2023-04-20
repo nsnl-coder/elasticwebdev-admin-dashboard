@@ -56,7 +56,6 @@ function OptionInputs(props: Props): JSX.Element {
           Price:
         </label>
         <input
-          type="number"
           name="price"
           value={option.price || ''}
           className="border outline-none h-7 px-3 w-36 rounded-sm placeholder:text-sm"

@@ -196,7 +196,6 @@ function OptionInputs(props: Props): JSX.Element {
             Price:
           </label>
           <input
-            type="number"
             name="price"
             onChange={handleInputChange}
             value={option.price || ''}

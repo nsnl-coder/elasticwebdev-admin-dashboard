@@ -30,10 +30,10 @@ function Login(): JSX.Element {
   const onSubmit = (data: any) => login(data);
 
   useEffect(() => {
-    if (apiError) {
+    if (apiError && isValidating) {
       reset();
     }
-  }, [isValidating]);
+  }, [isValidating, apiError, reset]);
 
   return (
     <RequireNotLogin>

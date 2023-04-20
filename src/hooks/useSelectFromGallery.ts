@@ -12,38 +12,6 @@ const useSelectFromGallery = () => {
   const { state, setState, handleSelectFile, handleRemoveSelect } =
     galleryContext;
 
-  // const selectFromGallery = (
-  //   maxFilesCount: number,
-  //   allowedTypes: AllowedFilesTypes = '*',
-  //   excludedFiles: string[] = [],
-  // ) => {
-  //   const promise: Promise<string[]> = new Promise((resolve, reject) => {
-  //     setState({
-  //       isOpen: true,
-  //       selectedFiles: excludedFiles,
-  //       resolve,
-  //       reject,
-  //       maxFilesCount,
-  //       allowedTypes,
-  //     });
-  //   });
-
-  //   const cleanup = () => {
-  //     setState(defaultState);
-  //   };
-
-  //   return promise.then(
-  //     (files) => {
-  //       cleanup();
-  //       return files;
-  //     },
-  //     () => {
-  //       cleanup();
-  //       return [];
-  //     },
-  //   );
-  // };
-
   const selectFromGallery = useCallback(
     (
       maxFilesCount: number,
@@ -76,7 +44,7 @@ const useSelectFromGallery = () => {
         },
       );
     },
-    [],
+    [setState],
   );
 
   const haha = '1111';

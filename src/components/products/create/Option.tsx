@@ -11,6 +11,7 @@ import { v4 } from 'uuid';
 import { TbGridDots } from 'react-icons/tb';
 import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
+import Image from 'next/image';
 
 export interface TOption extends Option {
   id: string;
@@ -168,9 +169,10 @@ function OptionInputs(props: Props): JSX.Element {
         )}
         {option.photo && (
           <div className="relative bg-gray-100 w-16 aspect-square">
-            <img
+            <Image
               className="object-contain w-full h-full"
               src={getS3FileUrl(option.photo)}
+              alt="product"
             />
             <span
               onClick={handleRemoveOptionImage}

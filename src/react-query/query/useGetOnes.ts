@@ -5,21 +5,21 @@ import { HttpError, HttpResponse } from '@src/types/api';
 import axios from '@src/config/axios';
 import { withDefaultOnError } from '../queryClient';
 import { RequestConfig } from '../queryConfig';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
 
 const useGetOnes = <T>(requestConfig: RequestConfig, optionalQuery?: any) => {
   const queryClient = useQueryClient();
   const { query } = useRouter();
 
-  const queryFn = async () => {
+  const queryFn = useCallback(async () => {
     const { data } = await axios<HttpResponse<T[]>>({
       method: 'get',
       url: requestConfig.url,
       params: optionalQuery || query,
     });
     return data;
-  };
+  }, [optionalQuery, query, requestConfig.url]);
 
   const onError = () => {
     toastError(`Can not get ${requestConfig.pluralName}`);
@@ -50,7 +50,14 @@ const useGetOnes = <T>(requestConfig: RequestConfig, optionalQuery?: any) => {
         queryFn,
       });
     }
-  }, [query.page]);
+  }, [
+    query.page,
+    query,
+    queryClient,
+    queryFn,
+    requestConfig.pluralName,
+    res.data?.pagination?.totalPages,
+  ]);
 
   return {
     data: res.data?.data,

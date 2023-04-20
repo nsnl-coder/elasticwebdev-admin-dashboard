@@ -26,10 +26,10 @@ function UpdatePageWrapper(props: Props): JSX.Element {
         throw 'User cancel route change! You can savely ignore this message!';
       }
     },
-    [isDirty],
+    [isDirty, router.events],
   );
 
-  const confirmToLeave = async () => {
+  const confirmToLeave = useCallback(async () => {
     const isConfirm = await isConfirmed(
       'You have unsaved changes, do you really want to leave?',
     );
@@ -40,12 +40,12 @@ function UpdatePageWrapper(props: Props): JSX.Element {
       console.log('pushed' + nextPath);
     }
     setNextPath(null);
-  };
+  }, [isConfirmed, nextPath, onRouteChangeStart, router]);
 
   useEffect(() => {
     if (!nextPath) return;
     confirmToLeave();
-  }, [nextPath]);
+  }, [nextPath, confirmToLeave]);
 
   useEffect(() => {
     if (!router.query.id) return;
@@ -56,7 +56,7 @@ function UpdatePageWrapper(props: Props): JSX.Element {
     return () => {
       router.events.off('routeChangeStart', onRouteChangeStart);
     };
-  }, [onRouteChangeStart]);
+  }, [onRouteChangeStart, router.query.id, router.events]);
 
   return (
     <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32 `}>

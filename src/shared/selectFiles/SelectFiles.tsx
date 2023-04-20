@@ -41,7 +41,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
       resetCreatePresignedUrl();
       resetUploadFile();
     }
-  }, [key, isUploaded]);
+  }, [key, isUploaded, resetCreatePresignedUrl, resetUploadFile, setFiles]);
 
   const isMaxFilesCount = files.length >= maxFilesCount;
 

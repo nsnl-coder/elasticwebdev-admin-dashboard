@@ -30,6 +30,11 @@ const queryConfig = {
     pluralName: 'menus',
     url: '/api/menus',
   },
+  files: {
+    singularName: 'file',
+    pluralName: 'files',
+    url: '/api/files',
+  },
 };
 
 interface RequestConfig {

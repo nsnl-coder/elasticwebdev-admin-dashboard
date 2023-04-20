@@ -28,7 +28,7 @@ function Variants(props: Props): JSX.Element {
     if (!variants.length) return;
 
     field.onChange(variants);
-  }, [variants]);
+  }, [variants, field]);
 
   return (
     <div>

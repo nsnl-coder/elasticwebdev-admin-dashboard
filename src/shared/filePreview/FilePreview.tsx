@@ -2,6 +2,7 @@ import imageOrVideo from '@src/utils/imageOrVideo';
 import VideoPlayer, { VideoProps } from './VideoPlayer';
 import getS3FileUrl from '@src/utils/getFileUrl';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
+import Image from 'next/image';
 
 interface Props extends VideoProps {
   src: string;
@@ -25,7 +26,11 @@ function FilePreview(props: Props): JSX.Element {
   }
 
   if (fileType === 'image') {
-    return <img src={src} className={className} />;
+    return (
+      <div className={className}>
+        <Image alt="preview" width={400} height={400} src={src} />
+      </div>
+    );
   }
 
   if (fallback === 'text') {

@@ -18,7 +18,7 @@ function RequireAdmin(props: Children): JSX.Element | null {
         pathname: '/auth/login',
       });
     }
-  }, [router.isReady, auth.isLoggedIn]);
+  }, [router.isReady, auth.isLoggedIn, router]);
 
   if (auth.isLoggedIn && auth.user?.role !== 'admin') return <ErrorMessage />;
 

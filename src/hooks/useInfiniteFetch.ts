@@ -23,7 +23,7 @@ const useInfiniteFetch = (props: Props) => {
 
       observer.current.observe(node);
     },
-    [hasNextPage],
+    [hasNextPage, fetchNextPage],
   );
 
   return { lastElementRef };

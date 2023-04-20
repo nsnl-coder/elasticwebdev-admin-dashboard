@@ -32,7 +32,7 @@ const useUploadFiles = (
         type: localFiles[0].file.type,
       });
     }
-  }, [localFiles]);
+  }, [localFiles, createPresignUrl]);
 
   useEffect(() => {
     if (status !== 'error' && status !== 'success') return;
@@ -47,7 +47,7 @@ const useUploadFiles = (
     }
 
     setLocalFiles((prev) => prev.slice(1));
-  }, [status, presignUrl]);
+  }, [status, presignUrl, localFiles, setLocalFiles, uploadFile]);
 
   return {
     isUploaded,

@@ -13,7 +13,9 @@ function GridSkeleton(props: Props): JSX.Element {
       {Array(count)
         .fill(0)
         .map((item, i) => (
-          <Skeleton className={className} key={i} />
+          <div key={i} className={className}>
+            <Skeleton className={'h-full w-full'} />
+          </div>
         ))}
     </>
   );

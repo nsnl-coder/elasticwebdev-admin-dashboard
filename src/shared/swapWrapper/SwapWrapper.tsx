@@ -44,8 +44,8 @@ function SwapWrapper(props: Props): JSX.Element {
   );
 
   useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, []);
+    if (preview) preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
 
   // accept drop
   const [{ isOver }, drop] = useDrop<any, any, any>(

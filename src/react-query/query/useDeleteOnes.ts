@@ -68,6 +68,7 @@ const useDeleteOnes = (requestConfig: RequestConfig) => {
   return {
     isLoading: mutation.isLoading,
     deleteOnes,
+    isDeleted: mutation.isSuccess,
   };
 };
 

@@ -1,14 +1,5 @@
-import {
-  Dispatch,
-  FormEvent,
-  InputHTMLAttributes,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import { DisplayTool } from './Toolbar';
 import { useRouter } from 'next/router';
 
 interface Props {
@@ -52,7 +43,7 @@ function SearchBar(props: Props): JSX.Element {
     if (router.query.searchBy || router.query.keyword) {
       if (!showSearch) setShowSearch(true);
     }
-  }, []);
+  }, [router.query.searchBy, router.query.keyword, showSearch]);
 
   return (
     <form onSubmit={searchHandler} className="flex-grow flex justify-end">

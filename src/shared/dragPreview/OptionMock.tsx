@@ -1,5 +1,6 @@
 import getS3FileUrl from '@src/utils/getFileUrl';
 import { Option } from '@src/yup/productSchema';
+import Image from 'next/image';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { HiPlusCircle } from 'react-icons/hi2';
@@ -32,9 +33,10 @@ function OptionInputs(props: Props): JSX.Element {
       )}
       {option.photo && (
         <div className="relative bg-gray-100 w-16 aspect-square">
-          <img
+          <Image
             className="object-contain w-full h-full"
             src={getS3FileUrl(option.photo)}
+            alt="drag and drop mock"
           />
           <span className="absolute -top-2 -right-2">
             <IoMdRemoveCircle size={24} />

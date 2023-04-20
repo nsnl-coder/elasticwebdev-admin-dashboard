@@ -17,7 +17,7 @@ function RequireNotLogin(props: Children): JSX.Element | null {
         pathname: '/',
       });
     }
-  }, [router.isReady, auth.user?.role]);
+  }, [router.isReady, auth.user?.role, router]);
 
   if (
     (auth.user?.role && auth.user?.role !== 'admin') ||

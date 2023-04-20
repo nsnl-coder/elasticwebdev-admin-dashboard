@@ -39,14 +39,13 @@ function CouponSummary(props: Props): JSX.Element {
           </li>
         )}
         {getValues('isFreeshipping') && <li>Freeshipping</li>}
-        {getValues('discountTime.endDate') &&
-          getValues('discountTime.startDate') && (
-            <li>
-              {`Discount start from
-              ${getLocaleDateString(getValues('discountTime.endDate'))} -   
-                ${getLocaleDateString(getValues('discountTime.endDate'))}`}
-            </li>
-          )}
+        {getValues('endDate') && getValues('startDate') && (
+          <li>
+            {`Discount start from
+              ${getLocaleDateString(getValues('endDate'))} -   
+                ${getLocaleDateString(getValues('endDate'))}`}
+          </li>
+        )}
         {getValues('minimumOrder') && (
           <li>Only valid for order over {getValues('minimumOrder')}$ </li>
         )}

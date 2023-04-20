@@ -25,7 +25,7 @@ function Gallery(): JSX.Element | null {
   useEffect(() => {
     if (!isUploaded) return;
     if (!isOpen || !isFetching) resetUploadFile();
-  }, [isOpen, isFetching]);
+  }, [isOpen, isFetching, isUploaded, resetUploadFile]);
 
   return (
     <div>
@@ -34,9 +34,14 @@ function Gallery(): JSX.Element | null {
       <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 content-start gap-4 items-center">
         <GalleryLabel htmlFor="gallery_upload" />
         {(isUploading || (isFetching && isUploaded)) && (
-          <GridSkeleton count={1} className="h-48" />
+          <GridSkeleton count={1} className="h-full w-full" />
         )}
-        {isLoading && <GridSkeleton count={11} className="h-48" />}
+        {isLoading && (
+          <GridSkeleton
+            count={9}
+            className="h-32 rounded-xl overflow-hidden shadow-lg"
+          />
+        )}
         {s3Files?.pages.length && <GalleryContent s3Files={s3Files} />}
         {!isFetching && <div ref={lastElementRef}></div>}
       </div>

@@ -20,7 +20,7 @@ function GalleryContent(props: Props): JSX.Element {
               <FileWrapper key={item.Key} s3Key={item.Key}>
                 <FilePreview
                   src={item.Key}
-                  className="h-48 w-full object-cover cursor-pointer"
+                  className="w-full object-cover cursor-pointer h-28"
                 />
               </FileWrapper>
             ))}

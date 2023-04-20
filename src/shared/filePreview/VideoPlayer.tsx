@@ -60,7 +60,7 @@ function VideoPlayer(props: VideoProps): JSX.Element {
         playerRef.current = null;
       }
     };
-  }, [src, type, videoRef, playerRef]);
+  }, [src, type, videoRef, playerRef, controls, autoplay]);
 
   return (
     <div data-vjs-player>

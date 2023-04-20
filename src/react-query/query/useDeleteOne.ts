@@ -50,8 +50,8 @@ const useDeleteOne = (requestConfig: RequestConfig) => {
   };
 
   return {
-    isLoading: mutation.isLoading,
     deleteOne,
+    isDeleting: mutation.isLoading,
   };
 };
 

@@ -58,14 +58,14 @@ function FileWrapper(props: Props): JSX.Element {
   };
 
   useEffect(() => {
-    if (maxFilesCount === 1 && isSelected) {
+    if (maxFilesCount === 1 && isSelected && selectedFiles.length > 0) {
       resolve(selectedFiles);
     }
-  }, [maxFilesCount, isSelected]);
+  }, [maxFilesCount, isSelected, resolve, selectedFiles]);
 
   return (
     <div
-      className={`group relative h-32 flex flex-col justify-center bg-gray-200 shadow-sm rounded-xl overflow-hidden ${
+      className={`group relative flex flex-col justify-center bg-gray-200 shadow-sm rounded-xl overflow-hidden ${
         isDeleting || isDeletingFiles ? 'opacity-60' : ''
       }`}
     >

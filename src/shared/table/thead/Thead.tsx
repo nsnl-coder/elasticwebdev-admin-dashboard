@@ -51,7 +51,7 @@ function Thead(props: Props): JSX.Element {
         },
       });
     }
-  }, [sortDirection]);
+  }, [sortDirection, query, router, sortBy]);
 
   return (
     <th className="group" onClick={handleOnClick}>

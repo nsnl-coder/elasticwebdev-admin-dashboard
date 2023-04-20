@@ -20,7 +20,7 @@ import 'nprogress/nprogress.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const publicSans = Public_Sans({ subsets: ['latin'] });
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 Router.events.on('routeChangeStart', nprogress.start);
 Router.events.on('routeChangeError', nprogress.done);

@@ -12,11 +12,6 @@ jobs:
         uses: actions/checkout@v3
 
       # caching
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc' # (1)
-          cache: 'npm'
-
       - name: Cache NPM dependencies
         uses: actions/cache@v3
         id: cache-primes

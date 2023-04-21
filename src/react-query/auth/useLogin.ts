@@ -6,7 +6,6 @@ import User from '@src/types/user';
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin, logUserIn } from '@src/store/auth';
 import { withDefaultOnError } from '../queryClient';
-import { useEffect } from 'react';
 
 type Response = HttpResponse<User>;
 

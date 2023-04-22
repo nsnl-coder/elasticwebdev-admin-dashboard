@@ -35,7 +35,7 @@ function Create(): JSX.Element {
   const { createOne: createCollection } =
     useCreateOne<Collection>(requestConfig);
 
-  const { updateOne: updateCollection } =
+  const { updateOne: updateCollection, isUpdating } =
     useUpdateOne<Collection>(requestConfig);
 
   const { data: collection } = useGetOne<Collection>(requestConfig, reset);
@@ -101,7 +101,7 @@ function Create(): JSX.Element {
                 defaultValue={collection?.status}
               />
               <div className="flex justify-end mt-4">
-                <SubmitBtn />
+                <SubmitBtn isUpdating={isUpdating} />
               </div>
             </Block>
             <Block>

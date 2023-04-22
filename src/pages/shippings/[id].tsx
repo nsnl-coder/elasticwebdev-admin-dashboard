@@ -32,7 +32,8 @@ function Create(): JSX.Element {
   const requestConfig = queryConfig.shippings;
 
   const { createOne: createShipping } = useCreateOne<Shipping>(requestConfig);
-  const { updateOne: updateShipping } = useUpdateOne<Shipping>(requestConfig);
+  const { updateOne: updateShipping, isUpdating } =
+    useUpdateOne<Shipping>(requestConfig);
   const { data: shipping } = useGetOne<Shipping>(requestConfig, reset);
 
   const onSubmit = (data: Shipping) => {
@@ -131,7 +132,7 @@ function Create(): JSX.Element {
                 label="status"
               />
               <div className="flex justify-end mt-4">
-                <SubmitBtn />
+                <SubmitBtn isUpdating={isUpdating} />
               </div>
             </Block>
           </SmallBlocks>

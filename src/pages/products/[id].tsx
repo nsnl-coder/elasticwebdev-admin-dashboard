@@ -45,8 +45,11 @@ function Create(): JSX.Element {
 
   const { createOne: createProduct, isCreated } =
     useCreateOne<Product>(requestConfig);
-  const { updateOne: updateProduct, error: updateError } =
-    useUpdateOne<Product>(requestConfig);
+  const {
+    updateOne: updateProduct,
+    error: updateError,
+    isUpdating,
+  } = useUpdateOne<Product>(requestConfig);
 
   const { data: product } = useGetOne<Product>(requestConfig, reset);
 
@@ -182,7 +185,7 @@ function Create(): JSX.Element {
                 label="status"
               />
               <div className="flex justify-end mt-4">
-                <SubmitBtn />
+                <SubmitBtn isUpdating={isUpdating} />
               </div>
             </Block>
             <Block>

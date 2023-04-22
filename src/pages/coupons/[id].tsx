@@ -37,7 +37,8 @@ function Create(): JSX.Element {
   const requestConfig = queryConfig.coupons;
 
   const { createOne: createCoupon } = useCreateOne<Coupon>(requestConfig);
-  const { updateOne: updateCoupon } = useUpdateOne<Coupon>(requestConfig);
+  const { updateOne: updateCoupon, isUpdating } =
+    useUpdateOne<Coupon>(requestConfig);
   const { data: coupon } = useGetOne<Coupon>(requestConfig, reset);
 
   const onSubmit = (data: Coupon) => {
@@ -177,7 +178,7 @@ function Create(): JSX.Element {
                 label="Status"
               />
               <div className="flex justify-end mt-6">
-                <SubmitBtn />
+                <SubmitBtn isUpdating={isUpdating} />
               </div>
             </Block>
             <Block>

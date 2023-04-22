@@ -11,7 +11,6 @@ import Select from '@src/shared/inputs/Select';
 import RichText from '@src/shared/inputs/RichText';
 import Textarea from '@src/shared/inputs/Textarea';
 import FilesInput from '@src/shared/inputs/FilesInput';
-import VariantsInput from '@src/components/products/create/VariantsInput';
 import useCreateOne from '@src/react-query/query/useCreateOne';
 import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useGetOne from '@src/react-query/query/useGetOne';
@@ -25,10 +24,13 @@ import { Collection } from '@src/yup/collectionSchema';
 import UpdatePageHeader from '@src/shared/updatePage/UpdatePageHeader';
 import { useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
+import { useAppDispatch } from '@src/hooks/redux';
+import VariantsInput from '@src/components/products/create/VariantsInput';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
   const requestConfig = queryConfig.products;
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -44,7 +46,7 @@ function Create(): JSX.Element {
   const { updateOne: updateProduct, error: updateError } =
     useUpdateOne<Product>(requestConfig);
 
-  const { data: product } = useGetOne<Product>(requestConfig, reset);
+  const { data: product, isSuccess } = useGetOne<Product>(requestConfig, reset);
 
   const { data: collections } = useGetOnes<Collection>(
     queryConfig.collections,
@@ -163,7 +165,6 @@ function Create(): JSX.Element {
                 errors={errors}
                 fieldName="variants"
                 control={control}
-                defaultValue={[]}
                 labelTheme="bold"
               />
             </Block>

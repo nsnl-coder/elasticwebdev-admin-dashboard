@@ -1,43 +1,49 @@
 import { ConfirmContext } from '@src/contexts/ConfirmContextProvider';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 const useConfirm = () => {
   const confirmContext = useContext(ConfirmContext);
+  const [confirm, setConfirm] = confirmContext || [];
 
-  if (!confirmContext) {
+  const isConfirmed = useCallback(
+    (prompt: string) => {
+      if (!setConfirm) {
+        return;
+      }
+
+      const promise = new Promise((resolve, reject) => {
+        setConfirm({ prompt, isOpen: true, resolve, reject });
+      });
+
+      const reset = () => {
+        setConfirm({ prompt: '', resolve: null, reject: null, isOpen: false });
+      };
+
+      return promise.then(
+        () => {
+          reset();
+          return true;
+        },
+        () => {
+          reset();
+          return false;
+        },
+      );
+    },
+    [setConfirm],
+  );
+
+  if (!confirm)
     return {
-      isConfirmed: () => undefined,
+      isConfirmed,
     };
-  }
-  const [confirm, setConfirm] = confirmContext;
-
-  const isConfirmed = (prompt: string) => {
-    const promise = new Promise((resolve, reject) => {
-      setConfirm({ prompt, isOpen: true, resolve, reject });
-    });
-
-    const reset = () => {
-      setConfirm({ prompt: '', resolve: null, reject: null, isOpen: false });
-    };
-
-    return promise.then(
-      () => {
-        reset();
-        return true;
-      },
-      () => {
-        reset();
-        return false;
-      },
-    );
-  };
 
   return {
     isConfirmed,
-    resolve:confirm.resolve,
-    reject:confirm.reject,
-    isOpen:confirm.isOpen,
-    prompt:confirm.prompt
+    resolve: confirm.resolve,
+    reject: confirm.reject,
+    isOpen: confirm.isOpen,
+    prompt: confirm.prompt,
   };
 };
 

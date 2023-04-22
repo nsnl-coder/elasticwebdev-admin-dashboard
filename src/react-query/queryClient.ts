@@ -1,4 +1,4 @@
-import { HttpError } from '@src/types/api';
+import { HttpError } from '@src/types/http';
 import { toastError } from '@src/utils/toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 

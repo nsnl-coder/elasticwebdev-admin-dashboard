@@ -9,6 +9,7 @@ interface Props {
 function UpdatePageHeader(props: Props): JSX.Element | null {
   const id = useRouter().query.id;
   const { reset, isDirty } = props;
+
   if (!isDirty) return null;
 
   return (

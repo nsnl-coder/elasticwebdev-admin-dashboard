@@ -1,5 +1,5 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpResponse } from '@src/types/api';
+import { HttpError, HttpResponse } from '@src/types/http';
 import { toastError } from '@src/utils/toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

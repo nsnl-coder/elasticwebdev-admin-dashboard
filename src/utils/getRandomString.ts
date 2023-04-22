@@ -1,4 +1,4 @@
-function generateCouponCode(length: number) {
+function getRandomString(length: number) {
   const characters =
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   let couponCode = '';
@@ -10,4 +10,4 @@ function generateCouponCode(length: number) {
   return couponCode.toUpperCase();
 }
 
-export default generateCouponCode;
+export default getRandomString;

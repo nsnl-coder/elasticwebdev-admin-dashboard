@@ -19,8 +19,8 @@ const menuSchema = object({
   status: string().oneOf(['draft', 'active']).label('status'),
   link: string().max(255).label('link'),
   photo: string().max(255).label('photo'),
+  type: string().oneOf(['root', 'nested']),
   childMenus: array().of(string()).label('Child menus'),
-  ordering: number().min(0).max(999).label('ordering'),
   position: string().oneOf(['footer', 'header']),
 });
 

@@ -1,10 +1,10 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpResponse } from '@src/types/api';
 import { useMutation } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { useRouter } from 'next/router';
 import { RequestConfig } from '../queryConfig';
+import { HttpError, HttpResponse } from '@src/types/http';
 
 const useCreateOne = <T extends { _id?: string }>(
   requestConfig: RequestConfig,

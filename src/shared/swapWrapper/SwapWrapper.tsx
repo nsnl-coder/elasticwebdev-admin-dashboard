@@ -71,7 +71,7 @@ function SwapWrapper(props: Props): JSX.Element {
         swapPosition(item.id, id);
       },
     }),
-    [ref],
+    [ref, swapPosition],
   );
 
   return (

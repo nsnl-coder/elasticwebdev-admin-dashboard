@@ -1,13 +1,13 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpResponse, HttpSuccess } from '@src/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { useRouter } from 'next/router';
 import { RequestConfig } from '../queryConfig';
 import useConfirm from '@src/hooks/useConfirm';
+import { HttpError, HttpResponse } from '@src/types/http';
 
-interface Response extends HttpSuccess {
+interface Response extends HttpResponse<any> {
   deletedCount: number;
 }
 

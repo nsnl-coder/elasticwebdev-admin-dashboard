@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 //
-import { HttpError } from '@src/types/api';
 import axios from '@src/config/axios';
 import { toastError } from '@src/utils/toast';
 import { withDefaultOnError } from '../queryClient';
+import { HttpError } from '@src/types/http';
 
 export type Response = {
   isTruncated: boolean;

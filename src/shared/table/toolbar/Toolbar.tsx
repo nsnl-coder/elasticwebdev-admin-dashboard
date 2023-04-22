@@ -1,9 +1,9 @@
-import { Sort } from '@src/types/table';
-import { useState } from 'react';
 import MultipleSelect from '../customFilter/MultipleSelect';
 import SingleSelect from '../customFilter/SingleSelect';
 import SearchBar from './SearchBar';
 import SortBar from './SortBar';
+
+export type Sort = string[][];
 
 interface DisplayTool {
   showSearch: boolean;

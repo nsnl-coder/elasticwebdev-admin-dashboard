@@ -1,12 +1,12 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 //
-import { HttpError, HttpResponse } from '@src/types/api';
 import axios from '@src/config/axios';
 import { withDefaultOnError } from '../queryClient';
 import { RequestConfig } from '../queryConfig';
 import { useCallback, useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
+import { HttpError, HttpResponse } from '@src/types/http';
 
 const useGetOnes = <T>(requestConfig: RequestConfig, optionalQuery?: any) => {
   const queryClient = useQueryClient();

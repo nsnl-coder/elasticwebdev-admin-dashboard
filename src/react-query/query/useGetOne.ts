@@ -2,11 +2,11 @@ import axios from '@src/config/axios';
 import { useQuery } from '@tanstack/react-query';
 //
 import { withDefaultOnError } from '../queryClient';
-import { HttpError, HttpResponse } from '@src/types/api';
 import { useRouter } from 'next/router';
 import { FieldValues, UseFormReset } from 'react-hook-form';
 import { RequestConfig } from '../queryConfig';
 import { toastError } from '@src/utils/toast';
+import { HttpError, HttpResponse } from '@src/types/http';
 
 const useGetOne = <T extends FieldValues>(
   requestConfig: RequestConfig,
@@ -43,6 +43,7 @@ const useGetOne = <T extends FieldValues>(
     isError: res.isError,
     error: res.error,
     data: res.data?.data,
+    isSuccess: res.isSuccess,
   };
 };
 

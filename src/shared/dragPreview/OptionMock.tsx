@@ -51,6 +51,7 @@ function OptionInputs(props: Props): JSX.Element {
           className="border outline-none h-7 px-3 w-full rounded-sm placeholder:text-sm"
           name="optionName"
           value={option.optionName || ''}
+          readOnly
         />
       </div>
       <div className="flex flex-col justify-between">
@@ -61,6 +62,7 @@ function OptionInputs(props: Props): JSX.Element {
           name="price"
           value={option.price || ''}
           className="border outline-none h-7 px-3 w-36 rounded-sm placeholder:text-sm"
+          readOnly
         />
       </div>
       <div className="flex gap-x-4 items-center self-end h-8 text-zinc-600">

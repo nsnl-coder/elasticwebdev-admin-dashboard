@@ -1,11 +1,11 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpSuccess } from '@src/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
+import { HttpError, HttpResponse } from '@src/types/http';
 
-interface Response extends HttpSuccess {
+interface Response extends HttpResponse<any> {
   modifiedCount: number;
 }
 

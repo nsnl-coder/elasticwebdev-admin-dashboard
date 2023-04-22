@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 //
 import axios from '@src/config/axios';
-import { HttpError } from '@src/types/api';
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin } from '@src/store/auth';
 import { useRouter } from 'next/router';
+import { HttpError } from '@src/types/http';
 
 const useLogOut = () => {
   const router = useRouter();

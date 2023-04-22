@@ -61,7 +61,6 @@ const MenuTable = (): JSX.Element => {
               <Thead fieldName="name" sortBy="name" />
               <Thead fieldName="status" sortBy="status" />
               <th>Link</th>
-              <Thead fieldName="ordering" sortBy="ordering" />
               <th>Actions</th>
             </tr>
           </thead>
@@ -108,7 +107,6 @@ const MenuTable = (): JSX.Element => {
                 <td>
                   <p className="truncate max-w-md">{menu.link}</p>
                 </td>
-                <td>{menu.ordering}</td>
                 <td>
                   <ActionsColumn requestConfig={requestConfig} id={menu._id} />
                 </td>

@@ -1,9 +1,3 @@
-interface QueryConfig {
-  singularName: string;
-  pluralName: string;
-  url: string;
-}
-
 const queryConfig = {
   collections: {
     singularName: 'collection',

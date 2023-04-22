@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { HttpResponse } from '@src/types/api';
-import User from '@src/types/user';
+import { HttpResponse } from '@src/types/http';
+import { User } from '@src/yup/userSchema';
 
 interface AuthState {
   isLoggedIn: boolean | undefined;

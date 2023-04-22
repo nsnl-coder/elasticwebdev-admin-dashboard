@@ -1,7 +1,7 @@
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import getS3FileUrl from '@src/utils/getFileUrl';
 import { Option } from '@src/yup/productSchema';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { HiPlusCircle } from 'react-icons/hi2';
@@ -14,17 +14,17 @@ import { DRAG_TYPES } from '@src/types/enum';
 import Image from 'next/image';
 
 export interface TOption extends Option {
-  id: string;
+  _id: string;
   variantId: string;
 }
 
 interface Props {
   option: TOption;
-  setVariants: Dispatch<SetStateAction<TVariant[]>>;
+  setVariants: (fn: (variansts: TVariant[]) => TVariant[]) => void;
   variantId: string;
 }
 
-function OptionInputs(props: Props): JSX.Element {
+function OptionsInput(props: Props): JSX.Element {
   const { option, setVariants, variantId } = props;
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +41,12 @@ function OptionInputs(props: Props): JSX.Element {
 
   const updateOption = (newOption: TOption) => {
     setVariants((variants) => {
-      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      const variantIndex = variants.findIndex((v) => v._id === variantId);
       if (variantIndex === -1) return variants;
 
       const variant = variants[variantIndex];
       const optionIndex = variant.options.findIndex(
-        (o) => o.id === newOption.id,
+        (o) => o._id === newOption._id,
       );
       if (optionIndex === -1) return variants;
 
@@ -62,11 +62,13 @@ function OptionInputs(props: Props): JSX.Element {
 
   const handleRemoveOption = () => {
     setVariants((variants) => {
-      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      const variantIndex = variants.findIndex((v) => v._id === variantId);
       if (variantIndex === -1) return variants;
 
       const variant = variants[variantIndex];
-      const optionIndex = variant.options.findIndex((o) => o.id === option.id);
+      const optionIndex = variant.options.findIndex(
+        (o) => o._id === option._id,
+      );
       if (optionIndex === -1) return variants;
 
       variant.options.splice(optionIndex, 1);
@@ -81,27 +83,25 @@ function OptionInputs(props: Props): JSX.Element {
 
   const handleAddMoreOption = () => {
     setVariants((variants) => {
-      const variantIndex = variants.findIndex((v) => v.id === variantId);
+      const variantIndex = variants.findIndex((v) => v._id === variantId);
       if (variantIndex === -1) return variants;
-
       let variant = variants[variantIndex];
       const options = variant.options;
-
-      const optionIndex = variant.options.findIndex((o) => o.id === option.id);
+      const optionIndex = variant.options.findIndex(
+        (o) => o._id === option._id,
+      );
       if (optionIndex === -1) return variants;
-
       variant = {
         ...variant,
         options: [
           ...options.slice(0, optionIndex + 1),
           {
-            id: v4(),
+            _id: v4(),
             variantId,
           },
           ...options.slice(optionIndex + 1),
         ],
       };
-
       return [
         ...variants.slice(0, variantIndex),
         variant,
@@ -125,35 +125,33 @@ function OptionInputs(props: Props): JSX.Element {
     updateOption(newOption);
   };
 
-  const swapPosition = (dragId: string, dropId: string) => {
-    setVariants((variants) => {
-      const variantIndex = variants.findIndex((v) => v.id === variantId);
-      const variant = variants[variantIndex];
-      const options = variant.options;
-
-      const dragIndex = options.findIndex((option) => option.id === dragId);
-
-      const dropIndex = options.findIndex((option) => option.id === dropId);
-
-      if (dragIndex === -1 || dropIndex == -1) return variants;
-
-      [options[dragIndex], options[dropIndex]] = [
-        options[dropIndex],
-        options[dragIndex],
-      ];
-
-      return [
-        ...variants.slice(0, variantIndex),
-        variant,
-        ...variants.slice(variantIndex + 1),
-      ];
-    });
-  };
+  const swapPosition = useCallback(
+    (dragId: string, dropId: string) => {
+      setVariants((variants) => {
+        const variantIndex = variants.findIndex((v) => v._id === variantId);
+        const variant = variants[variantIndex];
+        const options = variant.options;
+        const dragIndex = options.findIndex((option) => option._id === dragId);
+        const dropIndex = options.findIndex((option) => option._id === dropId);
+        if (dragIndex === -1 || dropIndex == -1) return variants;
+        [options[dragIndex], options[dropIndex]] = [
+          options[dropIndex],
+          options[dragIndex],
+        ];
+        return [
+          ...variants.slice(0, variantIndex),
+          variant,
+          ...variants.slice(variantIndex + 1),
+        ];
+      });
+    },
+    [setVariants, variantId],
+  );
 
   return (
     <SwapWrapper
       swapPosition={swapPosition}
-      id={option.id}
+      id={option._id}
       itemType={DRAG_TYPES.OPTION}
       swapOn="hover"
       payload={option}
@@ -172,7 +170,7 @@ function OptionInputs(props: Props): JSX.Element {
             <Image
               className="object-contain w-full h-full"
               src={getS3FileUrl(option.photo)}
-              alt="product"
+              alt="drag and drop image"
             />
             <span
               onClick={handleRemoveOptionImage}
@@ -198,6 +196,7 @@ function OptionInputs(props: Props): JSX.Element {
             Price:
           </label>
           <input
+            type="number"
             name="price"
             onChange={handleInputChange}
             value={option.price || ''}
@@ -221,7 +220,7 @@ function OptionInputs(props: Props): JSX.Element {
           >
             <HiPlusCircle size={25} />
           </button>
-          <button className="text-zinc-600/40 group-hover:text-zinc-600 cursor-move">
+          <button className="text-zinc-600/40 group-hover:text-zinc-600">
             <TbGridDots size={23} />
           </button>
         </div>
@@ -230,4 +229,4 @@ function OptionInputs(props: Props): JSX.Element {
   );
 }
 
-export default OptionInputs;
+export default OptionsInput;

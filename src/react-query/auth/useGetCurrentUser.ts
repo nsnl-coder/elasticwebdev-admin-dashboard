@@ -4,8 +4,8 @@ import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin, logUserIn } from '@src/store/auth';
 import axios from '@src/config/axios';
 
-import { HttpError, HttpResponse } from '@src/types/api';
-import User from '@src/types/user';
+import { HttpError, HttpResponse } from '@src/types/http';
+import { User } from '@src/yup/userSchema';
 
 type Response = HttpResponse<User>;
 

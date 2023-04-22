@@ -10,7 +10,7 @@ function Logo(): JSX.Element {
           width={130}
           height={29}
           alt="site logo"
-          className="w-32 object-contain"
+          className="w-32 object-contain h-auto"
         />
       </Link>
     </div>

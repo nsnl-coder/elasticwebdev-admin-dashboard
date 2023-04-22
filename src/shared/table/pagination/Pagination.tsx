@@ -1,7 +1,7 @@
-import Pagination from '@src/types/pagination';
 import getPagesArray from '@src/utils/getPagesArray';
 import Gotopage from './Gotopage';
 import PaginationItem from './PaginationItem';
+import { Pagination } from '@src/types/http';
 
 interface Props {
   pagination: Partial<Pagination> | undefined;

@@ -35,8 +35,6 @@ const CustomDragPreview = () => {
   let width = item?.ref?.current?.offsetWidth || 0;
   let height = item?.ref?.current?.offsetHeight || 0;
 
-  console.log(width, height);
-
   const styles = isDragging
     ? getStyles(sourceOffset, pointerOffset, width, height)
     : {};
@@ -66,10 +64,10 @@ function getStyles(
   const { x: pointerX, y: pointerY } = pointerOffset;
 
   // prevent point go outside of image
-  // if (x + width < pointerX || y + height < pointerY) {
-  //   x = pointerX - width / 2;
-  //   y = pointerY - height / 2;
-  // }
+  if (x + width < pointerX || y + height < pointerY) {
+    x = pointerX - width / 2;
+    y = pointerY - height / 2;
+  }
 
   //
   const transform = `translate(${x}px, ${y}px)`;

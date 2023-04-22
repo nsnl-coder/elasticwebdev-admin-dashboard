@@ -2,7 +2,7 @@ import useConfirm from '@src/hooks/useConfirm';
 import { Children } from '@src/types/shared';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props extends Children {
   className?: string;
@@ -18,15 +18,13 @@ function UpdatePageWrapper(props: Props): JSX.Element {
   const onRouteChangeStart = useCallback(
     (nextPath: string) => {
       if (isDirty) {
-        console.log('this run');
-
         setNextPath(nextPath);
         nProgress.done();
         router.events.emit('routeChangeError');
         throw 'User cancel route change! You can savely ignore this message!';
       }
     },
-    [isDirty, router.events],
+    [router.events, isDirty],
   );
 
   const confirmToLeave = useCallback(async () => {
@@ -37,7 +35,6 @@ function UpdatePageWrapper(props: Props): JSX.Element {
     if (isConfirm && nextPath) {
       router.events.off('routeChangeStart', onRouteChangeStart);
       router.push(nextPath);
-      console.log('pushed' + nextPath);
     }
     setNextPath(null);
   }, [isConfirmed, nextPath, onRouteChangeStart, router]);
@@ -49,8 +46,6 @@ function UpdatePageWrapper(props: Props): JSX.Element {
 
   useEffect(() => {
     if (!router.query.id) return;
-    if (router.query.id === 'create') return;
-
     router.events.on('routeChangeStart', onRouteChangeStart);
 
     return () => {

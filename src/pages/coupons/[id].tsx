@@ -8,7 +8,7 @@ import SmallBlocks from '@src/shared/form/SmallBlocks';
 import SubmitBtn from '@src/shared/form/SubmitBtn';
 import Input from '@src/shared/inputs/Input';
 import Select from '@src/shared/inputs/Select';
-import generateCouponCode from '@src/utils/generateCouponCode';
+import getRandomString from '@src/utils/getRandomString';
 import DateRangeInput from '@src/shared/inputs/date/DateRangeInput';
 import CouponSummary from '@src/components/coupons/CouponSummary';
 import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
@@ -81,7 +81,7 @@ function Create(): JSX.Element {
                   type="button"
                   className="bg-zinc-600 text-white px-4 rounded-md"
                   onClick={() => {
-                    setValue('couponCode', generateCouponCode(10));
+                    setValue('couponCode', getRandomString(10));
                     clearErrors('couponCode');
                   }}
                 >

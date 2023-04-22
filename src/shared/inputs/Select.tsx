@@ -25,6 +25,8 @@ function Select(props: Props): JSX.Element {
     options,
     labelTheme,
     className,
+    tooltip,
+    defaultValue,
   } = props;
 
   return (
@@ -34,6 +36,7 @@ function Select(props: Props): JSX.Element {
         label={label || fieldName}
         labelTheme={labelTheme}
         required={required}
+        tooltip={tooltip}
       />
       <select
         {...register(fieldName)}
@@ -41,6 +44,7 @@ function Select(props: Props): JSX.Element {
         className={`select select-bordered h-10 min-h-0 w-full rounded-md text-sm font-normal ${className} ${
           errors[fieldName] ? 'border-red-400' : ''
         }`}
+        defaultValue={defaultValue}
       >
         {options.map((option) => {
           if (typeof option === 'string') {

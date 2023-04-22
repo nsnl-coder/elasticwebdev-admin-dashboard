@@ -1,11 +1,11 @@
 import axios from '@src/config/axios';
-import { HttpError, HttpSuccess } from '@src/types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
 import { toastError, toastSuccess } from '@src/utils/toast';
 import { useRouter } from 'next/router';
 import { RequestConfig } from '../queryConfig';
 import useConfirm from '@src/hooks/useConfirm';
+import { HttpError, HttpResponse } from '@src/types/http';
 
 const useDeleteOne = (requestConfig: RequestConfig) => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const useDeleteOne = (requestConfig: RequestConfig) => {
   const queryClient = useQueryClient();
 
   const mutationFn = async (id: string) => {
-    const { data } = await axios<HttpSuccess>({
+    const { data } = await axios<HttpResponse<any>>({
       url: `${requestConfig.url}/${id}`,
       method: 'delete',
     });
@@ -33,7 +33,7 @@ const useDeleteOne = (requestConfig: RequestConfig) => {
     toastError(`Can not delete ${requestConfig.singularName}`);
   };
 
-  const mutation = useMutation<HttpSuccess, HttpError, string>({
+  const mutation = useMutation<HttpResponse<any>, HttpError, string>({
     mutationFn,
     onError: withDefaultOnError(onError),
     onSuccess,

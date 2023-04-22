@@ -3,10 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 
 //
-import loginSchema from '@src/yup/loginSchema';
 import Input from '@src/shared/inputs/Input';
 import useLogin from '@src/react-query/auth/useLogin';
 import RequireNotLogin from '@src/shared/hoc/RequireNotLogin';
+import userSchema from '@src/yup/userSchema';
 
 interface Inputs {
   email: string;
@@ -19,7 +19,7 @@ function Login(): JSX.Element {
     handleSubmit,
     formState: { errors, isValid, isValidating },
   } = useForm<Inputs>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(userSchema),
     defaultValues: {
       email: 'nsnl.coder@gmail.com',
       password: 'password',

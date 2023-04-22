@@ -14,8 +14,8 @@ import { Menu } from '@src/yup/menuSchema';
 import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
 import StatusColumn from '@src/shared/table/columns/StatusColumn';
-import IsPinnedColumn from '@src/shared/table/columns/IsPinnedColumn';
 import Thead from '@src/shared/table/thead/Thead';
+import MultipleSelect from '@src/shared/table/customFilter/MultipleSelect';
 
 const MenuTable = (): JSX.Element => {
   const requestConfig = queryConfig.menus;
@@ -47,7 +47,16 @@ const MenuTable = (): JSX.Element => {
       </div>
 
       <div className="bg-white shadow-lg ">
-        <Toolbar />
+        <Toolbar>
+          <MultipleSelect
+            queryField="position"
+            fieldValues={['header', 'footer']}
+          />
+          <MultipleSelect
+            queryField="menuType"
+            fieldValues={['root', 'nested']}
+          />
+        </Toolbar>
         <table className="shared-table">
           <thead>
             <tr>
@@ -59,6 +68,9 @@ const MenuTable = (): JSX.Element => {
               </th>
               <th>Photo</th>
               <Thead fieldName="name" sortBy="name" />
+              <Thead fieldName="menu type" sortBy="type" />
+              <Thead fieldName="position" sortBy="position" />
+              <Thead fieldName="ordering" sortBy="ordering" />
               <Thead fieldName="status" sortBy="status" />
               <th>Link</th>
               <th>Actions</th>
@@ -97,6 +109,9 @@ const MenuTable = (): JSX.Element => {
                     {menu.name}
                   </Link>
                 </td>
+                <td>{menu.menuType}</td>
+                <td>{menu.position || '_'}</td>
+                <td>{menu.ordering || '_'}</td>
                 <td>
                   <StatusColumn
                     requestConfig={requestConfig}
@@ -123,6 +138,7 @@ const MenuTable = (): JSX.Element => {
           <BulkActions
             checkedBoxesIds={checkedBoxesIds}
             requestConfig={requestConfig}
+            uiControls={{ showPin: false, showActive: true, showDraft: true }}
           />
         )}
         <Pagination pagination={pagination} />

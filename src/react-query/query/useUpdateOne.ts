@@ -45,7 +45,7 @@ const useUpdateOne = <T extends { _id?: string } = any>(
   };
 
   return {
-    isLoading: mutation.isLoading,
+    isUpdating: mutation.isLoading,
     updateOne,
     isSuccess: mutation.isSuccess,
     error: mutation.error,

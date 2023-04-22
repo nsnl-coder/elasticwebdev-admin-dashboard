@@ -20,7 +20,7 @@ function Checkbox(props: Props): JSX.Element {
   };
 
   return (
-    <div>
+    <div className="px-4">
       <input
         type="checkbox"
         className="checkbox checkbox-sm rounded-md"

@@ -1,6 +1,7 @@
 import { Menu } from '@src/yup/menuSchema';
 import { useController } from 'react-hook-form';
 import ChildMenu from './ChildMenu';
+import getRandomString from '@src/utils/getRandomString';
 
 interface Props {
   control: any;
@@ -10,16 +11,16 @@ interface Props {
 function ChildMenus(props: Props): JSX.Element {
   const { control, menus = [] } = props;
 
-  const { field } = useController({ control, name: 'childMenus' });
-
-  const selectedIds = field.value || [];
-  const selectedMenus = menus.filter((menu) => selectedIds.includes(menu._id));
+  const { field } = useController({
+    control,
+    name: 'childMenus',
+    defaultValue: [],
+  });
 
   const swapPosition = (id1: string, id2: string) => {
     const ids = field.value;
-
-    const index1 = menus.findIndex((menu) => menu._id === id1);
-    const index2 = menus.findIndex((menu) => menu._id === id2);
+    const index1 = ids.findIndex((id: string) => id === id1);
+    const index2 = ids.findIndex((id: string) => id === id2);
 
     if (index1 === -1 || index2 === -1) return;
 
@@ -27,11 +28,35 @@ function ChildMenus(props: Props): JSX.Element {
     field.onChange(ids);
   };
 
+  const removeMenu = (removeId: string) => {
+    const ids = field.value;
+
+    if (!Array.isArray(ids)) return;
+
+    const index = ids.findIndex((id: string) => id === removeId);
+    ids.splice(index, 1);
+
+    field.onChange(ids);
+  };
+
+  const selectedIds: string[] = field.value || [];
+  const selectedMenus: Menu[] = selectedIds.map(
+    (id) =>
+      menus.find((menu) => menu._id === id) ||
+      ({ name: 'Not found', _id: getRandomString(24) } as Menu),
+  );
+
   return (
-    <div>
-      {/* {selectedMenus.map((menu) => (
-        <ChildMenu menu={menu} swapPosition={swapPosition} />
-      ))} */}
+    <div className="space-y-1">
+      {selectedMenus.map((menu, index) => (
+        <ChildMenu
+          key={menu._id}
+          menu={menu}
+          swapPosition={swapPosition}
+          index={index}
+          removeMenu={removeMenu}
+        />
+      ))}
     </div>
   );
 }

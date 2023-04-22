@@ -40,7 +40,7 @@ function Create(): JSX.Element {
     reset,
     formState: { errors, isDirty },
   } = useForm<Product>({
-    resolver: yupResolver(productSchema),
+    resolver: yupResolver(productSchema, { stripUnknown: true }),
   });
 
   const { createOne: createProduct, isCreated } =

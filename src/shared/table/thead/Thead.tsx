@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BiSort } from 'react-icons/bi';
 import { BsSortAlphaDown, BsSortAlphaUpAlt } from 'react-icons/bs';
 
@@ -10,23 +10,16 @@ interface Props {
 
 function Thead(props: Props): JSX.Element {
   const router = useRouter();
-  const query = router.query;
 
   const { fieldName, sortBy } = props;
   const [sortDirection, setSortDirection] = useState<null | 'asc' | 'desc'>(
     null,
   );
 
-  const handleOnClick = () => {
-    setSortDirection((prev) =>
-      prev === null ? 'asc' : prev === 'asc' ? 'desc' : null,
-    );
-  };
-
-  useEffect(() => {
+  const handleSortDirectionChange = (sortDirection: string | null) => {
     if (!sortBy) return;
 
-    let sort = query.sort || '';
+    let sort = router.query.sort || '';
 
     if (typeof sort !== 'string') return;
 
@@ -43,15 +36,26 @@ function Thead(props: Props): JSX.Element {
     }
 
     sort = newSortArr.join(',');
+
     if (sort.length > 0) {
       router.push({
         query: {
-          ...query,
+          ...router.query,
           sort,
         },
       });
+    } else {
     }
-  }, [sortDirection, query, router, sortBy]);
+  };
+
+  const handleOnClick = () => {
+    setSortDirection((prev) => {
+      const newSortDirection =
+        prev === null ? 'asc' : prev === 'asc' ? 'desc' : null;
+      handleSortDirectionChange(newSortDirection);
+      return newSortDirection;
+    });
+  };
 
   return (
     <th className="group" onClick={handleOnClick}>

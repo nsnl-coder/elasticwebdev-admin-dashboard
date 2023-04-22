@@ -3,6 +3,7 @@ import { DRAG_TYPES } from '@src/types/enum';
 import { useDragLayer, XYCoord } from 'react-dnd';
 import OptionInputs from '../dragPreview/OptionMock';
 import Variant from '../dragPreview/VariantMock';
+import ChildMenuMock from '../dragPreview/ChildMenuMock';
 
 const CustomDragPreview = () => {
   const { isDragging, item, itemType, sourceOffset, pointerOffset } =
@@ -29,6 +30,9 @@ const CustomDragPreview = () => {
       break;
     case DRAG_TYPES.OPTION:
       preview = <OptionInputs option={item.payload} isDragging={true} />;
+      break;
+    case DRAG_TYPES.MENU:
+      preview = <ChildMenuMock menu={item.payload} />;
       break;
   }
 

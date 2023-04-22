@@ -29,17 +29,21 @@ function Create(): JSX.Element {
     register,
     handleSubmit,
     control,
-    getValues,
     reset,
+    watch,
     formState: { errors, isDirty },
   } = useForm<Menu>({
     resolver: yupResolver(menuSchema),
   });
 
   const { createOne: createMenu } = useCreateOne<Menu>(requestConfig);
-  const { updateOne: updateMenu } = useUpdateOne<Menu>(requestConfig);
+  const { updateOne: updateMenu, isUpdating } =
+    useUpdateOne<Menu>(requestConfig);
   const { data: menu } = useGetOne<Menu>(requestConfig, reset);
-  const { data: menus } = useGetOnes<Menu>(requestConfig, { fields: 'name' });
+  const { data: menus } = useGetOnes<Menu>(requestConfig, {
+    fields: 'name',
+    type: 'nested',
+  });
 
   const onSubmit = (data: Menu) => {
     // already check if should create or update
@@ -80,7 +84,7 @@ function Create(): JSX.Element {
               <Select
                 errors={errors}
                 register={register}
-                fieldName="type"
+                fieldName="menuType"
                 labelTheme="light"
                 options={[
                   { name: 'root menu', value: 'root' },
@@ -90,7 +94,7 @@ function Create(): JSX.Element {
                 tooltip="The menu hierarchy will start with the root menu at the first level!"
                 defaultValue="nested"
               />
-              {getValues('type') === 'root' ? (
+              {watch('menuType') === 'root' ? (
                 <Select
                   errors={errors}
                   register={register}
@@ -98,6 +102,18 @@ function Create(): JSX.Element {
                   labelTheme="light"
                   options={['header', 'footer']}
                   label="Position:"
+                />
+              ) : null}
+              {watch('menuType') === 'root' ? (
+                <Input
+                  register={register}
+                  errors={errors}
+                  fieldName="ordering"
+                  labelTheme="light"
+                  placeholder="1"
+                  label="Ordering:"
+                  tooltip="This will determine display order of root menu"
+                  required={true}
                 />
               ) : null}
             </Block>
@@ -128,19 +144,21 @@ function Create(): JSX.Element {
                 defaultValue={menu?.status}
               />
               <div className="flex justify-end mt-4">
-                <SubmitBtn />
+                <SubmitBtn isUpdating={isUpdating} />
               </div>
             </Block>
-            <Block>
-              <FilesInput
-                allowedTypes="*"
-                control={control}
-                errors={errors}
-                fieldName="photo"
-                maxFilesCount={1}
-                labelTheme="bold"
-              />
-            </Block>
+            {watch('menuType') === 'root' ? (
+              <Block>
+                <FilesInput
+                  allowedTypes="*"
+                  control={control}
+                  errors={errors}
+                  fieldName="photo"
+                  maxFilesCount={1}
+                  labelTheme="bold"
+                />
+              </Block>
+            ) : null}
           </SmallBlocks>
         </div>
       </form>

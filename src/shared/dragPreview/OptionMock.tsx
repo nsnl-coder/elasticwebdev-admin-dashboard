@@ -1,6 +1,4 @@
-import getS3FileUrl from '@src/utils/getFileUrl';
 import { Option } from '@src/yup/productSchema';
-import Image from 'next/image';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { HiPlusCircle } from 'react-icons/hi2';

@@ -1,3 +1,4 @@
+import { Children } from '@src/types/shared';
 import MultipleSelect from '../customFilter/MultipleSelect';
 import SingleSelect from '../customFilter/SingleSelect';
 import SearchBar from './SearchBar';
@@ -11,7 +12,7 @@ interface DisplayTool {
   currentFilter: string | undefined;
 }
 
-interface Props {
+interface Props extends Children {
   sortOptions?: string[][];
   searchBy?: string;
   showStatusFilter?: boolean;
@@ -22,6 +23,7 @@ function Toolbar(props: Props): JSX.Element {
     sortOptions = [['name', 'a-z', 'z-a']],
     searchBy = 'name',
     showStatusFilter = true,
+    children,
   } = props;
 
   const sort: Sort = [
@@ -44,8 +46,8 @@ function Toolbar(props: Props): JSX.Element {
           queryField="itemsPerPage"
           fieldValues={['5', '10', '20', '50', '100', '200', '500', '1000']}
         />
+        {children}
       </div>
-
       <div className="flex items-center gap-x-4 flex-grow justify-end">
         <SearchBar searchBy={searchBy} />
         <SortBar sort={sort} />

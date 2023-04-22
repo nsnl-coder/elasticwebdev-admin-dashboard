@@ -6,6 +6,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import { HiPlusCircle } from 'react-icons/hi2';
 import { IoMdRemoveCircle } from 'react-icons/io';
 import { TbGridDots } from 'react-icons/tb';
+import FilePreview from '../filePreview/FilePreview';
 
 export interface TOption extends Option {
   id: string;
@@ -32,14 +33,13 @@ function OptionInputs(props: Props): JSX.Element {
         </div>
       )}
       {option.photo && (
-        <div className="relative bg-gray-100 w-16 aspect-square">
-          <Image
-            className="object-contain w-full h-full"
-            src={getS3FileUrl(option.photo)}
-            alt="drag and drop mock"
+        <div className="relative bg-gray-100 w-24">
+          <FilePreview
+            src={option.photo}
+            className="w-20 aspect-square overflow-hidden object-cover"
           />
-          <span className="absolute -top-2 -right-2">
-            <IoMdRemoveCircle size={24} />
+          <span className="absolute -top-2 -right-2 hover:text-red-400 cursor-pointer">
+            <IoMdRemoveCircle size={20} />
           </span>
         </div>
       )}

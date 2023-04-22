@@ -27,8 +27,14 @@ function FilePreview(props: Props): JSX.Element {
 
   if (fileType === 'image') {
     return (
-      <div className={className}>
-        <Image alt="preview" width={400} height={400} src={src} />
+      <div>
+        <Image
+          alt="preview"
+          width={400}
+          height={400}
+          src={src}
+          className={className}
+        />
       </div>
     );
   }

@@ -10,6 +10,7 @@ interface Props extends Children {
 }
 
 function UpdatePageWrapper(props: Props): JSX.Element {
+  const id = useRouter().query.id;
   const { isDirty } = props;
   const { isConfirmed } = useConfirm();
   const [nextPath, setNextPath] = useState<string | null>(null);
@@ -17,14 +18,14 @@ function UpdatePageWrapper(props: Props): JSX.Element {
 
   const onRouteChangeStart = useCallback(
     (nextPath: string) => {
-      if (isDirty) {
+      if (isDirty && id !== 'create') {
         setNextPath(nextPath);
         nProgress.done();
         router.events.emit('routeChangeError');
         throw 'User cancel route change! You can savely ignore this message!';
       }
     },
-    [router.events, isDirty],
+    [router.events, isDirty, id],
   );
 
   const confirmToLeave = useCallback(async () => {

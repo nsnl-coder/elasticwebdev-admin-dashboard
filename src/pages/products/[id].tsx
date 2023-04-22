@@ -1,7 +1,24 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 //
 import productSchema, { Product } from '@src/yup/productSchema';
+
+import { toastError } from '@src/utils/toast';
+import { Collection } from '@src/yup/collectionSchema';
+import VariantsInput from '@src/components/products/create/VariantsInput';
+//
+import useCreateOne from '@src/react-query/query/useCreateOne';
+import useUpdateOne from '@src/react-query/query/useUpdateOne';
+import useGetOne from '@src/react-query/query/useGetOne';
+import queryConfig from '@src/react-query/queryConfig';
+import useGetOnes from '@src/react-query/query/useGetOnes';
+//
+import UpdatePageHeader from '@src/shared/updatePage/UpdatePageHeader';
+import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
+import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
+import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
 import BigBlocks from '@src/shared/form/BigBlocks';
 import Block from '@src/shared/form/Block';
 import SmallBlocks from '@src/shared/form/SmallBlocks';
@@ -11,26 +28,10 @@ import Select from '@src/shared/inputs/Select';
 import RichText from '@src/shared/inputs/RichText';
 import Textarea from '@src/shared/inputs/Textarea';
 import FilesInput from '@src/shared/inputs/FilesInput';
-import useCreateOne from '@src/react-query/query/useCreateOne';
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import useGetOne from '@src/react-query/query/useGetOne';
-import queryConfig from '@src/react-query/queryConfig';
-import { useRouter } from 'next/router';
-import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
-import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
-import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-import { Collection } from '@src/yup/collectionSchema';
-import UpdatePageHeader from '@src/shared/updatePage/UpdatePageHeader';
-import { useEffect } from 'react';
-import { toastError } from '@src/utils/toast';
-import { useAppDispatch } from '@src/hooks/redux';
-import VariantsInput from '@src/components/products/create/VariantsInput';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
   const requestConfig = queryConfig.products;
-  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -42,11 +43,12 @@ function Create(): JSX.Element {
     resolver: yupResolver(productSchema),
   });
 
-  const { createOne: createProduct } = useCreateOne<Product>(requestConfig);
+  const { createOne: createProduct, isCreated } =
+    useCreateOne<Product>(requestConfig);
   const { updateOne: updateProduct, error: updateError } =
     useUpdateOne<Product>(requestConfig);
 
-  const { data: product, isSuccess } = useGetOne<Product>(requestConfig, reset);
+  const { data: product } = useGetOne<Product>(requestConfig, reset);
 
   const { data: collections } = useGetOnes<Collection>(
     queryConfig.collections,

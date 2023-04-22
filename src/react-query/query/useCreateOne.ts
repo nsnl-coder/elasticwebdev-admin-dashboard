@@ -47,6 +47,7 @@ const useCreateOne = <T extends { _id?: string }>(
     isLoading: mutation.isLoading,
     createOne,
     error: mutation.error,
+    isCreated: mutation.isSuccess,
   };
 };
 

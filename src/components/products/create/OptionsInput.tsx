@@ -12,6 +12,7 @@ import { TbGridDots } from 'react-icons/tb';
 import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
 import Image from 'next/image';
+import FilePreview from '@src/shared/filePreview/FilePreview';
 
 export interface TOption extends Option {
   _id: string;
@@ -166,11 +167,10 @@ function OptionsInput(props: Props): JSX.Element {
           </div>
         )}
         {option.photo && (
-          <div className="relative bg-gray-100 w-16 aspect-square">
-            <Image
-              className="object-contain w-full h-full"
-              src={getS3FileUrl(option.photo)}
-              alt="drag and drop image"
+          <div className="relative bg-gray-100 w-20">
+            <FilePreview
+              src={option.photo}
+              className="w-20 aspect-square overflow-hidden object-cover"
             />
             <span
               onClick={handleRemoveOptionImage}

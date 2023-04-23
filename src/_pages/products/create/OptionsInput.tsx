@@ -9,10 +9,10 @@ import { IoMdRemoveCircle } from 'react-icons/io';
 import { TVariant } from './Variant';
 import { v4 } from 'uuid';
 import { TbGridDots } from 'react-icons/tb';
-import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
+import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
 import Image from 'next/image';
-import FilePreview from '@src/shared/filePreview/FilePreview';
+import FilePreview from '@src/components/filePreview/FilePreview';
 
 export interface TOption extends Option {
   _id: string;

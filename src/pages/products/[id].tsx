@@ -7,7 +7,7 @@ import productSchema, { Product } from '@src/yup/productSchema';
 
 import { toastError } from '@src/utils/toast';
 import { Collection } from '@src/yup/collectionSchema';
-import VariantsInput from '@src/components/products/create/VariantsInput';
+import VariantsInput from '@src/_pages/products/create/VariantsInput';
 //
 import useCreateOne from '@src/react-query/query/useCreateOne';
 import useUpdateOne from '@src/react-query/query/useUpdateOne';
@@ -15,19 +15,19 @@ import useGetOne from '@src/react-query/query/useGetOne';
 import queryConfig from '@src/react-query/queryConfig';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 //
-import UpdatePageHeader from '@src/shared/updatePage/UpdatePageHeader';
-import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
-import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
-import MultipleSelect from '@src/shared/form/multipleSelect/MultipleSelect';
-import BigBlocks from '@src/shared/form/BigBlocks';
-import Block from '@src/shared/form/Block';
-import SmallBlocks from '@src/shared/form/SmallBlocks';
-import SubmitBtn from '@src/shared/form/SubmitBtn';
-import Input from '@src/shared/inputs/Input';
-import Select from '@src/shared/inputs/Select';
-import RichText from '@src/shared/inputs/RichText';
-import Textarea from '@src/shared/inputs/Textarea';
-import FilesInput from '@src/shared/inputs/FilesInput';
+import UpdatePageHeader from '@src/components/updatePage/UpdatePageHeader';
+import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
+import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
+import MultipleSelect from '@src/components/form/multipleSelect/MultipleSelect';
+import BigBlocks from '@src/components/form/BigBlocks';
+import Block from '@src/components/form/Block';
+import SmallBlocks from '@src/components/form/SmallBlocks';
+import SubmitBtn from '@src/components/form/SubmitBtn';
+import Input from '@src/components/inputs/Input';
+import Select from '@src/components/inputs/Select';
+import RichText from '@src/components/inputs/RichText';
+import Textarea from '@src/components/inputs/Textarea';
+import FilesInput from '@src/components/inputs/FilesInput';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;

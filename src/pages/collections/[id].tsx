@@ -1,22 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 //
-import BigBlocks from '@src/shared/form/BigBlocks';
-import Block from '@src/shared/form/Block';
-import SmallBlocks from '@src/shared/form/SmallBlocks';
-import SubmitBtn from '@src/shared/form/SubmitBtn';
+import BigBlocks from '@src/components/form/BigBlocks';
+import Block from '@src/components/form/Block';
+import SmallBlocks from '@src/components/form/SmallBlocks';
+import SubmitBtn from '@src/components/form/SubmitBtn';
 import collectionSchema, { Collection } from '@src/yup/collectionSchema';
-import RichText from '@src/shared/inputs/RichText';
-import Select from '@src/shared/inputs/Select';
-import FilesInput from '@src/shared/inputs/FilesInput';
-import Input from '@src/shared/inputs/Input';
+import RichText from '@src/components/inputs/RichText';
+import Select from '@src/components/inputs/Select';
+import FilesInput from '@src/components/inputs/FilesInput';
+import Input from '@src/components/inputs/Input';
 import { useRouter } from 'next/router';
 import queryConfig from '@src/react-query/queryConfig';
 import useGetOne from '@src/react-query/query/useGetOne';
 import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useCreateOne from '@src/react-query/query/useCreateOne';
-import UpdatePageHeading from '@src/shared/updatePage/UpdatePageHeading';
-import UpdatePageWrapper from '@src/shared/updatePage/UpdatePageWrapper';
+import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
+import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;

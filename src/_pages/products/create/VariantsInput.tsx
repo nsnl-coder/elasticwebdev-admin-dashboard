@@ -1,6 +1,6 @@
 import Variant, { TVariant } from './Variant';
 import { v4 } from 'uuid';
-import { LabelProps } from '@src/shared/form/Label';
+import { LabelProps } from '@src/components/form/Label';
 import { Control, useController } from 'react-hook-form';
 import { MdPlaylistAdd } from 'react-icons/md';
 

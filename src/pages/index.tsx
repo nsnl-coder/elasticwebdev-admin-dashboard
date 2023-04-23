@@ -1,4 +1,4 @@
-import SelectFiles from '@src/shared/selectFiles/SelectFiles';
+import SelectFiles from '@src/components/selectFiles/SelectFiles';
 import { useState } from 'react';
 
 export default function Home() {

@@ -4,9 +4,9 @@ import { NextComponentType, NextPageContext } from 'next';
 import Router from 'next/router';
 import nprogress from 'nprogress';
 // src
-import CommonLayout from '@src/shared/layout/CommonLayout';
-import RequireAdmin from '@src/shared/requireAdmin/RequireAdmin';
-import UiContainer from '@src/shared/uiContainer/UiContainer';
+import CommonLayout from '@src/components/layout/CommonLayout';
+import RequireAdmin from '@src/components/requireAdmin/RequireAdmin';
+import UiContainer from '@src/components/uiContainer/UiContainer';
 import ContextProvider from '@src/contexts/ContextProvider';
 
 // css

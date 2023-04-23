@@ -3,18 +3,18 @@ import Link from 'next/link';
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
-import TableWrapper from '@src/shared/table/TableWrapper';
-import BulkActions from '@src/shared/table/bulkActions/BulkActions';
-import Checkbox from '@src/shared/table/bulkActions/Checkbox';
-import HeaderCheckbox from '@src/shared/table/bulkActions/HeaderCheckbox';
-import Pagination from '@src/shared/table/pagination/Pagination';
-import Toolbar from '@src/shared/table/toolbar/Toolbar';
+import TableWrapper from '@src/components/table/TableWrapper';
+import BulkActions from '@src/components/table/bulkActions/BulkActions';
+import Checkbox from '@src/components/table/bulkActions/Checkbox';
+import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
+import Pagination from '@src/components/table/pagination/Pagination';
+import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { Coupon } from '@src/yup/couponSchema';
-import EmptyUi from '@src/shared/table/emptyui/EmptyUi';
-import ActionsColumn from '@src/shared/table/columns/ActionsColumn';
-import StatusColumn from '@src/shared/table/columns/StatusColumn';
+import EmptyUi from '@src/components/table/emptyui/EmptyUi';
+import ActionsColumn from '@src/components/table/columns/ActionsColumn';
+import StatusColumn from '@src/components/table/columns/StatusColumn';
 import { BsCheck } from 'react-icons/bs';
-import Thead from '@src/shared/table/thead/Thead';
+import Thead from '@src/components/table/thead/Thead';
 
 const CouponTable = (): JSX.Element => {
   const requestConfig = queryConfig.coupons;

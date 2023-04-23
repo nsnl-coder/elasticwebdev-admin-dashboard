@@ -1,7 +1,7 @@
 import { TOption } from './OptionsInput';
 import OptionInputs from './OptionsInput';
 import { AiTwotoneDelete } from 'react-icons/ai';
-import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
+import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
 import { TbGridDots } from 'react-icons/tb';
 import { ChangeEvent, useCallback } from 'react';

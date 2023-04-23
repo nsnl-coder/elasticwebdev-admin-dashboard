@@ -1,4 +1,4 @@
-import FilePreview from '@src/shared/filePreview/FilePreview';
+import FilePreview from '@src/components/filePreview/FilePreview';
 import { DRAG_TYPES } from '@src/types/enum';
 import { useDragLayer, XYCoord } from 'react-dnd';
 import OptionInputs from '../dragPreview/OptionMock';

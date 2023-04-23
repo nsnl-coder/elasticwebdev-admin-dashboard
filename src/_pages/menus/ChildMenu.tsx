@@ -1,4 +1,4 @@
-import SwapWrapper from '@src/shared/swapWrapper/SwapWrapper';
+import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
 import { Menu } from '@src/yup/menuSchema';
 import { AiFillDelete } from 'react-icons/ai';

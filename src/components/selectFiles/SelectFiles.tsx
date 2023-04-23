@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 //
-import useUploadFiles from '@src/hooks/useUploadFiles';
 import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
 import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
 
@@ -11,6 +10,7 @@ import SelectFromGallery from './SelectFromGallery';
 import HiddenInput from './HiddenInput';
 import Label from './Label';
 import FilePreview from '../filePreview/FilePreview';
+import useUploadFiles from '@src/react-query/files/useUploadFiles';
 
 interface SelectFilesProps {
   files: string[];

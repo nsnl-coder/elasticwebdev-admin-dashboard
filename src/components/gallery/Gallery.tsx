@@ -1,4 +1,3 @@
-import useUploadFiles from '@src/hooks/useUploadFiles';
 import useGetFiles from '@src/react-query/files/useGetFiles';
 import React, { useEffect } from 'react';
 //
@@ -9,7 +8,8 @@ import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import GalleryContent from './GalleryContent';
 import GridSkeleton from '../skeleton/GridSkeleton';
-import useInfiniteFetch from '@src/hooks/useInfiniteFetch';
+import useUploadFiles from '@src/react-query/files/useUploadFiles';
+import useInfiniteFetch from '@src/react-query/query/useInfiniteFetch';
 
 function Gallery(): JSX.Element | null {
   const { isOpen } = useSelectFromGallery();

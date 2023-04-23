@@ -2,7 +2,6 @@ import { UseFormRegister } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 import { Children } from '@src/types/shared';
-import Tooltip from '../form/Tooltip';
 
 interface Props extends LabelProps, Children {
   register: UseFormRegister<any>;

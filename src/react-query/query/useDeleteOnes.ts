@@ -7,9 +7,9 @@ import { RequestConfig } from '../queryConfig';
 import useConfirm from '@src/hooks/useConfirm';
 import { HttpError, HttpResponse } from '@src/types/http';
 
-interface Response extends HttpResponse<any> {
+type Response = HttpResponse<{
   deletedCount: number;
-}
+}>;
 
 const useDeleteOnes = (requestConfig: RequestConfig) => {
   const router = useRouter();
@@ -29,13 +29,15 @@ const useDeleteOnes = (requestConfig: RequestConfig) => {
   };
 
   const onSuccess = (data: Response) => {
-    toastSuccess(
-      `${data.deletedCount} ${
-        data.deletedCount > 1
-          ? requestConfig.pluralName
-          : requestConfig.singularName
-      } has been deleted!`,
-    );
+    if (data.data?.deletedCount) {
+      toastSuccess(
+        `${data.data.deletedCount} ${
+          data.data.deletedCount > 1
+            ? requestConfig.pluralName
+            : requestConfig.singularName
+        } has been deleted!`,
+      );
+    }
     if (router.query.id) router.push(`/${requestConfig.pluralName}`);
     if (!router.query.id) {
       queryClient.invalidateQueries([requestConfig.pluralName]);

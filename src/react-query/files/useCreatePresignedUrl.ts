@@ -2,19 +2,17 @@ import axios from '@src/config/axios';
 import { toastError } from '@src/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
-import { HttpError } from '@src/types/http';
+import { HttpError, HttpResponse } from '@src/types/http';
 
 interface RequestData {
   type: string;
   size: number;
 }
 
-type Response = {
-  data: {
-    url: string;
-    key: string;
-  };
-};
+type Response = HttpResponse<{
+  url: string;
+  key: string;
+}>;
 
 const useCreatePresignedUrl = () => {
   const mutationFn = async (payload: RequestData) => {

@@ -3,14 +3,14 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from '@src/config/axios';
 import { toastError } from '@src/utils/toast';
 import { withDefaultOnError } from '../queryClient';
-import { HttpError } from '@src/types/http';
+import { HttpError, HttpResponse } from '@src/types/http';
 
-export type Response = {
-  isTruncated: boolean;
+export type Response = HttpResponse<{
+  IsTruncated: boolean;
   results: number;
   lastKey: number;
-  data: { Key: string }[];
-};
+  keys: { Key: string }[];
+}>;
 
 const useGetFiles = (isOpen: boolean) => {
   const fetchPage = async ({ pageParam = undefined }) => {
@@ -18,7 +18,7 @@ const useGetFiles = (isOpen: boolean) => {
       method: 'get',
       url: '/api/files',
       params: {
-        limit: 20,
+        limit: 30,
         startAfter: pageParam,
       },
     });
@@ -32,7 +32,7 @@ const useGetFiles = (isOpen: boolean) => {
   const res = useInfiniteQuery<any, HttpError, Response>(['files'], {
     queryFn: fetchPage,
     getNextPageParam: (lastPage: Response) =>
-      lastPage.isTruncated ? lastPage.lastKey : undefined,
+      lastPage.data!.IsTruncated ? lastPage.data?.lastKey : undefined,
     onError: withDefaultOnError(onError),
     enabled: isOpen,
   });

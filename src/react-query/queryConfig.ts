@@ -29,6 +29,11 @@ const queryConfig = {
     pluralName: 'files',
     url: '/api/files',
   },
+  homes: {
+    singularName: 'home',
+    pluralName: 'home',
+    url: '/api/homes',
+  },
 };
 
 interface RequestConfig {

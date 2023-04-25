@@ -1,5 +1,5 @@
 import useCreatePresignedUrl from '@src/react-query/files/useCreatePresignedUrl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FileInfo } from '../../hooks/useSelectLocalFiles';
 import useUploadFile from './useUploadFile';
 

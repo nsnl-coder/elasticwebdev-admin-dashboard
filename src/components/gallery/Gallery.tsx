@@ -29,6 +29,7 @@ function Gallery(): JSX.Element | null {
 
   return (
     <div>
+      {hasNextPage ? ' has next page' : 'does not hae'}
       <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
       <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
       <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 content-start gap-4 items-center">

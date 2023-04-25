@@ -5,9 +5,9 @@ import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
 import { HttpError, HttpResponse } from '@src/types/http';
 
-interface Response extends HttpResponse<any> {
+type Response = HttpResponse<{
   modifiedCount: number;
-}
+}>;
 
 interface Payload {
   updateList: string[];
@@ -27,13 +27,15 @@ const useUpdateOnes = (requestConfig: RequestConfig) => {
   };
 
   const onSuccess = (res: Response) => {
-    toastSuccess(
-      `${res.modifiedCount} ${
-        res.modifiedCount > 1
-          ? requestConfig.pluralName
-          : requestConfig.singularName
-      } has been updated!`,
-    );
+    if (res.data?.modifiedCount) {
+      toastSuccess(
+        `${res.data.modifiedCount} ${
+          res.data.modifiedCount > 1
+            ? requestConfig.pluralName
+            : requestConfig.singularName
+        } has been updated!`,
+      );
+    }
     queryClient.invalidateQueries([requestConfig.pluralName]);
   };
 

@@ -43,6 +43,7 @@ function Sidebar(): JSX.Element {
         <SidebarItem text="report " href="/" />
       </Section> */}
         <Section sectionName="Resources">
+          <SidebarItem text="Home page" href="/home" icon={<AiOutlineUserSwitch />} />
           <SidebarItem text="users" href="/" icon={<AiOutlineUserSwitch />} />
           <SidebarItem text="emails" href="/" icon={<AiOutlineMail />} />
           <button

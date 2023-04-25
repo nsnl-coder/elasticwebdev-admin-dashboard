@@ -12,10 +12,10 @@ const userSchema = object({
   profileImage: string().max(255).label('profileImage'),
 });
 
-interface User extends InferType<typeof userSchema> {
+interface IUser extends InferType<typeof userSchema> {
   _id?: string;
   role?: string;
 }
 
 export default userSchema;
-export type { User };
+export type { IUser };

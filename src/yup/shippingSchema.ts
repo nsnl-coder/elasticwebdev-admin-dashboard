@@ -83,9 +83,9 @@ const shippingSchema = object({
     .label('delivery max duration'),
 });
 
-interface Shipping extends InferType<typeof shippingSchema> {
+interface IShipping extends InferType<typeof shippingSchema> {
   _id?: string;
 }
 
 export default shippingSchema;
-export type { Shipping };
+export type { IShipping };

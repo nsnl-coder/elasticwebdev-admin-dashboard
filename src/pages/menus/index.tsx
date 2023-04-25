@@ -10,7 +10,7 @@ import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { Menu } from '@src/yup/menuSchema';
+import { IMenu } from '@src/yup/menuSchema';
 import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
@@ -23,7 +23,7 @@ const MenuTable = (): JSX.Element => {
     data: menus,
     pagination,
     isLoading,
-  } = useGetOnes<Menu>(requestConfig);
+  } = useGetOnes<IMenu>(requestConfig);
 
   const {
     handleCheckBoxChange,

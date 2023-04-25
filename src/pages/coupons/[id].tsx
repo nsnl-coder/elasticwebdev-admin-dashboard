@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 //
-import couponSchema, { Coupon } from '@src/yup/couponSchema';
+import couponSchema, { ICoupon } from '@src/yup/couponSchema';
 import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
@@ -31,17 +31,17 @@ function Create(): JSX.Element {
     clearErrors,
     reset,
     formState: { errors, isDirty },
-  } = useForm<Coupon>({
+  } = useForm<ICoupon>({
     resolver: yupResolver(couponSchema),
   });
   const requestConfig = queryConfig.coupons;
 
-  const { createOne: createCoupon } = useCreateOne<Coupon>(requestConfig);
+  const { createOne: createCoupon } = useCreateOne<ICoupon>(requestConfig);
   const { updateOne: updateCoupon, isUpdating } =
-    useUpdateOne<Coupon>(requestConfig);
-  const { data: coupon } = useGetOne<Coupon>(requestConfig, reset);
+    useUpdateOne<ICoupon>(requestConfig);
+  const { data: coupon } = useGetOne<ICoupon>(requestConfig, reset);
 
-  const onSubmit = (data: Coupon) => {
+  const onSubmit = (data: ICoupon) => {
     // already check if should create or update
     createCoupon(data, id);
     updateCoupon(data, id);

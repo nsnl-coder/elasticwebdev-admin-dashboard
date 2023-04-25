@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 //
-import shippingSchema, { Shipping } from '@src/yup/shippingSchema';
+import shippingSchema, { IShipping } from '@src/yup/shippingSchema';
 import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
@@ -25,18 +25,18 @@ function Create(): JSX.Element {
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<Shipping>({
+  } = useForm<IShipping>({
     resolver: yupResolver(shippingSchema),
   });
 
   const requestConfig = queryConfig.shippings;
 
-  const { createOne: createShipping } = useCreateOne<Shipping>(requestConfig);
+  const { createOne: createShipping } = useCreateOne<IShipping>(requestConfig);
   const { updateOne: updateShipping, isUpdating } =
-    useUpdateOne<Shipping>(requestConfig);
-  const { data: shipping } = useGetOne<Shipping>(requestConfig, reset);
+    useUpdateOne<IShipping>(requestConfig);
+  const { data: shipping } = useGetOne<IShipping>(requestConfig, reset);
 
-  const onSubmit = (data: Shipping) => {
+  const onSubmit = (data: IShipping) => {
     // already check if should create or update
     createShipping(data, id);
     updateShipping(data, id);

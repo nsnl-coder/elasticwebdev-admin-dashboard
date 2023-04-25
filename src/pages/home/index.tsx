@@ -11,7 +11,7 @@ import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
 import SubmitBtn from '@src/components/form/SubmitBtn';
-import homeSchema, { Home } from '@src/yup/homeSchema';
+import homeSchema, { IHome } from '@src/yup/homeSchema';
 import Select from '@src/components/inputs/Select';
 import Input from '@src/components/inputs/Input';
 import queryConfig from '@src/react-query/queryConfig';
@@ -19,7 +19,7 @@ import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
 import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
 import MultipleSelect from '@src/components/form/multipleSelect/MultipleSelect';
 import CarouselsInput from '@src/_pages/homes/CarouselsInput';
-import { Product } from '@src/yup/productSchema';
+import { IProduct } from '@src/yup/productSchema';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -31,18 +31,18 @@ function Create(): JSX.Element {
     control,
     reset,
     formState: { errors, isDirty },
-  } = useForm<Home>({
+  } = useForm<IHome>({
     resolver: yupResolver(homeSchema),
   });
 
-  const { createOne: createHome } = useCreateOne<Home>(requestConfig);
+  const { createOne: createHome } = useCreateOne<IHome>(requestConfig);
 
   const { updateOne: updateHome, isUpdating } =
-    useUpdateOne<Home>(requestConfig);
+    useUpdateOne<IHome>(requestConfig);
 
-  const { data: home } = useGetOne<Home>(requestConfig, reset);
+  const { data: home } = useGetOne<IHome>(requestConfig, reset);
 
-  const onSubmit = (data: Home) => {
+  const onSubmit = (data: IHome) => {
     // already check if should create or update
     // updateHome(data, id);
     // createHome(data, id);
@@ -50,11 +50,11 @@ function Create(): JSX.Element {
     console.log(data);
   };
   // get products, collections and posts
-  const { data: products } = useGetOnes<Product>(queryConfig.products, {
+  const { data: products } = useGetOnes<IProduct>(queryConfig.products, {
     fields: 'name',
   });
 
-  const { data: collections } = useGetOnes<Product>(queryConfig.collections, {
+  const { data: collections } = useGetOnes<IProduct>(queryConfig.collections, {
     fields: 'name',
   });
 

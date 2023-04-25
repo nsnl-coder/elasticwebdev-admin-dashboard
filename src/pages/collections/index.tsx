@@ -10,7 +10,7 @@ import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { Collection } from '@src/yup/collectionSchema';
+import { ICollection } from '@src/yup/collectionSchema';
 import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
@@ -23,7 +23,7 @@ const CollectionTable = (): JSX.Element => {
     data: collections,
     pagination,
     isLoading,
-  } = useGetOnes<Collection>(requestConfig);
+  } = useGetOnes<ICollection>(requestConfig);
 
   const {
     handleCheckBoxChange,

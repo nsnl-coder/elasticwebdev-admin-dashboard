@@ -36,9 +36,9 @@ const menuSchema = object({
     }),
 });
 
-interface Menu extends InferType<typeof menuSchema> {
+interface IMenu extends InferType<typeof menuSchema> {
   _id?: string;
 }
 
 export default menuSchema;
-export type { Menu };
+export type { IMenu };

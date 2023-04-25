@@ -9,7 +9,7 @@ import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { Coupon } from '@src/yup/couponSchema';
+import { ICoupon } from '@src/yup/couponSchema';
 import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
@@ -22,7 +22,7 @@ const CouponTable = (): JSX.Element => {
     data: coupons,
     pagination,
     isLoading,
-  } = useGetOnes<Coupon>(requestConfig);
+  } = useGetOnes<ICoupon>(requestConfig);
 
   const {
     handleCheckBoxChange,

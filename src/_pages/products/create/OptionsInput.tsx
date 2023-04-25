@@ -1,6 +1,5 @@
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
-import getS3FileUrl from '@src/utils/getFileUrl';
-import { Option } from '@src/yup/productSchema';
+import { IOption } from '@src/yup/productSchema';
 import { ChangeEvent, useCallback } from 'react';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
@@ -11,10 +10,9 @@ import { v4 } from 'uuid';
 import { TbGridDots } from 'react-icons/tb';
 import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
-import Image from 'next/image';
 import FilePreview from '@src/components/filePreview/FilePreview';
 
-export interface TOption extends Option {
+export interface TOption extends IOption {
   _id: string;
   variantId: string;
 }

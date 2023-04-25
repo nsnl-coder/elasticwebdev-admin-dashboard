@@ -10,7 +10,7 @@ import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { Product } from '@src/yup/productSchema';
+import { IProduct } from '@src/yup/productSchema';
 import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
@@ -24,7 +24,7 @@ const ProductTable = (): JSX.Element => {
     data: products,
     pagination,
     isLoading,
-  } = useGetOnes<Product>(requestConfig);
+  } = useGetOnes<IProduct>(requestConfig);
 
   const {
     handleCheckBoxChange,

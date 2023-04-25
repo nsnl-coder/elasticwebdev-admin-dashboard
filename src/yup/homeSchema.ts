@@ -16,9 +16,9 @@ const homeSchema = object({
   featuredPosts: array().of(string()).label('Featured posts'),
 });
 
-interface Home extends InferType<typeof homeSchema> {
+interface IHome extends InferType<typeof homeSchema> {
   _id: string;
 }
 
 export default homeSchema;
-export type { Home };
+export type { IHome };

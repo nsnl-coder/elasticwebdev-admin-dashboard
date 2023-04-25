@@ -1,11 +1,11 @@
-import { Menu } from '@src/yup/menuSchema';
+import { IMenu } from '@src/yup/menuSchema';
 import { useController } from 'react-hook-form';
 import ChildMenu from './ChildMenu';
 import getRandomString from '@src/utils/getRandomString';
 
 interface Props {
   control: any;
-  menus: Menu[] | undefined;
+  menus: IMenu[] | undefined;
 }
 
 function ChildMenus(props: Props): JSX.Element {
@@ -40,10 +40,10 @@ function ChildMenus(props: Props): JSX.Element {
   };
 
   const selectedIds: string[] = field.value || [];
-  const selectedMenus: Menu[] = selectedIds.map(
+  const selectedMenus: IMenu[] = selectedIds.map(
     (id) =>
       menus.find((menu) => menu._id === id) ||
-      ({ name: 'Not found', _id: getRandomString(24) } as Menu),
+      ({ name: 'Not found', _id: getRandomString(24) } as IMenu),
   );
 
   return (

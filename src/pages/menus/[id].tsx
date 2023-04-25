@@ -5,7 +5,7 @@ import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
 import SubmitBtn from '@src/components/form/SubmitBtn';
-import menuSchema, { Menu } from '@src/yup/menuSchema';
+import menuSchema, { IMenu } from '@src/yup/menuSchema';
 import Select from '@src/components/inputs/Select';
 import FilesInput from '@src/components/inputs/FilesInput';
 import Input from '@src/components/inputs/Input';
@@ -32,20 +32,20 @@ function Create(): JSX.Element {
     reset,
     watch,
     formState: { errors, isDirty },
-  } = useForm<Menu>({
+  } = useForm<IMenu>({
     resolver: yupResolver(menuSchema),
   });
 
-  const { createOne: createMenu } = useCreateOne<Menu>(requestConfig);
+  const { createOne: createMenu } = useCreateOne<IMenu>(requestConfig);
   const { updateOne: updateMenu, isUpdating } =
-    useUpdateOne<Menu>(requestConfig);
-  const { data: menu } = useGetOne<Menu>(requestConfig, reset);
-  const { data: menus } = useGetOnes<Menu>(requestConfig, {
+    useUpdateOne<IMenu>(requestConfig);
+  const { data: menu } = useGetOne<IMenu>(requestConfig, reset);
+  const { data: menus } = useGetOnes<IMenu>(requestConfig, {
     fields: 'name',
     type: 'nested',
   });
 
-  const onSubmit = (data: Menu) => {
+  const onSubmit = (data: IMenu) => {
     // already check if should create or update
     updateMenu(data, id);
     createMenu(data, id);

@@ -1,4 +1,4 @@
-import { object, number, string, array } from 'yup';
+import { object, number, string, array, InferType } from 'yup';
 
 const itemSchema = object({
   product: string().required(),
@@ -22,4 +22,9 @@ const orderSchema = object({
   shippingMethod: string(),
 });
 
+interface IOrder extends InferType<typeof orderSchema> {
+  _id?: string;
+}
+
 export default orderSchema;
+export type { IOrder };

@@ -1,11 +1,11 @@
 import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
-import { Menu } from '@src/yup/menuSchema';
+import { IMenu } from '@src/yup/menuSchema';
 import { AiFillDelete } from 'react-icons/ai';
 import { TbGridDots } from 'react-icons/tb';
 
 interface Props {
-  menu: Menu;
+  menu: IMenu;
   index: number;
   removeMenu: (removeId: string) => void;
   swapPosition: (id1: string, id2: string) => void;

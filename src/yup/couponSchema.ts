@@ -68,11 +68,11 @@ const couponSchema = object({
     .label('Coupon end date'),
 });
 
-interface Coupon extends InferType<typeof couponSchema> {
+interface ICoupon extends InferType<typeof couponSchema> {
   _id?: string;
   expiredIn?: string;
   usedCoupons?: number;
 }
 
 export default couponSchema;
-export type { Coupon };
+export type { ICoupon };

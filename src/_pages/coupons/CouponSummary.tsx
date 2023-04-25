@@ -1,9 +1,9 @@
 import getLocaleDateString from '@src/utils/getLocaleDateString';
-import { Coupon } from '@src/yup/couponSchema';
+import { ICoupon } from '@src/yup/couponSchema';
 import { UseFormGetValues } from 'react-hook-form';
 
 interface Props {
-  getValues: UseFormGetValues<Coupon>;
+  getValues: UseFormGetValues<ICoupon>;
 }
 
 function CouponSummary(props: Props): JSX.Element {

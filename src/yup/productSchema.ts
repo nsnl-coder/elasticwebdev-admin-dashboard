@@ -50,14 +50,14 @@ const productSchema = object({
   variants: array().of(variantSchema).max(100).label('Product variants'),
 });
 
-interface Product extends InferType<typeof productSchema> {
+interface IProduct extends InferType<typeof productSchema> {
   _id?: string;
   slug: string;
 }
 
-interface Option extends InferType<typeof optionSchema> {
+interface IOption extends InferType<typeof optionSchema> {
   _id?: string;
 }
 
-export type { Product, Option };
+export type { IProduct, IOption };
 export default productSchema;

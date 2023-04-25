@@ -3,10 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 //
-import productSchema, { Product } from '@src/yup/productSchema';
+import productSchema, { IProduct } from '@src/yup/productSchema';
 
 import { toastError } from '@src/utils/toast';
-import { Collection } from '@src/yup/collectionSchema';
+import { ICollection } from '@src/yup/collectionSchema';
 import VariantsInput from '@src/_pages/products/create/VariantsInput';
 //
 import useCreateOne from '@src/react-query/query/useCreateOne';
@@ -39,28 +39,28 @@ function Create(): JSX.Element {
     control,
     reset,
     formState: { errors, isDirty },
-  } = useForm<Product>({
+  } = useForm<IProduct>({
     resolver: yupResolver(productSchema, { stripUnknown: true }),
   });
 
   const { createOne: createProduct, isCreated } =
-    useCreateOne<Product>(requestConfig);
+    useCreateOne<IProduct>(requestConfig);
   const {
     updateOne: updateProduct,
     error: updateError,
     isUpdating,
-  } = useUpdateOne<Product>(requestConfig);
+  } = useUpdateOne<IProduct>(requestConfig);
 
-  const { data: product } = useGetOne<Product>(requestConfig, reset);
+  const { data: product } = useGetOne<IProduct>(requestConfig, reset);
 
-  const { data: collections } = useGetOnes<Collection>(
+  const { data: collections } = useGetOnes<ICollection>(
     queryConfig.collections,
     {
       itemsPerPage: 999,
     },
   );
 
-  const onSubmit = (data: Product) => {
+  const onSubmit = (data: IProduct) => {
     // already check if should create or update
     updateProduct(data, id);
     createProduct(data, id);

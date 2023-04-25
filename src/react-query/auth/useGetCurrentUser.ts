@@ -5,9 +5,9 @@ import { failToLogin, logUserIn } from '@src/store/auth';
 import axios from '@src/config/axios';
 
 import { HttpError, HttpResponse } from '@src/types/http';
-import { User } from '@src/yup/userSchema';
+import { IUser } from '@src/yup/userSchema';
 
-type Response = HttpResponse<User>;
+type Response = HttpResponse<IUser>;
 
 const useCurrentUser = () => {
   const dispatch = useAppDispatch();

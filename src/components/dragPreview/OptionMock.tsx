@@ -1,4 +1,4 @@
-import { Option } from '@src/yup/productSchema';
+import { IOption } from '@src/yup/productSchema';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { HiPlusCircle } from 'react-icons/hi2';
@@ -6,7 +6,7 @@ import { IoMdRemoveCircle } from 'react-icons/io';
 import { TbGridDots } from 'react-icons/tb';
 import FilePreview from '../filePreview/FilePreview';
 
-export interface TOption extends Option {
+export interface TOption extends IOption {
   id: string;
   variantId: string;
 }

@@ -3,18 +3,16 @@ import Link from 'next/link';
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
-import FilePreview from '@src/components/filePreview/FilePreview';
 import TableWrapper from '@src/components/table/TableWrapper';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
 import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { Shipping } from '@src/yup/shippingSchema';
+import { IShipping } from '@src/yup/shippingSchema';
 import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
-import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
 import Thead from '@src/components/table/thead/Thead';
 
 const ShippingTable = (): JSX.Element => {
@@ -23,7 +21,7 @@ const ShippingTable = (): JSX.Element => {
     data: shippings,
     pagination,
     isLoading,
-  } = useGetOnes<Shipping>(requestConfig);
+  } = useGetOnes<IShipping>(requestConfig);
 
   const {
     handleCheckBoxChange,

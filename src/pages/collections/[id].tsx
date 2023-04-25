@@ -5,7 +5,7 @@ import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
 import SubmitBtn from '@src/components/form/SubmitBtn';
-import collectionSchema, { Collection } from '@src/yup/collectionSchema';
+import collectionSchema, { ICollection } from '@src/yup/collectionSchema';
 import RichText from '@src/components/inputs/RichText';
 import Select from '@src/components/inputs/Select';
 import FilesInput from '@src/components/inputs/FilesInput';
@@ -28,19 +28,19 @@ function Create(): JSX.Element {
     control,
     reset,
     formState: { errors, isDirty },
-  } = useForm<Collection>({
+  } = useForm<ICollection>({
     resolver: yupResolver(collectionSchema),
   });
 
   const { createOne: createCollection } =
-    useCreateOne<Collection>(requestConfig);
+    useCreateOne<ICollection>(requestConfig);
 
   const { updateOne: updateCollection, isUpdating } =
-    useUpdateOne<Collection>(requestConfig);
+    useUpdateOne<ICollection>(requestConfig);
 
-  const { data: collection } = useGetOne<Collection>(requestConfig, reset);
+  const { data: collection } = useGetOne<ICollection>(requestConfig, reset);
 
-  const onSubmit = (data: Collection) => {
+  const onSubmit = (data: ICollection) => {
     // already check if should create or update
     updateCollection(data, id);
     createCollection(data, id);

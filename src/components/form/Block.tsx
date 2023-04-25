@@ -3,7 +3,7 @@ import { Children } from '@src/types/shared';
 interface Props {
   blockTitle?: string;
   className?: string;
-  children: any;
+  children?: any;
 }
 
 function Block(props: Props): JSX.Element {

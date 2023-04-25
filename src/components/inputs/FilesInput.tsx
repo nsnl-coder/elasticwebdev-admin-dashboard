@@ -10,6 +10,7 @@ interface Props
     LabelProps {
   control: any;
   errors: any;
+  className?: string;
 }
 
 function FilesInput(props: Props): JSX.Element {
@@ -20,8 +21,10 @@ function FilesInput(props: Props): JSX.Element {
     errors,
     maxFilesCount,
     labelTheme,
+    className,
     required = false,
     allowedTypes,
+    showUploadLabel = true,
   } = props;
 
   const { field } = useController({ name: fieldName, control });
@@ -44,10 +47,10 @@ function FilesInput(props: Props): JSX.Element {
   }
 
   return (
-    <div>
+    <div className={className}>
       <Label
         fieldName={fieldName}
-        label={label || fieldName}
+        label={label}
         labelTheme={labelTheme}
         required={required}
       />
@@ -57,6 +60,7 @@ function FilesInput(props: Props): JSX.Element {
         setFiles={setFiles}
         maxFilesCount={maxFilesCount}
         fieldName={fieldName}
+        showUploadLabel={showUploadLabel}
       />
       <ErrorMessage errors={errors} fieldName={fieldName} />
     </div>

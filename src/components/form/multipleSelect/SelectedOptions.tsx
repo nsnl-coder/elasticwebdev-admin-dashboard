@@ -1,6 +1,5 @@
 import { IoMdClose } from 'react-icons/io';
 import { Option } from './MultipleSelect';
-import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   selectedOptions: string[];
@@ -11,24 +10,24 @@ interface Props {
 function SelectedOptions(props: Props): JSX.Element {
   const { selectedOptions, setSelectedOptions, options } = props;
 
-  const handleRemoveSelection = (id: string | undefined) => {
-    if (!id) return;
+  const handleRemoveSelection = (_id: string | undefined) => {
+    if (!_id) return;
 
     setSelectedOptions((prev) => {
-      return prev.filter((option) => option !== id);
+      return prev.filter((option) => option !== _id);
     });
   };
 
   const foundOptions = options.filter(
-    (option) => option.id && selectedOptions.includes(option.id),
+    (option) => option._id && selectedOptions.includes(option._id),
   );
 
-  const optionIds = options.map((option) => option.id);
+  const optionIds = options.map((option) => option._id);
 
   const notFoundOptions: Option[] = selectedOptions
     .filter((option) => !optionIds.includes(option))
     .map((option) => ({
-      id: option,
+      _id: option,
       name: 'Not found',
     }));
 
@@ -38,12 +37,12 @@ function SelectedOptions(props: Props): JSX.Element {
     <div className="flex gap-1.5 flex-wrap">
       {allOptions.map((option) => (
         <div
-          key={option.id}
+          key={option._id}
           className="rounded-full border px-3 leading-3 py-1 flex items-center cursor-pointer hover:bg-gray-100"
         >
           {option.name}
           <span
-            onClick={() => handleRemoveSelection(option.id)}
+            onClick={() => handleRemoveSelection(option._id)}
             className="px-2 hover:text-red-400"
           >
             <IoMdClose />

@@ -1,22 +1,25 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
+//
+import useGetOne from '@src/react-query/query/useGetOne';
+import useUpdateOne from '@src/react-query/query/useUpdateOne';
+import useCreateOne from '@src/react-query/query/useCreateOne';
+import useGetOnes from '@src/react-query/query/useGetOnes';
 //
 import BigBlocks from '@src/components/form/BigBlocks';
 import Block from '@src/components/form/Block';
 import SmallBlocks from '@src/components/form/SmallBlocks';
 import SubmitBtn from '@src/components/form/SubmitBtn';
 import homeSchema, { Home } from '@src/yup/homeSchema';
-import RichText from '@src/components/inputs/RichText';
 import Select from '@src/components/inputs/Select';
-import FilesInput from '@src/components/inputs/FilesInput';
 import Input from '@src/components/inputs/Input';
-import { useRouter } from 'next/router';
 import queryConfig from '@src/react-query/queryConfig';
-import useGetOne from '@src/react-query/query/useGetOne';
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import useCreateOne from '@src/react-query/query/useCreateOne';
 import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
 import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
+import MultipleSelect from '@src/components/form/multipleSelect/MultipleSelect';
+import CarouselsInput from '@src/_pages/homes/CarouselsInput';
+import { Product } from '@src/yup/productSchema';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -41,9 +44,19 @@ function Create(): JSX.Element {
 
   const onSubmit = (data: Home) => {
     // already check if should create or update
-    updateHome(data, id);
-    createHome(data, id);
+    // updateHome(data, id);
+    // createHome(data, id);
+
+    console.log(data);
   };
+  // get products, collections and posts
+  const { data: products } = useGetOnes<Product>(queryConfig.products, {
+    fields: 'name',
+  });
+
+  const { data: collections } = useGetOnes<Product>(queryConfig.collections, {
+    fields: 'name',
+  });
 
   return (
     <UpdatePageWrapper isDirty={isDirty}>
@@ -55,7 +68,58 @@ function Create(): JSX.Element {
           status={home?.status}
         />
         <div className="mx-auto flex gap-x-5 justify-center">
-          <BigBlocks>{/* <Block></Block> */}</BigBlocks>
+          <BigBlocks>
+            <Block>
+              <Input
+                register={register}
+                errors={errors}
+                fieldName="versionName"
+                labelTheme="light"
+                placeholder="summer theme"
+                label="Version name:"
+                required={true}
+              />
+            </Block>
+            <Block>
+              <MultipleSelect
+                control={control}
+                errors={errors}
+                fieldName="featuredProducts"
+                labelTheme="light"
+                options={products}
+                label="Featured products"
+              />
+            </Block>
+            <Block>
+              <MultipleSelect
+                control={control}
+                errors={errors}
+                fieldName="featuredCollections"
+                labelTheme="light"
+                options={collections}
+                label="Featured collections:"
+              />
+            </Block>
+            <Block>
+              <MultipleSelect
+                control={control}
+                errors={errors}
+                fieldName="featuredPost"
+                labelTheme="light"
+                options={[]}
+                label="Featured posts:"
+              />
+            </Block>
+            <Block>
+              <CarouselsInput
+                control={control}
+                errors={errors}
+                fieldName="carouselItems"
+                labelTheme="light"
+                register={register}
+              />
+            </Block>
+          </BigBlocks>
           <SmallBlocks>
             <Block>
               <Select
@@ -65,6 +129,7 @@ function Create(): JSX.Element {
                 options={['draft', 'active']}
                 labelTheme="bold"
                 defaultValue={home?.status}
+                tooltip="Only one version is active at a time. Others with automatically be draft ."
               />
               <div className="flex justify-end mt-4">
                 <SubmitBtn isUpdating={isUpdating} />

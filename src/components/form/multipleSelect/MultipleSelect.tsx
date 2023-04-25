@@ -8,7 +8,7 @@ import { useController } from 'react-hook-form';
 
 export interface Option {
   name?: string;
-  id?: string;
+  _id?: string;
 }
 
 interface Props extends LabelProps {
@@ -39,8 +39,8 @@ function MultipleSelect(props: Props): JSX.Element {
   const matchedOptions = options.filter(
     (option) =>
       option.name?.toLowerCase().includes(keyword.toLowerCase()) &&
-      option.id &&
-      !excludes.includes(option.id),
+      option._id &&
+      !excludes.includes(option._id),
   );
 
   const { field } = useController({ name: fieldName, control });
@@ -92,7 +92,7 @@ function MultipleSelect(props: Props): JSX.Element {
         >
           {matchedOptions.map((option) => (
             <MultipleSelectItem
-              key={option.id}
+              key={option._id}
               option={option}
               setSelectedOptions={setSelectedOptions}
               selectedOptions={selectedOptions}

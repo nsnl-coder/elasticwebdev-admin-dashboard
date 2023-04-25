@@ -10,6 +10,8 @@ interface Props extends LabelProps, Children {
   placeholder?: string;
   defaultValue?: string;
   className?: string;
+  minLength?: number;
+  maxLength?: number;
 }
 
 function Input(props: Props): JSX.Element {
@@ -26,19 +28,21 @@ function Input(props: Props): JSX.Element {
     children,
     className,
     tooltip,
+    ...inputProps
   } = props;
 
   return (
     <div className="w-full">
       <Label
         fieldName={fieldName}
-        label={label || fieldName}
+        label={label}
         labelTheme={labelTheme}
         required={required}
         tooltip={tooltip}
       />
       <div className="flex gap-x-4">
         <input
+          {...inputProps}
           type={type}
           id={fieldName}
           {...register(fieldName)}

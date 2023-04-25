@@ -56,7 +56,7 @@ function Create(): JSX.Element {
   const { data: collections } = useGetOnes<Collection>(
     queryConfig.collections,
     {
-      limit: 999,
+      itemsPerPage: 999,
     },
   );
 
@@ -164,7 +164,7 @@ function Create(): JSX.Element {
                 control={control}
                 fieldName="collections"
                 labelTheme="bold"
-                options={collections?.map((c) => ({ id: c._id, name: c.name }))}
+                options={collections}
               />
               <VariantsInput
                 errors={errors}

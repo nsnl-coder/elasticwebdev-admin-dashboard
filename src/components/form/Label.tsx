@@ -10,7 +10,7 @@ interface LabelProps {
   tooltip?: string;
 }
 
-function Label(props: LabelProps): JSX.Element {
+function Label(props: LabelProps): JSX.Element | null {
   const {
     fieldName,
     tooltip,
@@ -18,6 +18,8 @@ function Label(props: LabelProps): JSX.Element {
     labelTheme = 'light',
     label,
   } = props;
+
+  if (!label) return null;
 
   return (
     <div
@@ -33,7 +35,7 @@ function Label(props: LabelProps): JSX.Element {
             : 'font-semibold text-lg capitalize block'
         }`}
       >
-        <span>{label || fieldName}</span>
+        <span>{label}</span>
         {required && <span className="text-red-400">*</span>}
       </label>
       {tooltip && <Tooltip dataTip={tooltip} />}

@@ -19,10 +19,18 @@ interface SelectFilesProps {
   allowedTypes: AllowedFilesTypes;
   className?: string;
   fieldName: string;
+  showUploadLabel?: boolean;
 }
 
 function SelectFiles(props: SelectFilesProps): JSX.Element {
-  const { files, setFiles, maxFilesCount, allowedTypes, fieldName } = props;
+  const {
+    files,
+    setFiles,
+    maxFilesCount,
+    allowedTypes,
+    fieldName,
+    showUploadLabel,
+  } = props;
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
   const {
@@ -66,7 +74,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
   return (
     <div
       className={`gap-4 grid ${
-        maxFilesCount > 3 ? 'grid-cols-4' : 'grid-cols-2 '
+        maxFilesCount > 3 ? 'grid-cols-4' : showUploadLabel ? 'grid-cols-2' : ''
       }`}
     >
       <HiddenInput id={fieldName} selectFiles={selectLocalFiles} />
@@ -96,7 +104,7 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
           currentFilesCount={files.length}
         />
       )}
-      {!isMaxFilesCount && (
+      {!isMaxFilesCount && showUploadLabel && (
         <Label htmlFor={fieldName} className="aspect-square" />
       )}
     </div>

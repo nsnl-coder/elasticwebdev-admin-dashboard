@@ -36,14 +36,14 @@ function FileWrapper(props: Props): JSX.Element {
         <div
           className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer`}
         ></div>
-        <div
-          onClick={handleRemoveFile}
-          className="absolute top-4 left-4 opacity-0 group-hover:opacity-100"
-        >
-          <TbTrashFilled
-            size={24}
-            className="text-gray-400  tooltip-bottom hover:text-red-400 cursor-pointer"
-          />
+        <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100">
+          <div>
+            <TbTrashFilled
+              onClick={handleRemoveFile}
+              size={24}
+              className="text-gray-400  tooltip-bottom hover:text-red-400 cursor-pointer"
+            />
+          </div>
         </div>
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100"

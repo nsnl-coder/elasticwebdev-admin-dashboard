@@ -17,7 +17,8 @@ function Login(): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isValidating },
+    control,
+    formState: { isValid, isValidating },
   } = useForm<Inputs>({
     resolver: yupResolver(userSchema),
     defaultValues: {
@@ -44,14 +45,14 @@ function Login(): JSX.Element {
             <Input
               register={register}
               fieldName="email"
-              errors={errors}
+              control={control}
               label="Email:"
               labelTheme="light"
             />
             <Input
               register={register}
               fieldName="password"
-              errors={errors}
+              control={control}
               label="Password:"
               type="password"
               labelTheme="light"

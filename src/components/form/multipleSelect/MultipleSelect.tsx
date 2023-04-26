@@ -31,7 +31,7 @@ function MultipleSelect(props: Props): JSX.Element {
     tooltip,
   } = props;
 
-  const { errors } = useFormState();
+  const { errors } = useFormState({ control });
 
   const [keyword, setKeyword] = useState<string>('');
   const [focusList, setFocusList] = useState(false);

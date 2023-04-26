@@ -25,7 +25,7 @@ function FilesInput(props: Props): JSX.Element {
     showUploadLabel = true,
   } = props;
 
-  const { errors } = useFormState();
+  const { errors } = useFormState({ control });
   const { field } = useController({ name: fieldName, control });
 
   const setFiles = (fn: (files: string[]) => string[]) => {

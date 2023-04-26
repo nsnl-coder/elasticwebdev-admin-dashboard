@@ -1,4 +1,18 @@
-import { object, number, string, array, InferType } from 'yup';
+import {
+  object,
+  number as originalNumber,
+  string,
+  array,
+  InferType,
+} from 'yup';
+
+const number = () => {
+  return originalNumber().transform((value, originalValue) => {
+    if (typeof originalValue === 'string' && originalValue.trim() === '')
+      return undefined;
+    return value;
+  });
+};
 
 const itemSchema = object({
   product: string().required(),

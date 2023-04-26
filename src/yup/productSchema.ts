@@ -18,7 +18,10 @@ const number = () => {
 const optionSchema = object({
   optionName: string().max(255),
   photo: string().max(255),
-  price: number().max(99999),
+  price: number()
+    .max(99999)
+    .label('Option price')
+    .typeError('Option price must be a number'),
 });
 
 const variantSchema = object({

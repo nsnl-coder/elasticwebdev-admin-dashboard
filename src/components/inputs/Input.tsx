@@ -42,10 +42,10 @@ function Input(props: Props): JSX.Element {
           type={type}
           id={fieldName}
           {...register(fieldName)}
-          className={`${className} border border-gray-400/80 h-10 px-3 w-full rounded-md placeholder:text-sm ${
+          className={`${className} outline-none border border-gray-300 h-10 px-3 w-full rounded-md placeholder:text-sm ${
             errors[fieldName] ? 'border border-red-400' : ''
           }`}
-          placeholder={placeholder || fieldName}
+          placeholder={placeholder}
         />
         {children}
       </div>

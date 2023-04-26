@@ -1,11 +1,6 @@
 import Variant from './Variant';
 import Label, { LabelProps } from '@src/components/form/Label';
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  useFieldArray,
-} from 'react-hook-form';
+import { Control, UseFormRegister, useFieldArray } from 'react-hook-form';
 import { MdPlaylistAdd } from 'react-icons/md';
 import { DRAG_TYPES } from '@src/types/enum';
 import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
@@ -35,13 +30,14 @@ function VariantsInput(props: Props): JSX.Element {
         {variants.map((variant, index) => (
           <SwapWrapper
             itemType={DRAG_TYPES.VARIANT}
-            swapPosition={swap}
-            className="bg-gray-50 py-10 rounded-md px-6 overflow-hidden"
-            isOverClassName="border border-blue-500"
+            swapByIndex={swap}
+            isOverClassName="border border-blue-500 rounded-md overflow-hidden"
             swapOn="drop"
-            payload={variant}
+            payload={{ control, index, register }}
             key={variant.id}
+            id={variant.id}
             index={index}
+            swapBy="index"
           >
             <Variant
               index={index}

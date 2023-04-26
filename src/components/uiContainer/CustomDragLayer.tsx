@@ -2,8 +2,9 @@ import FilePreview from '@src/components/filePreview/FilePreview';
 import { DRAG_TYPES } from '@src/types/enum';
 import { useDragLayer, XYCoord } from 'react-dnd';
 import OptionInputs from '../dragPreview/OptionMock';
-import Variant from '../dragPreview/VariantMock';
 import ChildMenuMock from '../dragPreview/ChildMenuMock';
+import Variant from '@src/_pages/products/create/Variant';
+import Option from '@src/_pages/products/create/Option';
 
 const CustomDragPreview = () => {
   const { isDragging, item, itemType, sourceOffset, pointerOffset } =
@@ -18,18 +19,32 @@ const CustomDragPreview = () => {
   if (!isDragging) return null;
 
   let preview = null;
-  let wrapperClassName = '';
 
   switch (itemType) {
     case DRAG_TYPES.FILE:
-      wrapperClassName = 'rounded-md overflow-hidden';
       preview = <FilePreview src={item.id} />;
       break;
     case DRAG_TYPES.VARIANT:
-      preview = <Variant variant={item.payload} />;
+      preview = (
+        <Variant
+          control={item.payload.control}
+          index={item.payload.index}
+          register={item.payload.register}
+          remove={() => {}}
+        />
+      );
       break;
     case DRAG_TYPES.OPTION:
-      preview = <OptionInputs option={item.payload} isDragging={true} />;
+      preview = (
+        <Option
+          control={item.payload.control}
+          index={item.payload.index}
+          variantIndex={item.payload.variantIndex}
+          register={item.payload.register}
+          insert={() => {}}
+          remove={() => {}}
+        />
+      );
       break;
     case DRAG_TYPES.MENU:
       preview = <ChildMenuMock menu={item.payload} />;
@@ -45,7 +60,7 @@ const CustomDragPreview = () => {
 
   return (
     <div className="fixed pointer-events-none left-0 top-0 z-50">
-      <div style={styles} className={wrapperClassName}>
+      <div style={styles} className="shadow-2xl">
         {preview}
       </div>
     </div>

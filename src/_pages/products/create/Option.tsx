@@ -2,8 +2,10 @@ import { IProduct } from '@src/yup/productSchema';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { HiPlusCircle } from 'react-icons/hi2';
 import { TbGridDots } from 'react-icons/tb';
-import { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Control, UseFormRegister } from 'react-hook-form';
 import Input from '@src/components/inputs/Input';
+import SelectFromGalleryInput from '@src/components/inputs/SelectFromGalleryInput';
+import React from 'react';
 
 interface Props {
   register: UseFormRegister<IProduct>;
@@ -28,31 +30,27 @@ function Option(props: Props): JSX.Element {
     `variants.${variantIndex}.options.${optionIndex}.${fieldName}`;
 
   return (
-    <div className="flex gap-x-4 pl-12 group py-4">
-      <div className="flex flex-col justify-between flex-grow">
-        <label htmlFor="" className="block">
-          Option name:
-        </label>
-        <Input
-          register={register}
-          control={control}
-          fieldName={getFieldName('optionName')}
-          labelTheme="light"
-          placeholder=""
-          label=""
-          required={true}
-        />
-      </div>
-      <div className="flex flex-col justify-between">
-        <label htmlFor="" className="block">
-          Price:
-        </label>
-        <input
-          min="0"
-          max="99999"
-          className="border outline-none h-7 px-3 w-36 rounded-sm placeholder:text-sm"
-        />
-      </div>
+    <div className="flex gap-x-4 pl-12 group py-2 px-2 bg-gray-50 rounded-sm overflow-hidden">
+      <SelectFromGalleryInput
+        control={control}
+        fieldName={getFieldName('photo')}
+      />
+      <Input
+        register={register}
+        control={control}
+        fieldName={getFieldName('optionName')}
+        labelTheme="light"
+        label="Option name:"
+        className="h-8 rounded-sm -mt-1"
+      />
+      <Input
+        register={register}
+        control={control}
+        fieldName={getFieldName('price')}
+        labelTheme="light"
+        label="Price:"
+        className="h-8 rounded-sm -mt-1"
+      />
       <div className="flex gap-x-4 items-center self-end h-8 text-zinc-600">
         <button
           type="button"
@@ -64,7 +62,7 @@ function Option(props: Props): JSX.Element {
         <button
           type="button"
           className="hover:text-blue-500 cursor-pointer"
-          onClick={() => insert(optionIndex, {})}
+          onClick={() => insert(optionIndex + 1, {})}
         >
           <HiPlusCircle size={25} />
         </button>
@@ -76,4 +74,4 @@ function Option(props: Props): JSX.Element {
   );
 }
 
-export default Option;
+export default React.memo(Option);

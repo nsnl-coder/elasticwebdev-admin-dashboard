@@ -59,7 +59,7 @@ function Create(): JSX.Element {
   });
 
   return (
-    <UpdatePageWrapper isDirty={isDirty}>
+    <UpdatePageWrapper control={control}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <UpdatePageHeading
           title={home?.versionName || 'Add home'}
@@ -72,7 +72,7 @@ function Create(): JSX.Element {
             <Block>
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="versionName"
                 labelTheme="light"
                 placeholder="summer theme"
@@ -83,7 +83,6 @@ function Create(): JSX.Element {
             <Block>
               <MultipleSelect
                 control={control}
-                errors={errors}
                 fieldName="featuredProducts"
                 labelTheme="light"
                 options={products}
@@ -93,7 +92,6 @@ function Create(): JSX.Element {
             <Block>
               <MultipleSelect
                 control={control}
-                errors={errors}
                 fieldName="featuredCollections"
                 labelTheme="light"
                 options={collections}
@@ -103,7 +101,6 @@ function Create(): JSX.Element {
             <Block>
               <MultipleSelect
                 control={control}
-                errors={errors}
                 fieldName="featuredPost"
                 labelTheme="light"
                 options={[]}
@@ -124,7 +121,7 @@ function Create(): JSX.Element {
             <Block>
               <Select
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="status"
                 options={['draft', 'active']}
                 labelTheme="bold"

@@ -25,14 +25,7 @@ function Create(): JSX.Element {
   const id = useRouter().query.id;
   const requestConfig = queryConfig.menus;
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    watch,
-    formState: { errors, isDirty },
-  } = useForm<IMenu>({
+  const { register, handleSubmit, control, reset, watch } = useForm<IMenu>({
     resolver: yupResolver(menuSchema),
   });
 
@@ -42,7 +35,7 @@ function Create(): JSX.Element {
   const { data: menu } = useGetOne<IMenu>(requestConfig, reset);
   const { data: menus } = useGetOnes<IMenu>(requestConfig, {
     fields: 'name',
-    type: 'nested',
+    menuType: 'nested',
   });
 
   const onSubmit = (data: IMenu) => {
@@ -119,14 +112,10 @@ function Create(): JSX.Element {
             </Block>
             <Block>
               <MultipleSelect
-                control={control}
                 fieldName="childMenus"
-                errors={errors}
+                control={control}
                 labelTheme="light"
-                options={menus?.map((menu) => ({
-                  id: menu._id,
-                  name: menu.name,
-                }))}
+                options={menus}
                 label="Child menus:"
                 excludes={menu?._id ? [menu._id] : []}
               />
@@ -152,7 +141,6 @@ function Create(): JSX.Element {
                 <FilesInput
                   allowedTypes="*"
                   control={control}
-                  errors={errors}
                   fieldName="photo"
                   maxFilesCount={1}
                   labelTheme="bold"

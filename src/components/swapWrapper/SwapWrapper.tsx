@@ -3,21 +3,29 @@ import { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
+interface Payload {
+  index: number;
+  id: string;
+}
+
 interface Props extends Children {
   className?: string;
   isOverClassName?: string;
   payload?: any;
   itemType: string;
   swapOn: 'hover' | 'drop';
+  swapBy: 'id' | 'index';
   disableGrayBg?: boolean;
-  idOrIndex: string | number;
-  swapPosition: (index1: number | string, index2: number | string) => void;
+  id: string;
+  index: number;
+  swapByIndex?: (index1: number, index2: number) => void;
+  swapById?: (id1: string, id2: string) => void;
 }
 
 function SwapWrapper(props: Props): JSX.Element {
   const {
-    idOrIndex,
-    swapPosition,
+    id,
+    index,
     children,
     className,
     payload,
@@ -25,7 +33,11 @@ function SwapWrapper(props: Props): JSX.Element {
     swapOn = 'hover',
     disableGrayBg,
     isOverClassName,
+    swapById,
+    swapByIndex,
+    swapBy,
   } = props;
+
   const ref = useRef<null | HTMLDivElement>(null);
 
   // enable drag
@@ -33,7 +45,8 @@ function SwapWrapper(props: Props): JSX.Element {
     () => ({
       type: itemType,
       item: {
-        idOrIndex,
+        id,
+        index,
         ref,
         payload,
       },
@@ -55,23 +68,27 @@ function SwapWrapper(props: Props): JSX.Element {
         isOver: monitor.isOver(),
       }),
       canDrop(item) {
-        return item.idOrIndex !== idOrIndex;
+        return item.id !== id;
       },
       hover(item) {
-        if (item.idOrIndex === idOrIndex) return;
+        if (item.id === id) return;
         if (swapOn !== 'hover') return;
 
-        swapPosition(item.idOrIndex, idOrIndex);
+        if (swapBy === 'id' && !!swapById) swapById(item.id, id);
+        if (swapBy === 'index' && !!swapByIndex) swapByIndex(item.index, index);
       },
       drop(item) {
-        if (item.idOrIndex === idOrIndex) return;
+        if (item.id === id) return;
         if (swapOn !== 'drop') return;
 
-        if (idOrIndex) swapPosition(item.idOrIndex, idOrIndex);
+        if (swapBy === 'id' && !!swapById) swapById(item.id, id);
+        if (swapBy === 'index' && !!swapByIndex) swapByIndex(item.index, index);
       },
     }),
-    [ref, swapPosition],
+    [ref, swapById, swapByIndex],
   );
+
+  console.log(ref.current?.dataset?.index);
 
   return (
     <div
@@ -81,6 +98,7 @@ function SwapWrapper(props: Props): JSX.Element {
         ref.current = node;
       }}
       className={`relative ${className} z-20 ${isOver ? isOverClassName : ''}`}
+      data-index={index}
     >
       {children}
       {isDragging && !disableGrayBg && (

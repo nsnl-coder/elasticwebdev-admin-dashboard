@@ -3,11 +3,12 @@ import { object, number as originalNumber, string, InferType } from 'yup';
 const invalid_time = 'Delivery max unit should have higher time unit.';
 
 const number = () => {
-  return originalNumber().transform((value, originalValue) =>
-    originalValue.trim() === '' ? undefined : value,
-  );
+  return originalNumber().transform((value, originalValue) => {
+    if (typeof originalValue === 'string' && originalValue.trim() === '')
+      return undefined;
+    return value;
+  });
 };
-
 const shippingSchema = object({
   display_name: string().min(1).max(255).label('name'),
   status: string().oneOf(['draft', 'active']).label('status'),

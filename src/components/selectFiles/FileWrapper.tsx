@@ -26,10 +26,12 @@ function FileWrapper(props: Props): JSX.Element {
       className={`relative border group rounded-md shadow-sm flex items-center justify-center aspect-square overflow-hidden bg-gray-50 ${
         index === 0 ? 'col-span-2 row-span-2' : ''
       }`}
-      swapPosition={swapPosition}
       itemType={DRAG_TYPES.FILE}
       id={s3Key}
+      swapBy="id"
+      swapById={swapPosition}
       swapOn="hover"
+      index={index}
     >
       <div>
         {props.children}

@@ -1,7 +1,8 @@
 import { Control, UseFormRegister, useFieldArray } from 'react-hook-form';
-import Option from './Option';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { TbGridDots } from 'react-icons/tb';
+//
+import Option from './Option';
 import { IProduct } from '@src/yup/productSchema';
 import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
@@ -29,7 +30,7 @@ function Variant(props: Props): JSX.Element {
   } = useFieldArray({ control, name: `variants.${variantIndex}.options` });
 
   return (
-    <div>
+    <div className="bg-gray-50 px-6 py-10 rounded-md overflow-hidden">
       <div className="flex items-center mb-6 gap-x-6">
         <div className="h-10 self-end flex items-center cursor-pointer">
           <TbGridDots size={24} />
@@ -52,15 +53,24 @@ function Variant(props: Props): JSX.Element {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-y-6">
+      <div>
         {options.map((option, index) => (
           <SwapWrapper
-            swapPosition={swap}
+            swapByIndex={swap}
+            id={option.id}
             index={index}
+            swapBy="index"
             itemType={DRAG_TYPES.OPTION}
-            swapOn="hover"
-            payload={option}
+            swapOn="drop"
+            payload={{
+              register,
+              index,
+              variantIndex,
+              control,
+            }}
             key={option.id}
+            isOverClassName="border border-blue-500"
+            className="rounded-sm overflow-hidden"
           >
             <Option
               register={register}
@@ -68,6 +78,7 @@ function Variant(props: Props): JSX.Element {
               variantIndex={variantIndex}
               insert={insert}
               remove={removeOption}
+              control={control}
             />
           </SwapWrapper>
         ))}

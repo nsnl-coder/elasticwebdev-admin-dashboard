@@ -19,10 +19,12 @@ function ChildMenu(props: Props): JSX.Element | null {
   return (
     <SwapWrapper
       itemType={DRAG_TYPES.MENU}
-      idOrIndex={menu._id}
-      swapPosition={swapPosition}
+      index={index}
+      id={menu._id}
+      swapBy="id"
+      swapById={swapPosition}
       swapOn="hover"
-      payload={{ name: menu.name, index }}
+      payload={{ name: menu.name, index, id: menu._id }}
     >
       <div className="h-12 flex items-center gap-x-4 justify-between bg-slate-50 px-6 cursor-pointer">
         <div className="flex gap-x-6">

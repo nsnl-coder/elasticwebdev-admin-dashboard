@@ -3,11 +3,9 @@ import React, { useEffect } from 'react';
 //
 import HiddenInput from '../selectFiles/HiddenInput';
 import GalleryHeader from './GalleryHeader';
-import GalleryLabel from './UploadLabel';
 import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 import GalleryContent from './GalleryContent';
-import GridSkeleton from '../skeleton/GridSkeleton';
 import useUploadFiles from '@src/react-query/files/useUploadFiles';
 import useInfiniteFetch from '@src/react-query/query/useInfiniteFetch';
 
@@ -28,22 +26,19 @@ function Gallery(): JSX.Element | null {
   }, [isOpen, isFetching, isUploaded, resetUploadFile]);
 
   return (
-    <div>
-      {hasNextPage ? ' has next page' : 'does not hae'}
+    <div className="flex flex-col h-screen overflow-hidden">
       <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
       <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
-      <div className="p-8 flex-grow overflow-y-auto small-scrollbar grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 content-start gap-4 items-center">
-        <GalleryLabel htmlFor="gallery_upload" />
-        {(isUploading || (isFetching && isUploaded)) && (
-          <GridSkeleton count={1} className="h-full w-full" />
-        )}
-        {isLoading && (
-          <GridSkeleton
-            count={9}
-            className="h-32 rounded-xl overflow-hidden shadow-lg"
+      <div className="p-8 flex-grow   content-start items-center overflow-y-auto small-scrollbar">
+        {s3Files?.pages.length && (
+          <GalleryContent
+            isFetching={isFetching}
+            isLoading={isLoading}
+            isUploaded={isUploaded}
+            isUploading={isUploading}
+            s3Files={s3Files}
           />
         )}
-        {s3Files?.pages.length && <GalleryContent s3Files={s3Files} />}
         {!isFetching && <div ref={lastElementRef}></div>}
       </div>
     </div>

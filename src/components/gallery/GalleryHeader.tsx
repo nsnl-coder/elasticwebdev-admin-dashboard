@@ -27,7 +27,7 @@ function GalleryHeader(props: Props): JSX.Element {
   }, [isDeleted, handleRemoveSelect, selectedFiles]);
 
   return (
-    <div className="flex justify-between shadow-md p-8 items-center sticky top-0 z-50 bg-white">
+    <div className="flex justify-between shadow-md px-8 items-center sticky top-0 z-50 bg-white h-20 flex-shrink-0">
       <button
         type="button"
         className={` px-4 py-1 text-white font-semibold bg-red-400 rounded-md ${

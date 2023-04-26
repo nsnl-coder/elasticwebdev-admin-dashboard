@@ -17,7 +17,7 @@ function ChildMenus(props: Props): JSX.Element {
     defaultValue: [],
   });
 
-  const swapPosition = (id1: string, id2: string) => {
+  const swapPosition = (id1: string | number, id2: string | number) => {
     const ids = field.value;
     const index1 = ids.findIndex((id: string) => id === id1);
     const index2 = ids.findIndex((id: string) => id === id2);

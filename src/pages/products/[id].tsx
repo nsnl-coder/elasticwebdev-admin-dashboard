@@ -33,18 +33,12 @@ function Create(): JSX.Element {
   const id = useRouter().query.id;
   const requestConfig = queryConfig.products;
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<IProduct>({
+  const { register, handleSubmit, control, reset } = useForm<IProduct>({
     resolver: yupResolver(productSchema, { stripUnknown: true }),
   });
 
-  const { createOne: createProduct, isCreated } =
-    useCreateOne<IProduct>(requestConfig);
+  const { createOne: createProduct } = useCreateOne<IProduct>(requestConfig);
+
   const {
     updateOne: updateProduct,
     error: updateError,
@@ -80,8 +74,8 @@ function Create(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <UpdatePageWrapper isDirty={isDirty}>
-        <UpdatePageHeader reset={reset} isDirty={isDirty} />
+      <UpdatePageWrapper control={control}>
+        <UpdatePageHeader reset={reset} control={control} />
         <UpdatePageHeading
           title={product?.name || 'Add product'}
           requestConfig={requestConfig}
@@ -93,7 +87,7 @@ function Create(): JSX.Element {
             <Block>
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="name"
                 labelTheme="light"
                 placeholder="T-shirt for man....."
@@ -101,7 +95,7 @@ function Create(): JSX.Element {
               />
               <Textarea
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="overview"
                 labelTheme="light"
                 placeholder="short description about your product"
@@ -110,7 +104,7 @@ function Create(): JSX.Element {
               <div className="flex gap-3">
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="price"
                   labelTheme="light"
                   placeholder="19.99"
@@ -118,7 +112,7 @@ function Create(): JSX.Element {
                 />
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="discountPrice"
                   labelTheme="light"
                   placeholder="9.99"
@@ -129,14 +123,12 @@ function Create(): JSX.Element {
             <Block>
               <RichText
                 control={control}
-                defaultValue=""
-                errors={errors}
                 fieldName="description"
                 labelTheme="light"
                 label="Description:"
               />
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="isPinned"
                 labelTheme="light"
@@ -153,31 +145,33 @@ function Create(): JSX.Element {
                 allowedTypes="*"
                 control={control}
                 labelTheme="bold"
-                errors={errors}
                 maxFilesCount={10}
                 key={1}
               />
             </Block>
             <Block>
               <MultipleSelect
-                errors={errors}
                 control={control}
                 fieldName="collections"
                 labelTheme="bold"
                 options={collections}
+                label="Collection:"
               />
+            </Block>
+            <Block>
               <VariantsInput
-                errors={errors}
                 fieldName="variants"
                 control={control}
                 labelTheme="bold"
+                register={register}
+                label="Variants:"
               />
             </Block>
           </BigBlocks>
           <SmallBlocks>
             <Block>
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="status"
                 labelTheme="bold"
@@ -194,7 +188,6 @@ function Create(): JSX.Element {
                 allowedTypes="*"
                 control={control}
                 labelTheme="bold"
-                errors={errors}
                 maxFilesCount={2}
                 key={2}
               />

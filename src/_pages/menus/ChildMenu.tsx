@@ -8,7 +8,7 @@ interface Props {
   menu: IMenu;
   index: number;
   removeMenu: (removeId: string) => void;
-  swapPosition: (id1: string, id2: string) => void;
+  swapPosition: (id1: string | number, id2: string | number) => void;
 }
 
 function ChildMenu(props: Props): JSX.Element | null {
@@ -19,7 +19,7 @@ function ChildMenu(props: Props): JSX.Element | null {
   return (
     <SwapWrapper
       itemType={DRAG_TYPES.MENU}
-      id={menu._id}
+      idOrIndex={menu._id}
       swapPosition={swapPosition}
       swapOn="hover"
       payload={{ name: menu.name, index }}

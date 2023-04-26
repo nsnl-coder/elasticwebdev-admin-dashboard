@@ -6,7 +6,7 @@ function Logo(): JSX.Element {
     <div className="px-5 w-full border-b h-16 flex items-center py-2">
       <Link href="/" className="h-16 flex items-center">
         <Image
-          src="/images/logo.png"
+          src="/logo.webp"
           width={130}
           height={29}
           alt="site logo"

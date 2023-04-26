@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router';
-import { UseFormReset } from 'react-hook-form';
+import { Control, UseFormReset, useFormState } from 'react-hook-form';
 
 interface Props {
   reset: UseFormReset<any>;
-  isDirty: boolean;
+  control: Control<any>;
 }
 
 function UpdatePageHeader(props: Props): JSX.Element | null {
+  const { reset, control } = props;
   const id = useRouter().query.id;
-  const { reset, isDirty } = props;
+  const { isDirty } = useFormState({ control });
 
   if (!isDirty) return null;
 

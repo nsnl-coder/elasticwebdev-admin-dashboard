@@ -49,7 +49,6 @@ function CarouselsInput(props: Props): JSX.Element {
               allowedTypes="image"
               control={control}
               fieldName={`${fieldName}.${index}.photo`}
-              errors={errors}
               labelTheme="light"
               maxFilesCount={1}
               showUploadLabel={false}
@@ -78,30 +77,27 @@ function CarouselsInput(props: Props): JSX.Element {
           <div className="flex-grow space-y-3">
             <Input
               register={register}
-              errors={errors}
+              control={control}
               fieldName={`${fieldName}.${index}.title`}
               labelTheme="light"
               placeholder="title"
               className="outline-0 border-gray-200"
-              maxLength={250}
             />
             <Input
               register={register}
-              errors={errors}
+              control={control}
               fieldName={`${fieldName}.${index}.description`}
               labelTheme="light"
               placeholder="description"
-              maxLength={500}
               className="outline-0 border-gray-200"
             />
             <Input
               register={register}
-              errors={errors}
+              control={control}
               fieldName={`${fieldName}.${index}.link`}
               labelTheme="light"
               placeholder="redirect link"
               className="outline-0 border-gray-200"
-              maxLength={255}
             />
           </div>
         </div>

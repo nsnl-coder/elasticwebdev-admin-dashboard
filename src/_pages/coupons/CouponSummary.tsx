@@ -1,23 +1,48 @@
 import getLocaleDateString from '@src/utils/getLocaleDateString';
 import { ICoupon } from '@src/yup/couponSchema';
-import { UseFormGetValues } from 'react-hook-form';
+import { Control, useWatch } from 'react-hook-form';
 
 interface Props {
-  getValues: UseFormGetValues<ICoupon>;
+  control: Control<ICoupon>;
 }
 
 function CouponSummary(props: Props): JSX.Element {
-  const { getValues } = props;
+  const { control } = props;
+
+  const [
+    status,
+    couponCode,
+    discountAmount,
+    discountUnit,
+    isFreeshipping,
+    endDate,
+    startDate,
+    minimumOrder,
+    maximumOrder,
+  ] = useWatch({
+    control,
+    name: [
+      'status',
+      'couponCode',
+      'discountAmount',
+      'discountUnit',
+      'isFreeshipping',
+      'endDate',
+      'startDate',
+      'minimumOrder',
+      'maximumOrder',
+    ],
+  });
 
   return (
     <div>
       <h3 className="font-medium mb-4">Summary</h3>
       <ul className="list-disc px-4 flex gap-y-2 flex-col">
-        {getValues('status') && (
+        {status && (
           <li>
             <div className="flex gap-x-3 items-center">
               Status:
-              {getValues('status') === 'draft' ? (
+              {status === 'draft' ? (
                 <span className="badge">draft</span>
               ) : (
                 <span className="badge bg-green-500 border-none text-white">
@@ -27,31 +52,27 @@ function CouponSummary(props: Props): JSX.Element {
             </div>
           </li>
         )}
-        {getValues('couponCode') && (
+        {couponCode && (
           <li>
-            Code: <span className="bg-gray-100">{getValues('couponCode')}</span>
+            Code: <span className="bg-gray-100">{couponCode}</span>
           </li>
         )}
-        {getValues('discountAmount') && (
+        {discountAmount && (
           <li>
-            {getValues('discountAmount')}
-            {getValues('discountUnit')} off total order
+            {discountAmount}
+            {discountUnit} off total order
           </li>
         )}
-        {getValues('isFreeshipping') && <li>Freeshipping</li>}
-        {getValues('endDate') && getValues('startDate') && (
+        {isFreeshipping && <li>Freeshipping</li>}
+        {endDate && startDate && (
           <li>
             {`Discount start from
-              ${getLocaleDateString(getValues('endDate'))} -   
-                ${getLocaleDateString(getValues('endDate'))}`}
+              ${getLocaleDateString(startDate)} -   
+                ${getLocaleDateString(endDate)}`}
           </li>
         )}
-        {getValues('minimumOrder') && (
-          <li>Only valid for order over {getValues('minimumOrder')}$ </li>
-        )}
-        {getValues('maximumOrder') && (
-          <li>Only valid for order under {getValues('maximumOrder')}$</li>
-        )}
+        {minimumOrder && <li>Only valid for order over {minimumOrder}$ </li>}
+        {maximumOrder && <li>Only valid for order under {maximumOrder}$</li>}
       </ul>
     </div>
   );

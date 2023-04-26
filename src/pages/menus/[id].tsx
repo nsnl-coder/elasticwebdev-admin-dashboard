@@ -52,9 +52,9 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper isDirty={isDirty}>
+    <UpdatePageWrapper control={control}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader reset={reset} isDirty={isDirty} />
+        <UpdatePageHeader reset={reset} control={control} />
         <UpdatePageHeading
           title={menu?.name || 'Add menu'}
           requestConfig={requestConfig}
@@ -66,7 +66,7 @@ function Create(): JSX.Element {
             <Block>
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="name"
                 labelTheme="light"
                 placeholder="menu display name"
@@ -75,14 +75,14 @@ function Create(): JSX.Element {
               />
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="link"
                 labelTheme="light"
                 placeholder="https://..."
                 label="Link:"
               />
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="menuType"
                 labelTheme="light"
@@ -96,7 +96,7 @@ function Create(): JSX.Element {
               />
               {watch('menuType') === 'root' ? (
                 <Select
-                  errors={errors}
+                  control={control}
                   register={register}
                   fieldName="position"
                   labelTheme="light"
@@ -107,7 +107,7 @@ function Create(): JSX.Element {
               {watch('menuType') === 'root' ? (
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="ordering"
                   labelTheme="light"
                   placeholder="1"
@@ -137,7 +137,7 @@ function Create(): JSX.Element {
             <Block>
               <Select
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="status"
                 options={['draft', 'active']}
                 labelTheme="bold"

@@ -1,4 +1,4 @@
-import { UseFormRegister } from 'react-hook-form';
+import { Control, UseFormRegister, useFormState } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 
@@ -9,25 +9,26 @@ interface Option {
 
 interface Props extends LabelProps {
   register: UseFormRegister<any>;
-  errors: any;
   options: string[] | Option[];
   defaultValue?: string;
   className?: string;
+  control: Control<any>;
 }
 
 function Select(props: Props): JSX.Element {
   const {
     fieldName,
     register,
-    errors,
     label,
     required = false,
     options,
     labelTheme,
     className,
     tooltip,
-    defaultValue,
+    control,
   } = props;
+
+  const { errors } = useFormState({ control });
 
   return (
     <div className="w-full">
@@ -44,7 +45,6 @@ function Select(props: Props): JSX.Element {
         className={`select select-bordered h-10 min-h-0 w-full rounded-md text-sm font-normal ${className} ${
           errors[fieldName] ? 'border-red-400' : ''
         }`}
-        defaultValue={defaultValue}
       >
         {options.map((option) => {
           if (typeof option === 'string') {

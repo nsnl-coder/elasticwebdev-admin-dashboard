@@ -22,13 +22,7 @@ function Create(): JSX.Element {
   const id = useRouter().query.id;
   const requestConfig = queryConfig.collections;
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<ICollection>({
+  const { register, handleSubmit, control, reset } = useForm<ICollection>({
     resolver: yupResolver(collectionSchema),
   });
 
@@ -47,7 +41,7 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper isDirty={isDirty}>
+    <UpdatePageWrapper control={control}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <UpdatePageHeading
           title={collection?.name || 'Add collection'}
@@ -61,16 +55,13 @@ function Create(): JSX.Element {
               <Input
                 register={register}
                 fieldName="name"
-                errors={errors}
+                control={control}
                 label="Name:"
                 labelTheme="light"
-                defaultValue={collection?.name}
               />
               <RichText
                 control={control}
                 fieldName="description"
-                defaultValue={collection?.description}
-                errors={errors}
                 labelTheme="light"
                 label="Description:"
               />
@@ -78,11 +69,10 @@ function Create(): JSX.Element {
             <Block>
               <Select
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="isPinned"
                 label="Pin?"
                 labelTheme="bold"
-                defaultValue={collection?.isPinned + ''}
                 options={[
                   { name: 'Do not pin', value: 'false' },
                   { name: 'Pin to top', value: 'true' },
@@ -94,11 +84,10 @@ function Create(): JSX.Element {
             <Block>
               <Select
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="status"
                 options={['draft', 'active']}
                 labelTheme="bold"
-                defaultValue={collection?.status}
               />
               <div className="flex justify-end mt-4">
                 <SubmitBtn isUpdating={isUpdating} />
@@ -110,7 +99,6 @@ function Create(): JSX.Element {
                 control={control}
                 fieldName="photo"
                 maxFilesCount={1}
-                errors={errors}
                 labelTheme="bold"
                 label="Collection photo"
               />

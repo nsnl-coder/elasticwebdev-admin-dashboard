@@ -20,12 +20,7 @@ import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
 function Create(): JSX.Element {
   const id = useRouter().query.id;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<IShipping>({
+  const { register, handleSubmit, control, reset } = useForm<IShipping>({
     resolver: yupResolver(shippingSchema),
   });
 
@@ -43,9 +38,9 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper isDirty={isDirty}>
+    <UpdatePageWrapper control={control}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader isDirty={isDirty} reset={reset} />
+        <UpdatePageHeader control={control} reset={reset} />
         <UpdatePageHeading
           id={shipping?._id}
           requestConfig={requestConfig}
@@ -57,7 +52,7 @@ function Create(): JSX.Element {
             <Block>
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="display_name"
                 labelTheme="light"
                 placeholder="Express shipping"
@@ -66,7 +61,7 @@ function Create(): JSX.Element {
               />
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="fees"
                 labelTheme="light"
                 placeholder="9.99"
@@ -74,7 +69,7 @@ function Create(): JSX.Element {
               />
               <Input
                 register={register}
-                errors={errors}
+                control={control}
                 fieldName="freeshipOrderOver"
                 labelTheme="light"
                 label="Freeship order over:"
@@ -86,14 +81,14 @@ function Create(): JSX.Element {
               <div className="flex gap-x-3">
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="delivery_min"
                   labelTheme="light"
                   placeholder="2"
                   label="Delivery Min:"
                 />
                 <Select
-                  errors={errors}
+                  control={control}
                   register={register}
                   fieldName="delivery_min_unit"
                   labelTheme="light"
@@ -104,14 +99,14 @@ function Create(): JSX.Element {
               <div className="flex gap-x-3">
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="delivery_max"
                   labelTheme="light"
                   placeholder="6"
                   label="Delivery max:"
                 />
                 <Select
-                  errors={errors}
+                  control={control}
                   register={register}
                   fieldName="delivery_max_unit"
                   labelTheme="light"
@@ -124,7 +119,7 @@ function Create(): JSX.Element {
           <SmallBlocks>
             <Block>
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="status"
                 labelTheme="bold"

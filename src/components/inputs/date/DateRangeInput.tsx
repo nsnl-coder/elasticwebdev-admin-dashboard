@@ -3,12 +3,10 @@ import { DateRange } from 'react-date-range';
 import DateRangeFromNow from './DateRangeFromNow';
 import Label, { LabelProps } from '../../form/Label';
 import ErrorMessage from '../../form/ErrorMessage';
-import { useController } from 'react-hook-form';
-import { addDays } from 'date-fns';
+import { Control, useController, useFormState } from 'react-hook-form';
 
 interface Props extends Omit<LabelProps, 'fieldName' | 'label'> {
-  control: any;
-  errors: any;
+  control: Control<any>;
   startDateFieldName: string;
   endDateFieldName: string;
   label: string;
@@ -21,9 +19,10 @@ function DateRangeInput(props: Props): JSX.Element {
     label,
     required = false,
     labelTheme,
-    errors,
     control,
   } = props;
+
+  const { errors } = useFormState({ control });
 
   const { field: startDateField } = useController({
     name: startDateFieldName,

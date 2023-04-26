@@ -1,4 +1,4 @@
-import { UseFormRegister } from 'react-hook-form';
+import { Control, UseFormRegister, useFormState } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 
@@ -16,20 +16,22 @@ interface Checkbox {
 
 interface CheckBoxesProps extends LabelProps {
   register: UseFormRegister<any>;
-  errors: any;
+  control: Control<any>;
   options: string[] | Checkbox[];
 }
 
 function CheckBoxes(props: CheckBoxesProps): JSX.Element {
   const {
     register,
-    errors,
+    control,
     fieldName,
     labelTheme,
     options,
     label,
     required = true,
   } = props;
+
+  const { errors } = useFormState({ control });
 
   return (
     <div>

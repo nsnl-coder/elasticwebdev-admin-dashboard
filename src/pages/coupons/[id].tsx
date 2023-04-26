@@ -22,18 +22,10 @@ import { useRouter } from 'next/router';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
-  const {
-    register,
-    handleSubmit,
-    control,
-    getValues,
-    setValue,
-    clearErrors,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<ICoupon>({
-    resolver: yupResolver(couponSchema),
-  });
+  const { register, handleSubmit, control, setValue, clearErrors, reset } =
+    useForm<ICoupon>({
+      resolver: yupResolver(couponSchema),
+    });
   const requestConfig = queryConfig.coupons;
 
   const { createOne: createCoupon } = useCreateOne<ICoupon>(requestConfig);
@@ -48,9 +40,9 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper isDirty={isDirty}>
+    <UpdatePageWrapper control={control}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader isDirty={isDirty} reset={reset} />
+        <UpdatePageHeader control={control} reset={reset} />
         <UpdatePageHeading
           id={coupon?._id}
           requestConfig={requestConfig}
@@ -62,21 +54,21 @@ function Create(): JSX.Element {
             <Block>
               <Input
                 register={register}
-                errors={errors}
                 fieldName="name"
                 labelTheme="light"
                 placeholder="flash sale..."
                 label="Name:"
                 required={true}
+                control={control}
               />
               <Input
                 register={register}
-                errors={errors}
                 fieldName="couponCode"
                 labelTheme="light"
                 placeholder="OFF10"
                 label="Coupon code:"
                 required={true}
+                control={control}
               >
                 <button
                   type="button"
@@ -92,15 +84,15 @@ function Create(): JSX.Element {
               <div className="flex gap-x-4 py-2">
                 <Input
                   register={register}
-                  errors={errors}
                   fieldName="discountAmount"
                   labelTheme="light"
                   placeholder="99"
                   label="Discount amount:"
                   required={true}
+                  control={control}
                 />
                 <Select
-                  errors={errors}
+                  control={control}
                   register={register}
                   fieldName="discountUnit"
                   labelTheme="light"
@@ -115,20 +107,19 @@ function Create(): JSX.Element {
 
               <Input
                 register={register}
-                errors={errors}
                 fieldName="couponQuantity"
                 labelTheme="light"
                 placeholder="999"
                 label="Coupon quantity:"
                 required={true}
-                defaultValue="999"
+                control={control}
               />
             </Block>
             <Block>
               <div className="flex gap-x-4">
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="minimumOrder"
                   labelTheme="light"
                   placeholder="100"
@@ -136,7 +127,7 @@ function Create(): JSX.Element {
                 />
                 <Input
                   register={register}
-                  errors={errors}
+                  control={control}
                   fieldName="maximumOrder"
                   labelTheme="light"
                   placeholder="999"
@@ -144,7 +135,7 @@ function Create(): JSX.Element {
                 />
               </div>
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="isFreeshipping"
                 labelTheme="light"
@@ -159,7 +150,6 @@ function Create(): JSX.Element {
             <Block>
               <DateRangeInput
                 control={control}
-                errors={errors}
                 startDateFieldName="startDate"
                 endDateFieldName="endDate"
                 labelTheme="light"
@@ -170,7 +160,7 @@ function Create(): JSX.Element {
           <SmallBlocks>
             <Block>
               <Select
-                errors={errors}
+                control={control}
                 register={register}
                 fieldName="status"
                 labelTheme="bold"
@@ -182,7 +172,7 @@ function Create(): JSX.Element {
               </div>
             </Block>
             <Block>
-              <CouponSummary getValues={getValues} />
+              <CouponSummary control={control} />
             </Block>
           </SmallBlocks>
         </div>

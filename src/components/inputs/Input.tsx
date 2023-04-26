@@ -1,35 +1,32 @@
-import { UseFormRegister } from 'react-hook-form';
+import { Control, UseFormRegister, useFormState } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 import { Children } from '@src/types/shared';
 
 interface Props extends LabelProps, Children {
   register: UseFormRegister<any>;
-  errors: any;
   type?: string;
   placeholder?: string;
-  defaultValue?: string;
   className?: string;
-  minLength?: number;
-  maxLength?: number;
+  control: Control<any>;
 }
 
 function Input(props: Props): JSX.Element {
   const {
     fieldName,
     register,
-    errors,
     label,
     placeholder,
     required,
     type = 'text',
     labelTheme,
-    defaultValue,
     children,
     className,
     tooltip,
-    ...inputProps
+    control,
   } = props;
+
+  const { errors } = useFormState({ control });
 
   return (
     <div className="w-full">
@@ -42,7 +39,6 @@ function Input(props: Props): JSX.Element {
       />
       <div className="flex gap-x-4">
         <input
-          {...inputProps}
           type={type}
           id={fieldName}
           {...register(fieldName)}
@@ -50,7 +46,6 @@ function Input(props: Props): JSX.Element {
             errors[fieldName] ? 'border border-red-400' : ''
           }`}
           placeholder={placeholder || fieldName}
-          defaultValue={defaultValue}
         />
         {children}
       </div>

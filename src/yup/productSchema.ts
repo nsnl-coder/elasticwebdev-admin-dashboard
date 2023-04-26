@@ -59,5 +59,9 @@ interface IOption extends InferType<typeof optionSchema> {
   _id?: string;
 }
 
-export type { IProduct, IOption };
+interface IVariant extends InferType<typeof variantSchema> {
+  _id?: string;
+}
+
+export type { IProduct, IOption, IVariant };
 export default productSchema;

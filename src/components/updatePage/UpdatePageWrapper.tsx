@@ -3,15 +3,17 @@ import { Children } from '@src/types/shared';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Control, useFormState } from 'react-hook-form';
 
 interface Props extends Children {
   className?: string;
-  isDirty: boolean;
+  control: Control<any>;
 }
 
 function UpdatePageWrapper(props: Props): JSX.Element {
+  const { control } = props;
+  const { isDirty } = useFormState({ control });
   const id = useRouter().query.id;
-  const { isDirty } = props;
   const { isConfirmed } = useConfirm();
   const [nextPath, setNextPath] = useState<string | null>(null);
   const router = useRouter();

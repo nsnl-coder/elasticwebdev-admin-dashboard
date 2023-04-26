@@ -1,24 +1,24 @@
 import Editor from '../editor/Editor';
-import { Controller, Control } from 'react-hook-form';
+import { Controller, Control, useFormState } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 
 interface Props extends LabelProps {
   control: Control<any, any>;
   defaultValue?: string | undefined;
-  errors: any;
 }
 
 function RichText(props: Props): JSX.Element {
   const {
     fieldName,
     control,
-    errors,
     defaultValue = '',
     required = false,
     label,
     labelTheme,
   } = props;
+
+  const errors = useFormState({ control });
 
   return (
     <div>

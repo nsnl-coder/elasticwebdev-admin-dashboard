@@ -1,11 +1,11 @@
-import { UseFormRegister } from 'react-hook-form';
+import { Control, UseFormRegister, useFormState } from 'react-hook-form';
 import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
 import { Children } from '@src/types/shared';
 
 interface Props extends LabelProps, Children {
   register: UseFormRegister<any>;
-  errors: any;
+  control: Control<any>;
   type?: string;
   placeholder?: string;
   defaultValue?: string;
@@ -15,14 +15,16 @@ function Textarea(props: Props): JSX.Element {
   const {
     fieldName,
     register,
-    errors,
     label,
     placeholder,
     required,
     labelTheme,
     defaultValue,
     children,
+    control,
   } = props;
+
+  const { errors } = useFormState({ control });
 
   return (
     <div className="w-full">

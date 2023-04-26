@@ -4,20 +4,19 @@ import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 interface Props extends Children {
-  id: string;
   className?: string;
   isOverClassName?: string;
   payload?: any;
   itemType: string;
   swapOn: 'hover' | 'drop';
   disableGrayBg?: boolean;
-
-  swapPosition: (id1: string, id2: string) => void;
+  idOrIndex: string | number;
+  swapPosition: (index1: number | string, index2: number | string) => void;
 }
 
 function SwapWrapper(props: Props): JSX.Element {
   const {
-    id,
+    idOrIndex,
     swapPosition,
     children,
     className,
@@ -34,7 +33,7 @@ function SwapWrapper(props: Props): JSX.Element {
     () => ({
       type: itemType,
       item: {
-        id,
+        idOrIndex,
         ref,
         payload,
       },
@@ -56,19 +55,19 @@ function SwapWrapper(props: Props): JSX.Element {
         isOver: monitor.isOver(),
       }),
       canDrop(item) {
-        return item.id !== id;
+        return item.idOrIndex !== idOrIndex;
       },
       hover(item) {
-        if (item.id === id) return;
+        if (item.idOrIndex === idOrIndex) return;
         if (swapOn !== 'hover') return;
 
-        swapPosition(item.id, id);
+        swapPosition(item.idOrIndex, idOrIndex);
       },
       drop(item) {
-        if (item.id === id) return;
+        if (item.idOrIndex === idOrIndex) return;
         if (swapOn !== 'drop') return;
 
-        swapPosition(item.id, id);
+        if (idOrIndex) swapPosition(item.idOrIndex, idOrIndex);
       },
     }),
     [ref, swapPosition],

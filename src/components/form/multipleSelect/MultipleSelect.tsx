@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Label, { LabelProps } from '../Label';
 import SelectedOptions from './SelectedOptions';
 import ErrorMessage from '../ErrorMessage';
-import { useController } from 'react-hook-form';
+import { useController, useFormState } from 'react-hook-form';
 
 export interface Option {
   name?: string;
@@ -12,7 +12,6 @@ export interface Option {
 }
 
 interface Props extends LabelProps {
-  errors: any;
   options: Option[] | undefined;
   fieldName: string;
   control: any;
@@ -28,10 +27,11 @@ function MultipleSelect(props: Props): JSX.Element {
     fieldName,
     labelTheme,
     label,
-    errors,
     control,
     tooltip,
   } = props;
+
+  const { errors } = useFormState();
 
   const [keyword, setKeyword] = useState<string>('');
   const [focusList, setFocusList] = useState(false);

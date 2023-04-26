@@ -1,4 +1,4 @@
-import { useController } from 'react-hook-form';
+import { Control, useController, useFormState } from 'react-hook-form';
 import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 import { useEffect, useState } from 'react';
 import Label from '../form/Label';
@@ -8,8 +8,7 @@ import ErrorMessage from '../form/ErrorMessage';
 interface Props
   extends Omit<SelectFilesProps, 'setFiles' | 'files'>,
     LabelProps {
-  control: any;
-  errors: any;
+  control: Control<any>;
   className?: string;
 }
 
@@ -18,7 +17,6 @@ function FilesInput(props: Props): JSX.Element {
     fieldName,
     label,
     control,
-    errors,
     maxFilesCount,
     labelTheme,
     className,
@@ -27,6 +25,7 @@ function FilesInput(props: Props): JSX.Element {
     showUploadLabel = true,
   } = props;
 
+  const { errors } = useFormState();
   const { field } = useController({ name: fieldName, control });
 
   const setFiles = (fn: (files: string[]) => string[]) => {

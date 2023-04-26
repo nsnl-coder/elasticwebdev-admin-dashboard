@@ -1,73 +1,35 @@
-import { TOption } from './OptionsInput';
-import OptionInputs from './OptionsInput';
+import { Control, UseFormRegister, useFieldArray } from 'react-hook-form';
+import Option from './Option';
 import { AiTwotoneDelete } from 'react-icons/ai';
+import { TbGridDots } from 'react-icons/tb';
+import { IProduct } from '@src/yup/productSchema';
 import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { DRAG_TYPES } from '@src/types/enum';
-import { TbGridDots } from 'react-icons/tb';
-import { ChangeEvent, useCallback } from 'react';
-
-export interface TVariant {
-  _id: string;
-  variantName?: string;
-  options: TOption[];
-}
 
 interface Props {
-  variant: TVariant;
-  setVariants: (fn: (variansts: TVariant[]) => TVariant[]) => void;
+  register: UseFormRegister<IProduct>;
+  index: number;
+  remove: (index?: number | number[]) => void;
+  control: Control<IProduct>;
 }
 
 function Variant(props: Props): JSX.Element {
-  const { variant, setVariants } = props;
+  const {
+    register,
+    index: variantIndex,
+    remove: removeVariant,
+    control,
+  } = props;
 
-  const handleDeleteVariant = () => {
-    setVariants((variants) => variants.filter((v) => v._id !== variant._id));
-  };
-
-  const onVariantNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVariants((variants) => {
-      const index = variants.findIndex((v) => v._id === variant._id);
-      const newVariant = { ...variant, variantName: e.target.value };
-
-      return [
-        ...variants.slice(0, index),
-        newVariant,
-        ...variants.slice(index + 1),
-      ];
-    });
-  };
-
-  const swapPosition = useCallback(
-    (dragId: string, dropId: string) => {
-      setVariants((variants) => {
-        const copyVariants = [...variants];
-        const dragIndex = copyVariants.findIndex(
-          (variant) => variant._id === dragId,
-        );
-        const dropIndex = copyVariants.findIndex(
-          (variant) => variant._id === dropId,
-        );
-        if (dragIndex === -1 || dropIndex == -1) return variants;
-        [copyVariants[dragIndex], copyVariants[dropIndex]] = [
-          copyVariants[dropIndex],
-          copyVariants[dragIndex],
-        ];
-        return copyVariants;
-      });
-    },
-    [setVariants],
-  );
+  const {
+    fields: options,
+    remove: removeOption,
+    insert,
+    swap,
+  } = useFieldArray({ control, name: `variants.${variantIndex}.options` });
 
   return (
-    <SwapWrapper
-      itemType={DRAG_TYPES.VARIANT}
-      id={variant._id}
-      swapPosition={swapPosition}
-      className="bg-gray-50 py-10 rounded-md px-6 overflow-hidden"
-      isOverClassName="border border-blue-500"
-      swapOn="drop"
-      payload={variant}
-    >
+    <div>
       <div className="flex items-center mb-6 gap-x-6">
         <div className="h-10 self-end flex items-center cursor-pointer">
           <TbGridDots size={24} />
@@ -76,15 +38,14 @@ function Variant(props: Props): JSX.Element {
           <label className="block mb-2 text-sm">Variant Name:</label>
           <input
             className="h-10 w-full px-4 text-lg"
-            onChange={onVariantNameChange}
-            value={variant.variantName}
+            {...register(`variants.${variantIndex}.variantName`)}
           />
         </div>
         <div className="flex self-end h-9 items-center">
           <button
             type="button"
             className="hover:text-danger"
-            onClick={() => handleDeleteVariant()}
+            onClick={() => removeVariant(variantIndex)}
             data-tip="remove collection"
           >
             <AiTwotoneDelete size={22} />
@@ -92,16 +53,26 @@ function Variant(props: Props): JSX.Element {
         </div>
       </div>
       <div className="flex flex-col gap-y-6">
-        {variant.options.map((option, index) => (
-          <OptionInputs
-            key={option._id}
-            option={option}
-            setVariants={setVariants}
-            variantId={variant._id}
-          />
+        {options.map((option, index) => (
+          <SwapWrapper
+            swapPosition={swap}
+            index={index}
+            itemType={DRAG_TYPES.OPTION}
+            swapOn="hover"
+            payload={option}
+            key={option.id}
+          >
+            <Option
+              register={register}
+              index={index}
+              variantIndex={variantIndex}
+              insert={insert}
+              remove={removeOption}
+            />
+          </SwapWrapper>
         ))}
       </div>
-    </SwapWrapper>
+    </div>
   );
 }
 

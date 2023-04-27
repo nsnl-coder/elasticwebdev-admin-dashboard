@@ -1,5 +1,6 @@
-import { Children } from '@src/types/shared';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
+
+import { Children } from '@src/types/shared';
 
 type AllowedFilesTypes = 'video' | 'image' | '*';
 

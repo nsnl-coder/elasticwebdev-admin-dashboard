@@ -1,24 +1,26 @@
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+
+import CouponSummary from '@src/_pages/coupons/CouponSummary';
+import getRandomString from '@src/utils/getRandomString';
 //
 import couponSchema, { ICoupon } from '@src/yup/couponSchema';
-import BigBlocks from '@src/components/form/BigBlocks';
-import Block from '@src/components/form/Block';
-import SmallBlocks from '@src/components/form/SmallBlocks';
-import SubmitBtn from '@src/components/form/SubmitBtn';
-import Input from '@src/components/inputs/Input';
-import Select from '@src/components/inputs/Select';
-import getRandomString from '@src/utils/getRandomString';
-import DateRangeInput from '@src/components/inputs/date/DateRangeInput';
-import CouponSummary from '@src/_pages/coupons/CouponSummary';
-import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
-import UpdatePageHeader from '@src/components/updatePage/UpdatePageHeader';
-import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
-import useCreateOne from '@src/react-query/query/useCreateOne';
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import useGetOne from '@src/react-query/query/useGetOne';
-import queryConfig from '@src/react-query/queryConfig';
-import { useRouter } from 'next/router';
+
+import useCreateOne from '@react-query/query/useCreateOne';
+import useGetOne from '@react-query/query/useGetOne';
+import useUpdateOne from '@react-query/query/useUpdateOne';
+import queryConfig from '@react-query/queryConfig';
+
+import BigBlocks from '@components/form/BigBlocks';
+import Block from '@components/form/Block';
+import SmallBlocks from '@components/form/SmallBlocks';
+import SubmitBtn from '@components/form/SubmitBtn';
+import DateRangeInput from '@components/inputs/date/DateRangeInput';
+import Input from '@components/inputs/Input';
+import Select from '@components/inputs/Select';
+import UpdatePageHeading from '@components/updatePage/UpdatePageHeading';
+import UpdatePageWrapper from '@components/updatePage/UpdatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;

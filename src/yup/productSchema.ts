@@ -1,11 +1,4 @@
-import {
-  object,
-  number as originalNumber,
-  string,
-  boolean,
-  InferType,
-  array,
-} from 'yup';
+import { array, boolean, InferType, number as originalNumber, object, string } from 'yup';
 import { ICollection } from './collectionSchema';
 
 const number = () => {

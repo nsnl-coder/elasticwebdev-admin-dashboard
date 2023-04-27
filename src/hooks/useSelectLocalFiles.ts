@@ -1,7 +1,8 @@
-import { imageExtensions, videoExtensions } from '@src/utils/imageOrVideo';
-import { toastError } from '@src/utils/toast';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+
+import { imageExtensions, videoExtensions } from '@src/utils/imageOrVideo';
+import { toastError } from '@src/utils/toast';
 
 interface FileInfo {
   url: string;

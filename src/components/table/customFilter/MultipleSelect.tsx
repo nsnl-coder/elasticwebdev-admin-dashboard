@@ -3,7 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { FaSortDown } from 'react-icons/fa';
 import { DisplayTool } from '../toolbar/Toolbar';
 import MultipleSelectItem from './MutipleSelectItem';
-import Tooltip from '@src/components/form/Tooltip';
+
+import Tooltip from '@components/form/Tooltip';
 
 interface Props {
   displayText?: string;

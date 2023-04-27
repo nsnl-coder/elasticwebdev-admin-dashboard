@@ -1,25 +1,26 @@
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-//
-import BigBlocks from '@src/components/form/BigBlocks';
-import Block from '@src/components/form/Block';
-import SmallBlocks from '@src/components/form/SmallBlocks';
-import SubmitBtn from '@src/components/form/SubmitBtn';
-import menuSchema, { IMenu } from '@src/yup/menuSchema';
-import Select from '@src/components/inputs/Select';
-import FilesInput from '@src/components/inputs/FilesInput';
-import Input from '@src/components/inputs/Input';
 import { useRouter } from 'next/router';
-import queryConfig from '@src/react-query/queryConfig';
-import useGetOne from '@src/react-query/query/useGetOne';
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import useCreateOne from '@src/react-query/query/useCreateOne';
-import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
-import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
-import MultipleSelect from '@src/components/form/multipleSelect/MultipleSelect';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-import UpdatePageHeader from '@src/components/updatePage/UpdatePageHeader';
+import { useForm } from 'react-hook-form';
+
 import ChildMenus from '@src/_pages/menus/ChildMenus';
+import menuSchema, { IMenu } from '@src/yup/menuSchema';
+
+import useCreateOne from '@react-query/query/useCreateOne';
+import useGetOne from '@react-query/query/useGetOne';
+import useGetOnes from '@react-query/query/useGetOnes';
+import useUpdateOne from '@react-query/query/useUpdateOne';
+import queryConfig from '@react-query/queryConfig';
+
+import BigBlocks from '@components/form/BigBlocks';
+import Block from '@components/form/Block';
+import MultipleSelect from '@components/form/multipleSelect/MultipleSelect';
+import SmallBlocks from '@components/form/SmallBlocks';
+import SubmitBtn from '@components/form/SubmitBtn';
+import FilesInput from '@components/inputs/FilesInput';
+import Input from '@components/inputs/Input';
+import Select from '@components/inputs/Select';
+import UpdatePageHeading from '@components/updatePage/UpdatePageHeading';
+import UpdatePageWrapper from '@components/updatePage/UpdatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;

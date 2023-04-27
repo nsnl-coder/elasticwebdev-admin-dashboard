@@ -1,4 +1,4 @@
-import { object, number as originalNumber, string, InferType } from 'yup';
+import { InferType, number as originalNumber, object, string } from 'yup';
 
 const invalid_time = 'Delivery max unit should have higher time unit.';
 

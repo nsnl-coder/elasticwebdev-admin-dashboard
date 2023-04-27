@@ -1,8 +1,9 @@
-import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
-import { Control, UseFormRegister, useController } from 'react-hook-form';
+import { Control, useController, UseFormRegister } from 'react-hook-form';
 import { BiImageAdd } from 'react-icons/bi';
-import FilePreview from '../filePreview/FilePreview';
 import { IoIosRemoveCircle } from 'react-icons/io';
+import FilePreview from '../filePreview/FilePreview';
+
+import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 
 interface Props {
   control: Control<any>;

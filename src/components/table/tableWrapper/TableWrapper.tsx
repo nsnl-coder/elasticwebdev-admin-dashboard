@@ -1,7 +1,8 @@
-import { Children } from '@src/types/shared';
-import TableHeading, { TableHeadingProps } from './TableHeading';
-import Pagination from '../pagination/Pagination';
 import EmptyUi from '../emptyui/EmptyUi';
+import Pagination from '../pagination/Pagination';
+import TableHeading, { TableHeadingProps } from './TableHeading';
+
+import { Children } from '@src/types/shared';
 
 interface Props extends Children, TableHeadingProps {
   className?: string;

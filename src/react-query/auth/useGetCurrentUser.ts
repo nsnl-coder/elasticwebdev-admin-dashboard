@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+
+import axios from '@src/config/axios';
 //
 import { useAppDispatch } from '@src/hooks/redux';
 import { failToLogin, logUserIn } from '@src/store/auth';
-import axios from '@src/config/axios';
-
 import { HttpError, HttpResponse } from '@src/types/http';
 import { IUser } from '@src/yup/userSchema';
 

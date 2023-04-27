@@ -1,11 +1,12 @@
-import { Control, UseFormRegister, useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { TbGridDots } from 'react-icons/tb';
-//
 import Option from './Option';
-import { IProduct } from '@src/yup/productSchema';
-import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
+
 import { DRAG_TYPES } from '@src/types/enum';
+import { IProduct } from '@src/yup/productSchema';
+
+import SwapWrapper from '@components/swapWrapper/SwapWrapper';
 
 interface Props {
   register: UseFormRegister<IProduct>;

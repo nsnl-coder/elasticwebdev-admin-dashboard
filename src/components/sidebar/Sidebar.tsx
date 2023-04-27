@@ -1,25 +1,20 @@
+import React from 'react';
 import {
-  AiFillHome,
-  AiOutlineUserSwitch,
-  AiOutlineMail,
-  AiFillStar,
-  AiFillPushpin,
-  AiOutlineMenu,
+    AiFillHome, AiFillPushpin, AiFillStar, AiOutlineMail, AiOutlineMenu, AiOutlineUserSwitch
 } from 'react-icons/ai';
-
-import { ImImages } from 'react-icons/im';
-import { FaProductHunt, FaShippingFast } from 'react-icons/fa';
 import { BiCategoryAlt, BiCommentDetail } from 'react-icons/bi';
+import { BsFillChatDotsFill, BsMenuButtonWideFill } from 'react-icons/bs';
+import { FaProductHunt, FaShippingFast } from 'react-icons/fa';
+import { ImImages } from 'react-icons/im';
+import { IoIosSettings } from 'react-icons/io';
+import { MdCategory } from 'react-icons/md';
 import { RiBillLine } from 'react-icons/ri';
 import { TbDiscountCheckFilled } from 'react-icons/tb';
-import { MdCategory } from 'react-icons/md';
-import { IoIosSettings } from 'react-icons/io';
-import { BsMenuButtonWideFill, BsFillChatDotsFill } from 'react-icons/bs';
 //
 import Logo from './Logo';
 import Section from './Section';
 import SidebarItem from './SidebarItem';
-import React from 'react';
+
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
 
 function Sidebar(): JSX.Element {

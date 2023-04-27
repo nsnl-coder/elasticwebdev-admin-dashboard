@@ -1,9 +1,8 @@
-import { Control, useController, useFormState } from 'react-hook-form';
-import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 import { useEffect, useState } from 'react';
-import Label from '../form/Label';
-import { LabelProps } from '../form/Label';
+import { Control, useController, useFormState } from 'react-hook-form';
 import ErrorMessage from '../form/ErrorMessage';
+import Label, { LabelProps } from '../form/Label';
+import SelectFiles, { SelectFilesProps } from '../selectFiles/SelectFiles';
 
 interface Props
   extends Omit<SelectFilesProps, 'setFiles' | 'files'>,

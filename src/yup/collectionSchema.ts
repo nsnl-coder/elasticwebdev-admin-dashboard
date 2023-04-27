@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from 'yup';
+import { boolean, InferType, object, string } from 'yup';
 
 const collectionSchema = object({
   display_name: string().max(255).label('Display name').required(),

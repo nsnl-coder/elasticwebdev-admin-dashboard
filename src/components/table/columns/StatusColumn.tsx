@@ -1,6 +1,7 @@
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import { RequestConfig } from '@src/react-query/queryConfig';
 import { useEffect, useState } from 'react';
+
+import useUpdateOne from '@react-query/query/useUpdateOne';
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   status: 'draft' | 'active' | undefined;

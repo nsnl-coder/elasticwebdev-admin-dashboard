@@ -1,12 +1,12 @@
-import { BsChevronDown } from 'react-icons/bs';
+import { Editor } from '@tiptap/react';
 import { BiTable } from 'react-icons/bi';
+import { BsChevronDown } from 'react-icons/bs';
 import WithNestedMenu from '../menu/WithNestedMenu';
-import TableOptions from './TableOptions';
-import TableRowOptions from './TableRowOptions';
+import TableCellOptions from './TableCellOptions';
 import TableColumnOptions from './TableColumnOptions';
 import TableHeadOptions from './TableHeadOptions';
-import { Editor } from '@tiptap/react';
-import TableCellOptions from './TableCellOptions';
+import TableOptions from './TableOptions';
+import TableRowOptions from './TableRowOptions';
 
 interface Props {
   editor: Editor;

@@ -1,9 +1,10 @@
-import axios from '@src/config/axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { withDefaultOnError } from '../queryClient';
-import { toastError, toastSuccess } from '@src/utils/toast';
 import { RequestConfig } from '../queryConfig';
+
+import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/http';
+import { toastError, toastSuccess } from '@src/utils/toast';
 
 const useUpdateOne = <T extends { _id?: string } = any>(
   requestConfig: RequestConfig,

@@ -1,17 +1,20 @@
-import useBulkActions from '@src/hooks/useBulkActions';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-import queryConfig from '@src/react-query/queryConfig';
-import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
-import Toolbar from '@src/components/table/toolbar/Toolbar';
-import { ICoupon } from '@src/yup/couponSchema';
-import ActionsColumn from '@src/components/table/columns/ActionsColumn';
-import StatusColumn from '@src/components/table/columns/StatusColumn';
 import { BsCheck } from 'react-icons/bs';
-import Thead from '@src/components/table/thead/Thead';
-import NameColumn from '@src/components/table/columns/NameColumn';
-import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
-import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
+
+import useBulkActions from '@src/hooks/useBulkActions';
+import { ICoupon } from '@src/yup/couponSchema';
+
+import useGetOnes from '@react-query/query/useGetOnes';
+import queryConfig from '@react-query/queryConfig';
+
+import BulkActions from '@components/table/bulkActions/BulkActions';
+import HeaderCheckbox from '@components/table/bulkActions/HeaderCheckbox';
+import ActionsColumn from '@components/table/columns/ActionsColumn';
+import CheckBoxColumn from '@components/table/columns/CheckBoxColumn';
+import NameColumn from '@components/table/columns/NameColumn';
+import StatusColumn from '@components/table/columns/StatusColumn';
+import TableWrapper from '@components/table/tableWrapper/TableWrapper';
+import Thead from '@components/table/thead/Thead';
+import Toolbar from '@components/table/toolbar/Toolbar';
 
 const CouponTable = (): JSX.Element => {
   const requestConfig = queryConfig.coupons;

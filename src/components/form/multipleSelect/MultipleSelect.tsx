@@ -1,10 +1,10 @@
-import { AiOutlineDown } from 'react-icons/ai';
-import MultipleSelectItem from './MultipleSelectItem';
 import { useState } from 'react';
-import Label, { LabelProps } from '../Label';
-import SelectedOptions from './SelectedOptions';
-import ErrorMessage from '../ErrorMessage';
 import { useController, useFormState } from 'react-hook-form';
+import { AiOutlineDown } from 'react-icons/ai';
+import ErrorMessage from '../ErrorMessage';
+import Label, { LabelProps } from '../Label';
+import MultipleSelectItem from './MultipleSelectItem';
+import SelectedOptions from './SelectedOptions';
 
 export interface Option {
   name?: string;

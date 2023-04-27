@@ -1,10 +1,12 @@
-import FilePreview from '@src/components/filePreview/FilePreview';
-import { DRAG_TYPES } from '@src/types/enum';
 import { useDragLayer, XYCoord } from 'react-dnd';
-import OptionInputs from '../dragPreview/OptionMock';
 import ChildMenuMock from '../dragPreview/ChildMenuMock';
-import Variant from '@src/_pages/products/create/Variant';
+import OptionInputs from '../dragPreview/OptionMock';
+
 import Option from '@src/_pages/products/create/Option';
+import Variant from '@src/_pages/products/create/Variant';
+import { DRAG_TYPES } from '@src/types/enum';
+
+import FilePreview from '@components/filePreview/FilePreview';
 
 const CustomDragPreview = () => {
   const { isDragging, item, itemType, sourceOffset, pointerOffset } =

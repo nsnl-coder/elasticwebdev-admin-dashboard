@@ -1,9 +1,9 @@
-import useDeleteOne from '@src/react-query/query/useDeleteOne';
-import { RequestConfig } from '@src/react-query/queryConfig';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
 import { IoMdTrash } from 'react-icons/io';
-import StatusColumn from '../table/columns/StatusColumn';
+
+import useDeleteOne from '@react-query/query/useDeleteOne';
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   title: string;

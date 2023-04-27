@@ -1,18 +1,20 @@
 import useBulkActions from '@src/hooks/useBulkActions';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-import queryConfig from '@src/react-query/queryConfig';
-import FilePreview from '@src/components/filePreview/FilePreview';
-import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
-import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { IMenu } from '@src/yup/menuSchema';
-import ActionsColumn from '@src/components/table/columns/ActionsColumn';
-import StatusColumn from '@src/components/table/columns/StatusColumn';
-import Thead from '@src/components/table/thead/Thead';
-import MultipleSelect from '@src/components/table/customFilter/MultipleSelect';
-import NameColumn from '@src/components/table/columns/NameColumn';
-import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
-import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
+
+import useGetOnes from '@react-query/query/useGetOnes';
+import queryConfig from '@react-query/queryConfig';
+
+import FilePreview from '@components/filePreview/FilePreview';
+import BulkActions from '@components/table/bulkActions/BulkActions';
+import HeaderCheckbox from '@components/table/bulkActions/HeaderCheckbox';
+import ActionsColumn from '@components/table/columns/ActionsColumn';
+import CheckBoxColumn from '@components/table/columns/CheckBoxColumn';
+import NameColumn from '@components/table/columns/NameColumn';
+import StatusColumn from '@components/table/columns/StatusColumn';
+import MultipleSelect from '@components/table/customFilter/MultipleSelect';
+import TableWrapper from '@components/table/tableWrapper/TableWrapper';
+import Thead from '@components/table/thead/Thead';
+import Toolbar from '@components/table/toolbar/Toolbar';
 
 const MenuTable = (): JSX.Element => {
   const requestConfig = queryConfig.menus;

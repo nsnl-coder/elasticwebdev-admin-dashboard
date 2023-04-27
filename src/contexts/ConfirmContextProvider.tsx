@@ -1,5 +1,6 @@
-import { Children } from '@src/types/shared';
 import React, { createContext, useState } from 'react';
+
+import { Children } from '@src/types/shared';
 
 interface Confirm {
   prompt: string;

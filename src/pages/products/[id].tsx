@@ -1,33 +1,32 @@
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-//
-import productSchema, { IProduct } from '@src/yup/productSchema';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
+import VariantsInput from '@src/_pages/products/create/VariantsInput';
 import { toastError } from '@src/utils/toast';
 import { ICollection } from '@src/yup/collectionSchema';
-import VariantsInput from '@src/_pages/products/create/VariantsInput';
-//
-import useCreateOne from '@src/react-query/query/useCreateOne';
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import useGetOne from '@src/react-query/query/useGetOne';
-import queryConfig from '@src/react-query/queryConfig';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-//
-import UpdatePageHeader from '@src/components/updatePage/UpdatePageHeader';
-import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
-import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
-import MultipleSelect from '@src/components/form/multipleSelect/MultipleSelect';
-import BigBlocks from '@src/components/form/BigBlocks';
-import Block from '@src/components/form/Block';
-import SmallBlocks from '@src/components/form/SmallBlocks';
-import SubmitBtn from '@src/components/form/SubmitBtn';
-import Input from '@src/components/inputs/Input';
-import Select from '@src/components/inputs/Select';
-import RichText from '@src/components/inputs/RichText';
-import Textarea from '@src/components/inputs/Textarea';
-import FilesInput from '@src/components/inputs/FilesInput';
+import productSchema, { IProduct } from '@src/yup/productSchema';
+
+import useCreateOne from '@react-query/query/useCreateOne';
+import useGetOne from '@react-query/query/useGetOne';
+import useGetOnes from '@react-query/query/useGetOnes';
+import useUpdateOne from '@react-query/query/useUpdateOne';
+import queryConfig from '@react-query/queryConfig';
+
+import BigBlocks from '@components/form/BigBlocks';
+import Block from '@components/form/Block';
+import MultipleSelect from '@components/form/multipleSelect/MultipleSelect';
+import SmallBlocks from '@components/form/SmallBlocks';
+import SubmitBtn from '@components/form/SubmitBtn';
+import FilesInput from '@components/inputs/FilesInput';
+import Input from '@components/inputs/Input';
+import RichText from '@components/inputs/RichText';
+import Select from '@components/inputs/Select';
+import Textarea from '@components/inputs/Textarea';
+import UpdatePageHeader from '@components/updatePage/UpdatePageHeader';
+import UpdatePageHeading from '@components/updatePage/UpdatePageHeading';
+import UpdatePageWrapper from '@components/updatePage/UpdatePageWrapper';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;

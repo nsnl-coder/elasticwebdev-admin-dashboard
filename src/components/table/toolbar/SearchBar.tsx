@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 
 interface Props {
   searchBy: string;

@@ -1,6 +1,7 @@
+import { GrGallery } from 'react-icons/gr';
+
 import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
 import useSelectFromGallery from '@src/hooks/useSelectFromGallery';
-import { GrGallery } from 'react-icons/gr';
 
 interface Props {
   className?: string;

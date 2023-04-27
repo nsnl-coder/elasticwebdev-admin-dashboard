@@ -1,6 +1,6 @@
-import { openPreviewFile } from '@src/store/previewFile';
 import { useAppDispatch, useAppSelector } from './redux';
-import { closePreviewFile } from '@src/store/previewFile';
+
+import { closePreviewFile, openPreviewFile } from '@src/store/previewFile';
 
 const usePreviewOriginalFile = () => {
   const dispatch = useAppDispatch();

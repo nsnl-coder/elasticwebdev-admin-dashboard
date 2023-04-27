@@ -1,8 +1,9 @@
-import useDeleteOne from '@src/react-query/query/useDeleteOne';
-import { RequestConfig } from '@src/react-query/queryConfig';
 import Link from 'next/link';
 import { AiFillEdit } from 'react-icons/ai';
 import { IoMdTrash } from 'react-icons/io';
+
+import useDeleteOne from '@react-query/query/useDeleteOne';
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   requestConfig: RequestConfig;

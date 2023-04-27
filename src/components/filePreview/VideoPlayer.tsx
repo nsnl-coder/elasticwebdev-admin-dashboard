@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 
 import 'video.js/dist/video-js.css';
-
 // City
 import '@videojs/themes/dist/city/index.css';
 

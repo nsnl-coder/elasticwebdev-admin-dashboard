@@ -1,5 +1,6 @@
-import { ConfirmContext } from '@src/contexts/ConfirmContextProvider';
 import { useCallback, useContext } from 'react';
+
+import { ConfirmContext } from '@src/contexts/ConfirmContextProvider';
 
 const useConfirm = () => {
   const confirmContext = useContext(ConfirmContext);

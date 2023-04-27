@@ -1,7 +1,7 @@
+import { Control, Controller, useFormState } from 'react-hook-form';
 import Editor from '../editor/Editor';
-import { Controller, Control, useFormState } from 'react-hook-form';
-import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
+import Label, { LabelProps } from '../form/Label';
 
 interface Props extends LabelProps {
   control: Control<any, any>;

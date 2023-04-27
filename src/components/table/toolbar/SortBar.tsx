@@ -1,9 +1,10 @@
-import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import { BiSortAlt2 } from 'react-icons/bi';
 //
 import SortItem from './SortItem';
 import { Sort } from './Toolbar';
+
 interface Props {
   sort: Sort;
 }

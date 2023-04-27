@@ -1,7 +1,8 @@
-import useUpdateOne from '@src/react-query/query/useUpdateOne';
-import { RequestConfig } from '@src/react-query/queryConfig';
 import { useEffect, useState } from 'react';
 import { AiFillPushpin } from 'react-icons/ai';
+
+import useUpdateOne from '@react-query/query/useUpdateOne';
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   isPinned: boolean | undefined;

@@ -1,18 +1,20 @@
 import useBulkActions from '@src/hooks/useBulkActions';
-import useGetOnes from '@src/react-query/query/useGetOnes';
-import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
-import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { IProduct } from '@src/yup/productSchema';
-import ActionsColumn from '@src/components/table/columns/ActionsColumn';
-import StatusColumn from '@src/components/table/columns/StatusColumn';
-import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
-import Thead from '@src/components/table/thead/Thead';
-import PhotoColumn from '@src/components/table/columns/PhotoColumn';
-import NameColumn from '@src/components/table/columns/NameColumn';
-import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
-import queryConfig from '@src/react-query/queryConfig';
-import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
+
+import useGetOnes from '@react-query/query/useGetOnes';
+import queryConfig from '@react-query/queryConfig';
+
+import BulkActions from '@components/table/bulkActions/BulkActions';
+import HeaderCheckbox from '@components/table/bulkActions/HeaderCheckbox';
+import ActionsColumn from '@components/table/columns/ActionsColumn';
+import CheckBoxColumn from '@components/table/columns/CheckBoxColumn';
+import IsPinnedColumn from '@components/table/columns/IsPinnedColumn';
+import NameColumn from '@components/table/columns/NameColumn';
+import PhotoColumn from '@components/table/columns/PhotoColumn';
+import StatusColumn from '@components/table/columns/StatusColumn';
+import TableWrapper from '@components/table/tableWrapper/TableWrapper';
+import Thead from '@components/table/thead/Thead';
+import Toolbar from '@components/table/toolbar/Toolbar';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;

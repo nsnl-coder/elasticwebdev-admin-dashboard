@@ -1,7 +1,8 @@
-import { Children } from '@src/types/shared';
 import { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+
+import { Children } from '@src/types/shared';
 
 interface Payload {
   index: number;

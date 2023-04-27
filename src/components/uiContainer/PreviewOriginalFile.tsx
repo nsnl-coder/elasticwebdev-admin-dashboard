@@ -1,5 +1,6 @@
-import usePreviewOriginalFile from '@src/hooks/usePreviewOriginalFile';
 import FilePreview from '../filePreview/FilePreview';
+
+import usePreviewOriginalFile from '@src/hooks/usePreviewOriginalFile';
 import imageOrVideo from '@src/utils/imageOrVideo';
 
 function PreviewOriginalFile(): JSX.Element {

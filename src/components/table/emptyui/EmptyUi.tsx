@@ -1,6 +1,7 @@
-import { RequestConfig } from '@src/react-query/queryConfig';
 import Link from 'next/link';
-import { MdLibraryAdd, MdSearchOff } from 'react-icons/md';
+import { MdLibraryAdd } from 'react-icons/md';
+
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   isLoading: boolean;

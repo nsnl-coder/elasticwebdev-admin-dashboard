@@ -1,10 +1,11 @@
-import { IProduct } from '@src/yup/productSchema';
+import { Control } from 'react-hook-form';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { HiPlusCircle } from 'react-icons/hi2';
 import { TbGridDots } from 'react-icons/tb';
-import { Control, UseFormRegister } from 'react-hook-form';
-import Input from '@src/components/inputs/Input';
-import SelectFromGalleryInput from '@src/components/inputs/SelectFromGalleryInput';
+
+import { IProduct } from '@src/yup/productSchema';
+
+import SelectFromGalleryInput from '@components/inputs/SelectFromGalleryInput';
 
 interface Props {
   index: number;

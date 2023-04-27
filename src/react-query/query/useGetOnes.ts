@@ -1,12 +1,13 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-//
-import axios from '@src/config/axios';
+import { useCallback, useEffect } from 'react';
 import { withDefaultOnError } from '../queryClient';
 import { RequestConfig } from '../queryConfig';
-import { useCallback, useEffect } from 'react';
-import { toastError } from '@src/utils/toast';
+
+//
+import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/http';
+import { toastError } from '@src/utils/toast';
 
 interface OptionalQuery {
   includeUrlQuery: boolean;

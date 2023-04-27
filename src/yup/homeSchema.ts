@@ -1,4 +1,4 @@
-import { object, string, InferType, array } from 'yup';
+import { array, InferType, object, string } from 'yup';
 
 const carouselItem = object({
   photo: string().max(255).label('photo'),

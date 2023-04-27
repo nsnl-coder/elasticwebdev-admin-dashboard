@@ -1,8 +1,9 @@
-import { useAppSelector } from '@src/hooks/redux';
-import { Children } from '@src/types/shared';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ErrorMessage from './ErrorMessage';
+
+import { useAppSelector } from '@src/hooks/redux';
+import { Children } from '@src/types/shared';
 
 function RequireAdmin(props: Children): JSX.Element | null {
   const router = useRouter();

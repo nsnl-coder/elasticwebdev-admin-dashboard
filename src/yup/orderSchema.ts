@@ -1,10 +1,4 @@
-import {
-  object,
-  number as originalNumber,
-  string,
-  array,
-  InferType,
-} from 'yup';
+import { array, InferType, number as originalNumber, object, string } from 'yup';
 
 const number = () => {
   return originalNumber().transform((value, originalValue) => {

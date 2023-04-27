@@ -1,5 +1,6 @@
-import SelectFiles from '@src/components/selectFiles/SelectFiles';
 import { useState } from 'react';
+
+import SelectFiles from '@components/selectFiles/SelectFiles';
 
 export default function Home() {
   const [files, setfiles] = useState<string[]>([]);

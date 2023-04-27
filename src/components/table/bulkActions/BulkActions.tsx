@@ -1,7 +1,8 @@
-import useDeleteOnes from '@src/react-query/query/useDeleteOnes';
-import useUpdateOnes from '@src/react-query/query/useupdateOnes';
-import { RequestConfig } from '@src/react-query/queryConfig';
 import { AiFillDelete, AiTwotonePushpin } from 'react-icons/ai';
+
+import useDeleteOnes from '@react-query/query/useDeleteOnes';
+import useUpdateOnes from '@react-query/query/useupdateOnes';
+import { RequestConfig } from '@react-query/queryConfig';
 
 interface Props {
   requestConfig: RequestConfig;

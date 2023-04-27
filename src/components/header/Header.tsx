@@ -1,5 +1,4 @@
-import useLogOut from '@src/react-query/auth/useLogOut';
-import TableWrapper from '../table/tableWrapper/TableWrapper';
+import useLogOut from '@react-query/auth/useLogOut';
 
 function Header(): JSX.Element {
   const { logout, isLoggingOut } = useLogOut();

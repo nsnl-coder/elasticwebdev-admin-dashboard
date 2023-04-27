@@ -1,10 +1,12 @@
-import Variant from './Variant';
-import Label, { LabelProps } from '@src/components/form/Label';
-import { Control, UseFormRegister, useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
 import { MdPlaylistAdd } from 'react-icons/md';
+import Variant from './Variant';
+
 import { DRAG_TYPES } from '@src/types/enum';
-import SwapWrapper from '@src/components/swapWrapper/SwapWrapper';
 import { IProduct } from '@src/yup/productSchema';
+
+import Label, { LabelProps } from '@components/form/Label';
+import SwapWrapper from '@components/swapWrapper/SwapWrapper';
 
 interface Props extends LabelProps {
   control: Control<IProduct>;

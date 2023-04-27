@@ -1,7 +1,8 @@
 import { Control, useWatch } from 'react-hook-form';
-import Option from './OptionMock';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { TbGridDots } from 'react-icons/tb';
+import Option from './OptionMock';
+
 import { IProduct } from '@src/yup/productSchema';
 
 interface Props {

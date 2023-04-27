@@ -1,5 +1,5 @@
-import { DefinedRange, Range } from 'react-date-range';
 import { addDays } from 'date-fns';
+import { DefinedRange, Range } from 'react-date-range';
 
 interface Props {
   range: Range;

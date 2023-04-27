@@ -1,6 +1,7 @@
 import { Control, UseFormRegister, useFormState } from 'react-hook-form';
-import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
+import Label, { LabelProps } from '../form/Label';
+
 import { Children } from '@src/types/shared';
 
 interface Props extends LabelProps, Children {

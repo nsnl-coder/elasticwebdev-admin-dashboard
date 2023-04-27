@@ -1,5 +1,6 @@
-import { Children } from '@src/types/shared';
 import { BiChevronRight } from 'react-icons/bi';
+
+import { Children } from '@src/types/shared';
 
 interface Props extends Children {
   textContent: string;

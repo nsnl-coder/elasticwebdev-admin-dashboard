@@ -1,10 +1,8 @@
-import {
-  AllowedFilesTypes,
-  GalleryContext,
-  defaultState,
-} from '@src/contexts/GalleryContextProvider';
-
 import { useCallback, useContext } from 'react';
+
+import {
+    AllowedFilesTypes, defaultState, GalleryContext
+} from '@src/contexts/GalleryContextProvider';
 
 const useSelectFromGallery = () => {
   const galleryContext = useContext(GalleryContext);

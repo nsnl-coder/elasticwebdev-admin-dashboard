@@ -1,12 +1,5 @@
 import { subDays } from 'date-fns';
-import {
-  object,
-  number as originalNumber,
-  string,
-  date,
-  boolean,
-  InferType,
-} from 'yup';
+import { boolean, date, InferType, number as originalNumber, object, string } from 'yup';
 
 const number = () => {
   return originalNumber().transform((value, originalValue) => {

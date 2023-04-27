@@ -1,4 +1,4 @@
-import { string, boolean, object, InferType } from 'yup';
+import { boolean, InferType, object, string } from 'yup';
 
 const userSchema = object({
   email: string().email().max(150).lowercase().label('email').required(),

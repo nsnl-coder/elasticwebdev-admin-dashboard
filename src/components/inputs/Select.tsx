@@ -1,6 +1,6 @@
 import { Control, UseFormRegister, useFormState } from 'react-hook-form';
-import Label, { LabelProps } from '../form/Label';
 import ErrorMessage from '../form/ErrorMessage';
+import Label, { LabelProps } from '../form/Label';
 
 interface Option {
   name: string;

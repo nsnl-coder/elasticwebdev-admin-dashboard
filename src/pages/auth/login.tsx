@@ -1,12 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-//
-import Input from '@src/components/inputs/Input';
-import useLogin from '@src/react-query/auth/useLogin';
-import RequireNotLogin from '@src/components/hoc/RequireNotLogin';
 import userSchema from '@src/yup/userSchema';
+
+import useLogin from '@react-query/auth/useLogin';
+
+import RequireNotLogin from '@components/hoc/RequireNotLogin';
+//
+import Input from '@components/inputs/Input';
 
 interface Inputs {
   email: string;

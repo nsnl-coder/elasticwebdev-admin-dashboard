@@ -1,5 +1,6 @@
-import { Checkbox } from '@src/hooks/useBulkActions';
 import { ChangeEvent } from 'react';
+
+import { Checkbox } from '@src/hooks/useBulkActions';
 
 interface Props {
   id?: string;

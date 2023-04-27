@@ -1,6 +1,7 @@
+import { Control, useWatch } from 'react-hook-form';
+
 import getLocaleDateString from '@src/utils/getLocaleDateString';
 import { ICoupon } from '@src/yup/couponSchema';
-import { Control, useWatch } from 'react-hook-form';
 
 interface Props {
   control: Control<ICoupon>;

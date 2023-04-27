@@ -36,7 +36,8 @@ function Create(): JSX.Element {
     resolver: yupResolver(homeSchema),
   });
 
-  const { createOne: createHome } = useCreateOne<IHome>(requestConfig);
+  const { createOne: createHome, isLoading: isCreating } =
+    useCreateOne<IHome>(requestConfig);
 
   const { updateOne: updateHome, isUpdating } =
     useUpdateOne<IHome>(requestConfig);
@@ -47,8 +48,6 @@ function Create(): JSX.Element {
     // already check if should create or update
     // updateHome(data, id);
     // createHome(data, id);
-
-    console.log(data);
   };
   // get products, collections and posts
   const { data: products } = useGetOnes<IProduct>(queryConfig.products, {
@@ -139,7 +138,7 @@ function Create(): JSX.Element {
               tooltip="Only one version is active at a time. Others with automatically be draft ."
             />
             <div className="flex justify-end mt-4">
-              <SubmitBtn isUpdating={isUpdating} />
+              <SubmitBtn isSubmitting={isUpdating || isCreating} />
             </div>
           </Block>
         </SmallBlocks>

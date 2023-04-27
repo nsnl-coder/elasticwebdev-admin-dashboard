@@ -112,6 +112,7 @@ const ProductTable = (): JSX.Element => {
                     href={`${queryConfig.collections.pluralName}/${c._id}`}
                     key={c._id}
                     className="badge badge-outline"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     {c.name}
                   </Link>

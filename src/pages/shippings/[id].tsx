@@ -28,7 +28,8 @@ function Create(): JSX.Element {
 
   const requestConfig = queryConfig.shippings;
 
-  const { createOne: createShipping } = useCreateOne<IShipping>(requestConfig);
+  const { createOne: createShipping, isLoading: isCreating } =
+    useCreateOne<IShipping>(requestConfig);
   const { updateOne: updateShipping, isUpdating } =
     useUpdateOne<IShipping>(requestConfig);
   const { data: shipping } = useGetOne<IShipping>(requestConfig, reset);
@@ -131,7 +132,7 @@ function Create(): JSX.Element {
               label="status"
             />
             <div className="flex justify-end mt-4">
-              <SubmitBtn isUpdating={isUpdating} />
+              <SubmitBtn isSubmitting={isUpdating || isCreating} />
             </div>
           </Block>
         </SmallBlocks>

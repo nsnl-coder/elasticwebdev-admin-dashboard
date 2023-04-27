@@ -24,7 +24,7 @@ function FileWrapper(props: Props): JSX.Element {
 
   return (
     <SwapWrapper
-      className={`relative border group rounded-md shadow-sm flex items-center justify-center aspect-square overflow-hidden bg-gray-50/80 ${
+      className={`relative border group rounded-md overflow-hidden shadow-sm flex items-center justify-center aspect-square bg-gray-100 ${
         index === 0 ? 'col-span-2 row-span-2' : ''
       }`}
       itemType={DRAG_TYPES.FILE}

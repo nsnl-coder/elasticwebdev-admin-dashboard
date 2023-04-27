@@ -40,7 +40,8 @@ function Create(): JSX.Element {
     },
   });
 
-  const { createOne: createProduct } = useCreateOne<IProduct>(requestConfig);
+  const { createOne: createProduct, isLoading: isCreating } =
+    useCreateOne<IProduct>(requestConfig);
 
   const {
     updateOne: updateProduct,
@@ -163,7 +164,7 @@ function Create(): JSX.Element {
           <Block>
             <FilesInput
               fieldName="previewImages"
-              allowedTypes="*"
+              allowedTypes="image"
               control={control}
               labelTheme="bold"
               maxFilesCount={5}
@@ -202,7 +203,7 @@ function Create(): JSX.Element {
               label="status"
             />
             <div className="flex justify-end mt-4">
-              <SubmitBtn isUpdating={isUpdating} />
+              <SubmitBtn isSubmitting={isUpdating || isCreating} />
             </div>
           </Block>
         </SmallBlocks>

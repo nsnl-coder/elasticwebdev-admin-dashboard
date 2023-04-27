@@ -28,14 +28,18 @@ function Create(): JSX.Element {
 
   const { register, handleSubmit, control, reset, watch } = useForm<IMenu>({
     resolver: yupResolver(menuSchema),
+    defaultValues: {
+      menuType: 'nested',
+    },
   });
 
-  const { createOne: createMenu } = useCreateOne<IMenu>(requestConfig);
+  const { createOne: createMenu, isLoading: isCreating } =
+    useCreateOne<IMenu>(requestConfig);
   const { updateOne: updateMenu, isUpdating } =
     useUpdateOne<IMenu>(requestConfig);
   const { data: menu } = useGetOne<IMenu>(requestConfig, reset);
   const { data: menus } = useGetOnes<IMenu>(requestConfig, {
-    includeUrlQuery: true,
+    includeUrlQuery: false,
     additionalQuery: {
       fields: 'name',
       menuType: 'nested',
@@ -139,7 +143,7 @@ function Create(): JSX.Element {
               defaultValue={menu?.status}
             />
             <div className="flex justify-end mt-4">
-              <SubmitBtn isUpdating={isUpdating} />
+              <SubmitBtn isSubmitting={isUpdating || isCreating} />
             </div>
           </Block>
           {watch('menuType') === 'root' ? (

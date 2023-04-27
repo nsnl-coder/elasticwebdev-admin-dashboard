@@ -1,12 +1,10 @@
 import { useDragLayer, XYCoord } from 'react-dnd';
 import ChildMenuMock from '../dragPreview/ChildMenuMock';
-import OptionInputs from '../dragPreview/OptionMock';
 
 import Option from '@src/_pages/products/create/Option';
 import Variant from '@src/_pages/products/create/Variant';
 import { DRAG_TYPES } from '@src/types/enum';
-
-import FilePreview from '@components/filePreview/FilePreview';
+import FilePreview from '../filePreview/FilePreview';
 
 const CustomDragPreview = () => {
   const { isDragging, item, itemType, sourceOffset, pointerOffset } =
@@ -24,7 +22,11 @@ const CustomDragPreview = () => {
 
   switch (itemType) {
     case DRAG_TYPES.FILE:
-      preview = <FilePreview src={item.id} />;
+      preview = (
+        <div className="w-full h-full rounded-md overflow-hidden flex items-center justify-center bg-gray-50">
+          <FilePreview src={item.id} />
+        </div>
+      );
       break;
     case DRAG_TYPES.VARIANT:
       preview = (
@@ -62,7 +64,10 @@ const CustomDragPreview = () => {
 
   return (
     <div className="fixed pointer-events-none left-0 top-0 z-50">
-      <div style={styles} className="shadow-2xl">
+      <div
+        style={styles}
+        className="shadow-2xl flex items-center justify-center"
+      >
         {preview}
       </div>
     </div>

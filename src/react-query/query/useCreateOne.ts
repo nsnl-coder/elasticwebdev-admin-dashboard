@@ -26,7 +26,7 @@ const useCreateOne = <T extends { _id?: string }>(
     toastSuccess(`${requestConfig.singularName} has been created!`);
 
     if (res.data?._id) {
-      router.push(`/${requestConfig.pluralName}/${res.data._id}`);
+      router.replace(`/${requestConfig.pluralName}/${res.data._id}`);
     }
   };
 

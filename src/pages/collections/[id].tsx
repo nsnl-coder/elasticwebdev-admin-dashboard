@@ -29,7 +29,7 @@ function Create(): JSX.Element {
     resolver: yupResolver(collectionSchema),
   });
 
-  const { createOne: createCollection } =
+  const { createOne: createCollection, isLoading: isCreating } =
     useCreateOne<ICollection>(requestConfig);
 
   const { updateOne: updateCollection, isUpdating } =
@@ -105,7 +105,7 @@ function Create(): JSX.Element {
               labelTheme="bold"
             />
             <div className="flex justify-end mt-4">
-              <SubmitBtn isUpdating={isUpdating} />
+              <SubmitBtn isSubmitting={isUpdating || isCreating} />
             </div>
           </Block>
           <Block>

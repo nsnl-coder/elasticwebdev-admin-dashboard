@@ -66,7 +66,7 @@ function FileWrapper(props: Props): JSX.Element {
 
   return (
     <div
-      className={`group cursor-pointer relative flex flex-col justify-center bg-gray-200 shadow-sm border rounded-xl overflow-hidden ${
+      className={`group cursor-pointer relative flex flex-col justify-center shadow-sm border rounded-xl overflow-hidden ${
         isDeleting || isDeletingFiles ? 'opacity-60' : ''
       }`}
     >

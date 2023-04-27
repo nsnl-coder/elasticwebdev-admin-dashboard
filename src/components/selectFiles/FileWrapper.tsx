@@ -23,7 +23,7 @@ function FileWrapper(props: Props): JSX.Element {
 
   return (
     <SwapWrapper
-      className={`relative border group rounded-md shadow-sm flex items-center justify-center aspect-square overflow-hidden bg-gray-50 ${
+      className={`relative border group rounded-md shadow-sm flex items-center justify-center aspect-square overflow-hidden bg-gray-50/80 ${
         index === 0 ? 'col-span-2 row-span-2' : ''
       }`}
       itemType={DRAG_TYPES.FILE}
@@ -33,7 +33,7 @@ function FileWrapper(props: Props): JSX.Element {
       swapOn="hover"
       index={index}
     >
-      <div>
+      <div className="flex items-center justify-center w-full">
         {props.children}
         <div
           className={`absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer peer`}

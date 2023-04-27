@@ -33,7 +33,7 @@ function GalleryContent(props: Props): JSX.Element {
 
   return (
     <div
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative min-h-full content-start"
+      className="grid grid-cols-2 md:grid-cols-3 gap-4 relative min-h-full content-start"
       {...getRootProps()}
     >
       <input {...getInputProps()} />
@@ -41,13 +41,13 @@ function GalleryContent(props: Props): JSX.Element {
       {isUploading && (
         <GridSkeleton
           count={1}
-          className="h-36 rounded-xl overflow- shadow-lg border"
+          className="h-48 rounded-xl overflow- shadow-lg border"
         />
       )}
       {isLoadingFiles && (
         <GridSkeleton
           count={9}
-          className="h-36 rounded-xl overflow-hidden shadow-lg border"
+          className="h-48 rounded-xl overflow-hidden shadow-lg border"
         />
       )}
       {s3Files?.pages.map((page, index) => {
@@ -57,7 +57,7 @@ function GalleryContent(props: Props): JSX.Element {
               <FileWrapper key={item.Key} s3Key={item.Key}>
                 <FilePreview
                   src={item.Key}
-                  className="w-full object-cover cursor-pointer h-36"
+                  className="w-full object-contain cursor-pointer h-48"
                 />
               </FileWrapper>
             ))}

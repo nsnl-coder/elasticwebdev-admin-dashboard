@@ -37,6 +37,7 @@ function Create(): JSX.Element {
     resolver: yupResolver(productSchema, { stripUnknown: true }),
     defaultValues: {
       isPinned: false,
+      name: '99. Men New Fashion Casual Shoes for Light Soft Breathable Vulcanize Shoes High',
     },
   });
 
@@ -151,10 +152,10 @@ function Create(): JSX.Element {
               allowedTypes="*"
               control={control}
               labelTheme="bold"
-              maxFilesCount={10}
+              maxFilesCount={20}
               key={1}
-              label="Product images"
-              tooltip="Images that display in product detail page. Max 10 images."
+              label="Product media"
+              tooltip="Video or images. Max 20 files"
             />
           </Block>
           <Block>

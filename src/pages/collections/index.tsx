@@ -89,13 +89,11 @@ const CollectionTable = (): JSX.Element => {
                 id={collection._id}
                 isPinned={collection.isPinned}
               />
-              <td>
-                <StatusColumn
-                  requestConfig={requestConfig}
-                  status={collection.status}
-                  id={collection._id}
-                />
-              </td>
+              <StatusColumn
+                requestConfig={requestConfig}
+                status={collection.status}
+                id={collection._id}
+              />
               <td>
                 <p className="truncate max-w-md">{collection.slug}</p>
               </td>

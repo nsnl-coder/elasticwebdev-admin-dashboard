@@ -27,7 +27,7 @@ const ProductTable = (): JSX.Element => {
   } = useGetOnes<IProduct>(requestConfig, {
     includeUrlQuery: true,
     additionalQuery: {
-      fields: 'previewImages name isPinned collections slug',
+      fields: 'previewImages name isPinned collections slug status',
     },
   });
 

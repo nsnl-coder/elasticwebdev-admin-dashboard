@@ -12,7 +12,7 @@ function GalleryContainer(): JSX.Element | null {
       onClick={reject}
     >
       <div
-        className="modal-box max-w-6xl relative w-screen flex flex-col h-screen rounded-md p-0"
+        className="modal-box cursor-default max-w-6xl relative w-screen flex flex-col h-screen rounded-md p-0"
         onClick={(e) => e.stopPropagation()}
       >
         <Gallery />

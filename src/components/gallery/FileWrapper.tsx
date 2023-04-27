@@ -20,13 +20,14 @@ function FileWrapper(props: Props): JSX.Element {
   const { isConfirmed } = useConfirm();
   const { deleteFile, isDeleting } = useDeleteFile();
   const {
-    handleSelectFile,
-    handleRemoveSelect,
+    selectFile,
+    unselectFiles,
     selectedFiles,
     maxFilesCount,
     allowedTypes,
     resolve,
   } = useSelectFromGallery();
+
   const { openPreviewModal } = usePreviewOriginalFile();
 
   //
@@ -36,7 +37,7 @@ function FileWrapper(props: Props): JSX.Element {
   const wrongType = allowedTypes !== fileType && allowedTypes !== '*';
   const canToggle = !wrongType && selectedFiles.length < maxFilesCount;
 
-  const handleAddImage = () => {
+  const toggleFileSelection = () => {
     if (wrongType) {
       toastError('File type is not allowed!');
       return;
@@ -46,10 +47,10 @@ function FileWrapper(props: Props): JSX.Element {
       toastError('You haved reach the maximum files selections!');
     }
 
-    if (isSelected) handleRemoveSelect(s3Key);
+    if (isSelected) unselectFiles(s3Key);
 
     if (canToggle && !isSelected) {
-      handleSelectFile(s3Key);
+      selectFile(s3Key);
     }
   };
   const handleRemoveS3File = async () => {
@@ -65,7 +66,7 @@ function FileWrapper(props: Props): JSX.Element {
 
   return (
     <div
-      className={`group relative flex flex-col justify-center bg-gray-200 shadow-sm rounded-xl overflow-hidden ${
+      className={`group cursor-pointer relative flex flex-col justify-center bg-gray-200 shadow-sm border rounded-xl overflow-hidden ${
         isDeleting || isDeletingFiles ? 'opacity-60' : ''
       }`}
     >
@@ -87,13 +88,13 @@ function FileWrapper(props: Props): JSX.Element {
           >
             <TbTrashFilled
               size={26}
-              className="text-gray-300 hover:text-red-400 cursor-pointer"
+              className="text-gray-300 hover:text-red-400"
             />
           </div>
         </div>
       )}
       <div
-        onClick={handleAddImage}
+        onClick={toggleFileSelection}
         className={`absolute inset-0 z-10 opacity-0 peer-hover:opacity-100 peer-hover:bg-black/50 group-hover:opacity-100 ${
           isSelected
             ? 'opacity-100 flex justify-end items-start bg-black/50'

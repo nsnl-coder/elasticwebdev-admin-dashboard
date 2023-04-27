@@ -1,5 +1,5 @@
 import { Children } from '@src/types/shared';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 type AllowedFilesTypes = 'video' | 'image' | '*';
 
@@ -15,8 +15,6 @@ interface State {
 type TContext = {
   state: State;
   setState: React.Dispatch<React.SetStateAction<State>>;
-  handleSelectFile: (url: string) => void;
-  handleRemoveSelect: (url: string | string[]) => void;
 };
 
 const defaultState = {
@@ -31,41 +29,14 @@ const defaultState = {
 const GalleryContext = createContext<TContext>({
   state: defaultState,
   setState: () => undefined,
-  handleSelectFile: () => undefined,
-  handleRemoveSelect: () => undefined,
 });
 
 const GalleryContextProvider = (props: Children) => {
   const { children } = props;
   const [state, setState] = useState<State>(defaultState);
 
-  const handleSelectFile = (url: string) => {
-    setState((prev) => ({
-      ...prev,
-      selectedFiles: [...prev.selectedFiles, url],
-    }));
-  };
-
-  const handleRemoveSelect = (removeUrl: string | string[]) => {
-    if (typeof removeUrl === 'string') {
-      setState((prev) => ({
-        ...prev,
-        selectedFiles: prev.selectedFiles.filter((url) => url !== removeUrl),
-      }));
-    } else {
-      setState((prev) => ({
-        ...prev,
-        selectedFiles: prev.selectedFiles.filter(
-          (url) => !removeUrl.includes(url),
-        ),
-      }));
-    }
-  };
-
   return (
-    <GalleryContext.Provider
-      value={{ state, setState, handleSelectFile, handleRemoveSelect }}
-    >
+    <GalleryContext.Provider value={{ state, setState }}>
       {children}
     </GalleryContext.Provider>
   );

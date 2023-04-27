@@ -141,12 +141,26 @@ function Create(): JSX.Element {
             </Block>
             <Block>
               <FilesInput
+                fieldName="previewImages"
+                allowedTypes="*"
+                control={control}
+                labelTheme="bold"
+                maxFilesCount={5}
+                key={2}
+                label="Preview images"
+                tooltip="Images that display when you hover on card. Max 5 images."
+              />
+            </Block>
+            <Block>
+              <FilesInput
                 fieldName="images"
                 allowedTypes="*"
                 control={control}
                 labelTheme="bold"
                 maxFilesCount={10}
                 key={1}
+                label="Product images"
+                tooltip="Images that display in product detail page. Max 10 images."
               />
             </Block>
             <Block>
@@ -181,16 +195,6 @@ function Create(): JSX.Element {
               <div className="flex justify-end mt-4">
                 <SubmitBtn isUpdating={isUpdating} />
               </div>
-            </Block>
-            <Block>
-              <FilesInput
-                fieldName="previewImages"
-                allowedTypes="*"
-                control={control}
-                labelTheme="bold"
-                maxFilesCount={2}
-                key={2}
-              />
             </Block>
           </SmallBlocks>
         </div>

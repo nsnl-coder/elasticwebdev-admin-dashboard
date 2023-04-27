@@ -23,6 +23,7 @@ function FilesInput(props: Props): JSX.Element {
     required = false,
     allowedTypes,
     showUploadLabel = true,
+    tooltip,
   } = props;
 
   const { errors } = useFormState({ control });
@@ -52,6 +53,7 @@ function FilesInput(props: Props): JSX.Element {
         label={label}
         labelTheme={labelTheme}
         required={required}
+        tooltip={tooltip}
       />
       <SelectFiles
         allowedTypes={allowedTypes}

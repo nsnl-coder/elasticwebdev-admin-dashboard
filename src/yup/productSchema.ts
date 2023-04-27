@@ -46,7 +46,7 @@ const productSchema = object({
     .of(string().max(255).required())
     .label('Product images'),
   previewImages: array()
-    .max(2)
+    .max(5)
     .of(string().max(255).required())
     .label('Preview images'),
   collections: array().max(100).label('collections ids'),

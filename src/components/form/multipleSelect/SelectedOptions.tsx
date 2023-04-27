@@ -10,7 +10,7 @@ interface Props {
 function SelectedOptions(props: Props): JSX.Element {
   const { selectedOptions, setSelectedOptions, options } = props;
 
-  const handleRemoveSelection = (_id: string | undefined) => {
+  const unselectDeletedFilesion = (_id: string | undefined) => {
     if (!_id) return;
 
     setSelectedOptions((prev) => {
@@ -42,7 +42,7 @@ function SelectedOptions(props: Props): JSX.Element {
         >
           {option.name}
           <span
-            onClick={() => handleRemoveSelection(option._id)}
+            onClick={() => unselectDeletedFilesion(option._id)}
             className="px-2 hover:text-red-400"
           >
             <IoMdClose />

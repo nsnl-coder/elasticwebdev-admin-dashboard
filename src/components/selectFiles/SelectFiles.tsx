@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useDropzone } from 'react-dropzone';
 //
 import useSelectLocalFiles from '@src/hooks/useSelectLocalFiles';
 import { AllowedFilesTypes } from '@src/contexts/GalleryContextProvider';
@@ -31,27 +32,22 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
     fieldName,
     showUploadLabel,
   } = props;
+  const isMaxFilesCount = files.length >= maxFilesCount;
+
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
 
-  const {
-    key,
-    isUploading,
-    resetCreatePresignedUrl,
-    isUploaded,
-    resetUploadFile,
-  } = useUploadFiles(localFiles, setLocalFiles);
+  const { isUploading, s3Key, resetMutationState } = useUploadFiles({
+    localFiles,
+    setLocalFiles,
+    isMaxFilesCount,
+  });
 
   useEffect(() => {
-    if (!isUploaded) return;
-
-    if (key) {
-      setFiles((files: string[]) => [...files, key]);
-      resetCreatePresignedUrl();
-      resetUploadFile();
+    if (s3Key) {
+      setFiles((prev) => [...prev, s3Key]);
+      resetMutationState();
     }
-  }, [key, isUploaded, resetCreatePresignedUrl, resetUploadFile, setFiles]);
-
-  const isMaxFilesCount = files.length >= maxFilesCount;
+  }, [s3Key, setFiles, resetMutationState]);
 
   const swapPosition = (dragKey: string, dropKey: string) => {
     setFiles((files) => {
@@ -71,13 +67,28 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
     });
   };
 
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (acceptedFiles.length > 0 && !isMaxFilesCount)
+        selectLocalFiles(acceptedFiles);
+    },
+    [selectLocalFiles, isMaxFilesCount],
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
+  });
+
   return (
     <div
-      className={`gap-4 grid ${
+      className={`gap-4 grid relative ${
         maxFilesCount > 3 ? 'grid-cols-4' : showUploadLabel ? 'grid-cols-2' : ''
       }`}
+      {...getRootProps()}
     >
       <HiddenInput id={fieldName} selectFiles={selectLocalFiles} />
+      <input {...getInputProps()} />
       {files.map((s3Key, index) => (
         <FileWrapper
           key={s3Key}
@@ -106,6 +117,20 @@ function SelectFiles(props: SelectFilesProps): JSX.Element {
       )}
       {!isMaxFilesCount && showUploadLabel && (
         <Label htmlFor={fieldName} className="aspect-square" />
+      )}
+      {isDragActive && (
+        <div
+          className={`bg-blue-50 absolute w-full h-full z-20 rounded-md border-blue-400 border-dashed border font-semibold flex items-center justify-center text-blue-600 text-sm`}
+        >
+          Drop media to upload
+        </div>
+      )}
+      {isDragActive && isMaxFilesCount && (
+        <div
+          className={`bg-red-50 absolute w-full h-full z-20 rounded-md border-red-400 border-dashed border font-semibold flex items-center justify-center text-red-600 text-sm`}
+        >
+          Can not upload because only {maxFilesCount} selected files allowed.
+        </div>
       )}
     </div>
   );

@@ -11,32 +11,40 @@ import useInfiniteFetch from '@src/react-query/query/useInfiniteFetch';
 
 function Gallery(): JSX.Element | null {
   const { isOpen } = useSelectFromGallery();
-  const { s3Files, isLoading, isFetching, hasNextPage, fetchNextPage } =
-    useGetFiles(isOpen);
+  const {
+    s3Files,
+    isLoading: isLoadingFiles,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetFiles(isOpen);
   const { localFiles, setLocalFiles, selectLocalFiles } = useSelectLocalFiles();
-  const { isUploaded, isUploading, resetUploadFile } = useUploadFiles(
+  const { isUploading, resetMutationState, s3Key } = useUploadFiles({
     localFiles,
     setLocalFiles,
-  );
-  const { lastElementRef } = useInfiniteFetch({ hasNextPage, fetchNextPage });
+    isMaxFilesCount: false,
+  });
 
   useEffect(() => {
-    if (!isUploaded) return;
-    if (!isOpen || !isFetching) resetUploadFile();
-  }, [isOpen, isFetching, isUploaded, resetUploadFile]);
+    if (s3Key) {
+      resetMutationState();
+    }
+  }, [s3Key, resetMutationState]);
+
+  const { lastElementRef } = useInfiniteFetch({ hasNextPage, fetchNextPage });
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <HiddenInput id="gallery_upload" selectFiles={selectLocalFiles} />
-      <GalleryHeader isUploading={isUploading} isUploaded={isUploaded} />
-      <div className="p-8 flex-grow   content-start items-center overflow-y-auto small-scrollbar">
+      <GalleryHeader isUploading={isUploading} />
+      <div className="p-8 flex-grow content-start items-center overflow-y-auto small-scrollbar">
         {s3Files?.pages.length && (
           <GalleryContent
-            isFetching={isFetching}
-            isLoading={isLoading}
-            isUploaded={isUploaded}
+            isLoadingFiles={isLoadingFiles}
             isUploading={isUploading}
             s3Files={s3Files}
+            selectLocalFiles={selectLocalFiles}
+            isFetching={isFetching}
           />
         )}
         {!isFetching && <div ref={lastElementRef}></div>}

@@ -1,6 +1,6 @@
 import { imageExtensions, videoExtensions } from '@src/utils/imageOrVideo';
 import { toastError } from '@src/utils/toast';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface FileInfo {
@@ -11,29 +11,7 @@ interface FileInfo {
 function useSelectLocalFiles() {
   const [localFiles, setLocalFiles] = useState<FileInfo[]>([]);
 
-  const selectLocalFiles = (localFiles: FileList) => {
-    for (let i = 0; i < localFiles.length; i++) {
-      selectFile(localFiles[i]);
-    }
-  };
-
-  const isSupportedFileType = (fileType: string) => {
-    let extension = fileType.split('/')[1];
-
-    if (fileType.startsWith('image') && !imageExtensions.includes(extension)) {
-      toastError(`Supported images types: ${imageExtensions.join(', ')}`);
-      return false;
-    }
-
-    if (fileType.startsWith('video') && !videoExtensions.includes(extension)) {
-      toastError(`Supported video types: ${videoExtensions.join(', ')}`);
-      return false;
-    }
-
-    return true;
-  };
-
-  const selectFile = (file: File) => {
+  const selectFile = useCallback((file: File) => {
     if (!file.type.startsWith('image') && !file.type.startsWith('video')) {
       toastError('Please select image or video files only!');
       return;
@@ -59,18 +37,36 @@ function useSelectLocalFiles() {
         file,
       },
     ]);
+  }, []);
+
+  const selectLocalFiles = useCallback(
+    (localFiles: FileList | File[]) => {
+      for (let i = 0; i < localFiles.length; i++) {
+        selectFile(localFiles[i]);
+      }
+    },
+    [selectFile],
+  );
+
+  const isSupportedFileType = (fileType: string) => {
+    let extension = fileType.split('/')[1];
+
+    if (fileType.startsWith('image') && !imageExtensions.includes(extension)) {
+      toastError(`Supported images types: ${imageExtensions.join(', ')}`);
+      return false;
+    }
+
+    if (fileType.startsWith('video') && !videoExtensions.includes(extension)) {
+      toastError(`Supported video types: ${videoExtensions.join(', ')}`);
+      return false;
+    }
+
+    return true;
   };
 
   const removeFile = (url: string) => {
     setLocalFiles((prev) => prev.filter((fileinfo) => fileinfo.url !== url));
     URL.revokeObjectURL(url);
-  };
-
-  const pinFile = (pinnedFile: FileInfo) => {
-    setLocalFiles((prev) => {
-      const otherFiles = prev.filter((file) => file.url !== pinnedFile.url);
-      return [pinnedFile, ...otherFiles];
-    });
   };
 
   return { selectLocalFiles, removeFile, localFiles, setLocalFiles };

@@ -13,8 +13,8 @@ function GridSkeleton(props: Props): JSX.Element {
       {Array(count)
         .fill(0)
         .map((item, i) => (
-          <div key={i} className={className}>
-            <Skeleton className={'h-full w-full'} />
+          <div key={i} className={`relative ${className} overflow-hidden`}>
+            <Skeleton className={'h-full w-full absolute top-0 left-0 m-0'} />
           </div>
         ))}
     </>

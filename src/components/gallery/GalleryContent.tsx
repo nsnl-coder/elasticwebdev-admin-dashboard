@@ -1,32 +1,53 @@
 import { Response } from '@src/react-query/files/useGetFiles';
 import { InfiniteData } from '@tanstack/react-query';
-import React from 'react';
+import React, { useCallback } from 'react';
 import FileWrapper from './FileWrapper';
 import FilePreview from '../filePreview/FilePreview';
 import UploadLabel from './UploadLabel';
 import GridSkeleton from '../skeleton/GridSkeleton';
+import { useDropzone } from 'react-dropzone';
 
 interface Props {
   s3Files: InfiniteData<Response>;
   isUploading: boolean;
+  isLoadingFiles: boolean;
   isFetching: boolean;
-  isUploaded: boolean;
-  isLoading: boolean;
+  selectLocalFiles: (localFiles: File[] | FileList) => void;
 }
 
 function GalleryContent(props: Props): JSX.Element {
-  const { s3Files, isFetching, isUploading, isUploaded, isLoading } = props;
+  const { s3Files, isUploading, isLoadingFiles, selectLocalFiles, isFetching } =
+    props;
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      selectLocalFiles(acceptedFiles);
+    },
+    [selectLocalFiles],
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
+  });
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
+    <div
+      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative min-h-full content-start"
+      {...getRootProps()}
+    >
+      <input {...getInputProps()} />
       <UploadLabel htmlFor="gallery_upload" />
-      {(isUploading || (isFetching && isUploaded)) && (
-        <GridSkeleton count={1} className="h-full w-full" />
+      {isUploading && (
+        <GridSkeleton
+          count={1}
+          className="h-36 rounded-xl overflow- shadow-lg border"
+        />
       )}
-      {isLoading && (
+      {isLoadingFiles && (
         <GridSkeleton
           count={9}
-          className="h-32 rounded-xl overflow-hidden shadow-lg"
+          className="h-36 rounded-xl overflow-hidden shadow-lg border"
         />
       )}
       {s3Files?.pages.map((page, index) => {
@@ -36,13 +57,18 @@ function GalleryContent(props: Props): JSX.Element {
               <FileWrapper key={item.Key} s3Key={item.Key}>
                 <FilePreview
                   src={item.Key}
-                  className="w-full object-cover cursor-pointer h-28"
+                  className="w-full object-cover cursor-pointer h-36"
                 />
               </FileWrapper>
             ))}
           </React.Fragment>
         );
       })}
+      {isDragActive && (
+        <div className="bg-blue-50 absolute inset-0 rounded-md w-full h-full border-blue-400 text-blue-700 text-sm  z-20 flex items-center justify-center font-semibold border-dashed border">
+          Drop media to upload!
+        </div>
+      )}
     </div>
   );
 }

@@ -29,8 +29,9 @@ const useGetFiles = (isOpen: boolean) => {
     toastError('Can not get files!');
   };
 
-  const res = useInfiniteQuery<any, HttpError, Response>(['files'], {
+  const res = useInfiniteQuery<any, HttpError, Response>({
     queryFn: fetchPage,
+    queryKey: ['files'],
     getNextPageParam: (lastPage: Response) =>
       lastPage.data!.IsTruncated ? lastPage.data?.lastKey : undefined,
     onError: withDefaultOnError(onError),

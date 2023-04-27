@@ -38,10 +38,7 @@ const useDeleteOnes = (requestConfig: RequestConfig) => {
         } has been deleted!`,
       );
     }
-    if (router.query.id) router.push(`/${requestConfig.pluralName}`);
-    if (!router.query.id) {
-      queryClient.invalidateQueries([requestConfig.pluralName]);
-    }
+    queryClient.invalidateQueries([requestConfig.pluralName]);
   };
 
   const onError = () => {
@@ -71,6 +68,7 @@ const useDeleteOnes = (requestConfig: RequestConfig) => {
     isLoading: mutation.isLoading,
     deleteOnes,
     isDeleted: mutation.isSuccess,
+    reset: mutation.reset,
   };
 };
 

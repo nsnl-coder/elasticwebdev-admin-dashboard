@@ -88,8 +88,6 @@ function SwapWrapper(props: Props): JSX.Element {
     [ref, swapById, swapByIndex],
   );
 
-  console.log(ref.current?.dataset?.index);
-
   return (
     <div
       ref={(node) => {

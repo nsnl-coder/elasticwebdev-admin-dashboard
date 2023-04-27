@@ -12,6 +12,8 @@ interface RequestData {
 type Response = HttpResponse<{
   url: string;
   key: string;
+  type: string;
+  size: number;
 }>;
 
 const useCreatePresignedUrl = () => {
@@ -37,8 +39,7 @@ const useCreatePresignedUrl = () => {
 
   return {
     createPresignUrl: mutation.mutate,
-    presignUrl: mutation.data?.data?.url,
-    key: mutation.data?.data?.key,
+    signUrlData: mutation.data?.data,
     status: mutation.status,
     isCreating: mutation.isLoading,
     resetCreatePresignedUrl: mutation.reset,

@@ -7,13 +7,11 @@ import homeSchema, { IHome } from '@src/yup/homeSchema';
 import { IProduct } from '@src/yup/productSchema';
 
 import useCreateOne from '@react-query/query/useCreateOne';
-//
 import useGetOne from '@react-query/query/useGetOne';
 import useGetOnes from '@react-query/query/useGetOnes';
 import useUpdateOne from '@react-query/query/useUpdateOne';
 import queryConfig from '@react-query/queryConfig';
 
-//
 import BigBlocks from '@components/form/BigBlocks';
 import Block from '@components/form/Block';
 import MultipleSelect from '@components/form/multipleSelect/MultipleSelect';
@@ -54,13 +52,17 @@ function Create(): JSX.Element {
   };
   // get products, collections and posts
   const { data: products } = useGetOnes<IProduct>(queryConfig.products, {
-    fields: 'name',
     includeUrlQuery: false,
+    additionalQuery: {
+      fields: 'name',
+    },
   });
 
   const { data: collections } = useGetOnes<IProduct>(queryConfig.collections, {
-    fields: 'name',
     includeUrlQuery: false,
+    additionalQuery: {
+      fields: 'name',
+    },
   });
 
   return (

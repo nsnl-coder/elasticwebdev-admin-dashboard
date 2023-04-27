@@ -54,7 +54,9 @@ function Create(): JSX.Element {
     queryConfig.collections,
     {
       includeUrlQuery: false,
-      itemsPerPage: 999,
+      additionalQuery: {
+        itemsPerPage: 1000,
+      },
     },
   );
 

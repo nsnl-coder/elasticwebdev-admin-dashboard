@@ -35,9 +35,11 @@ function Create(): JSX.Element {
     useUpdateOne<IMenu>(requestConfig);
   const { data: menu } = useGetOne<IMenu>(requestConfig, reset);
   const { data: menus } = useGetOnes<IMenu>(requestConfig, {
-    fields: 'name',
-    menuType: 'nested',
     includeUrlQuery: true,
+    additionalQuery: {
+      fields: 'name',
+      menuType: 'nested',
+    },
   });
 
   const onSubmit = (data: IMenu) => {

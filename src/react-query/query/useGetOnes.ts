@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { withDefaultOnError } from '../queryClient';
 import { RequestConfig } from '../queryConfig';
 
@@ -9,12 +9,16 @@ import axios from '@src/config/axios';
 import { HttpError, HttpResponse } from '@src/types/http';
 import { toastError } from '@src/utils/toast';
 
-interface OptionalQuery {
+interface Options<T> {
   includeUrlQuery: boolean;
+  additionalQuery: AddtionalQuery<T>;
+}
+
+interface AddtionalQuery<T> {
   fields?: string;
   sort?: string;
   page?: number;
-  itemsPerPage?: number;
+  itemsPerPage?: 5 | 10 | 20 | 50 | 100 | 200 | 500 | 1000;
   [key: string]: any;
   startAfter?: string;
   prefix?: string;
@@ -23,26 +27,33 @@ interface OptionalQuery {
 
 const useGetOnes = <T>(
   requestConfig: RequestConfig,
-  optionalQuery?: OptionalQuery,
+  options: Options<T> = { includeUrlQuery: true, additionalQuery: {} },
 ) => {
   const queryClient = useQueryClient();
   const { query } = useRouter();
+  const { includeUrlQuery, additionalQuery } = options;
+
+  const finalQuery = useMemo(
+    () =>
+      includeUrlQuery ? { ...query, ...additionalQuery } : additionalQuery,
+    [includeUrlQuery, query, additionalQuery],
+  );
 
   const queryFn = useCallback(async () => {
     const { data } = await axios<HttpResponse<T[]>>({
       method: 'get',
       url: requestConfig.url,
-      params: optionalQuery || query,
+      params: finalQuery,
     });
     return data;
-  }, [optionalQuery, query, requestConfig.url]);
+  }, [finalQuery, requestConfig.url]);
 
   const onError = () => {
     toastError(`Can not get ${requestConfig.pluralName}`);
   };
 
   const res = useQuery<any, HttpError, HttpResponse<T[]>>({
-    queryKey: [requestConfig.pluralName, optionalQuery || query],
+    queryKey: [requestConfig.pluralName, finalQuery],
     queryFn,
     onError: withDefaultOnError(onError),
     keepPreviousData: true,

@@ -15,6 +15,7 @@ import StatusColumn from '@components/table/columns/StatusColumn';
 import TableWrapper from '@components/table/tableWrapper/TableWrapper';
 import Thead from '@components/table/thead/Thead';
 import Toolbar from '@components/table/toolbar/Toolbar';
+import Link from 'next/link';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -23,7 +24,12 @@ const ProductTable = (): JSX.Element => {
     data: products,
     pagination,
     isLoading,
-  } = useGetOnes<IProduct>(requestConfig);
+  } = useGetOnes<IProduct>(requestConfig, {
+    includeUrlQuery: true,
+    additionalQuery: {
+      fields: 'previewImages name isPinned collections slug',
+    },
+  });
 
   const {
     handleCheckBoxChange,
@@ -100,7 +106,17 @@ const ProductTable = (): JSX.Element => {
                 requestConfig={requestConfig}
                 status={product.status}
               />
-              <td>{/* {product.collections?.map(c=><div>{c.}</div>)} */}</td>
+              <td>
+                {product.collections?.map((c) => (
+                  <Link
+                    href={`${queryConfig.collections.pluralName}/${c._id}`}
+                    key={c._id}
+                    className="badge badge-outline"
+                  >
+                    {c.name}
+                  </Link>
+                ))}
+              </td>
               <td>
                 <p className="truncate w-40">{product.slug}</p>
               </td>

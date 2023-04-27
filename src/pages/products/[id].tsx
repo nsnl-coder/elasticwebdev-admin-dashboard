@@ -73,133 +73,135 @@ function Create(): JSX.Element {
   }, [updateError]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <UpdatePageWrapper control={control}>
-        <UpdatePageHeader reset={reset} control={control} />
-        <UpdatePageHeading
-          title={product?.name || 'Add product'}
-          requestConfig={requestConfig}
-          id={product?._id}
-          status={product?.status}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center mt-8">
-          <BigBlocks>
-            <Block>
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeader reset={reset} control={control} />
+      <UpdatePageHeading
+        title={product?.name || 'Add product'}
+        requestConfig={requestConfig}
+        id={product?._id}
+        status={product?.status}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center mt-8">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              control={control}
+              fieldName="name"
+              labelTheme="light"
+              placeholder="T-shirt for man....."
+              label="Name:"
+            />
+            <Textarea
+              register={register}
+              control={control}
+              fieldName="overview"
+              labelTheme="light"
+              placeholder="short description about your product"
+              label="Overview:"
+            />
+            <div className="flex gap-3">
               <Input
                 register={register}
                 control={control}
-                fieldName="name"
+                fieldName="price"
                 labelTheme="light"
-                placeholder="T-shirt for man....."
-                label="Name:"
+                placeholder="19.99"
+                label="Price:"
               />
-              <Textarea
+              <Input
                 register={register}
                 control={control}
-                fieldName="overview"
+                fieldName="discountPrice"
                 labelTheme="light"
-                placeholder="short description about your product"
-                label="Overview:"
+                placeholder="9.99"
+                label="Discount price:"
               />
-              <div className="flex gap-3">
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="price"
-                  labelTheme="light"
-                  placeholder="19.99"
-                  label="Price:"
-                />
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="discountPrice"
-                  labelTheme="light"
-                  placeholder="9.99"
-                  label="Discount price:"
-                />
-              </div>
-            </Block>
-            <Block>
-              <RichText
-                control={control}
-                fieldName="description"
-                labelTheme="light"
-                label="Description:"
-              />
-              <Select
-                control={control}
-                register={register}
-                fieldName="isPinned"
-                labelTheme="light"
-                options={[
-                  { name: 'pin', value: 'true' },
-                  { name: 'Do not pin', value: 'false' },
-                ]}
-                label="Pin to top?"
-              />
-            </Block>
-            <Block>
-              <FilesInput
-                fieldName="previewImages"
-                allowedTypes="*"
-                control={control}
-                labelTheme="bold"
-                maxFilesCount={5}
-                key={2}
-                label="Preview images"
-                tooltip="Images that display when you hover on card. Max 5 images."
-              />
-            </Block>
-            <Block>
-              <FilesInput
-                fieldName="images"
-                allowedTypes="*"
-                control={control}
-                labelTheme="bold"
-                maxFilesCount={10}
-                key={1}
-                label="Product images"
-                tooltip="Images that display in product detail page. Max 10 images."
-              />
-            </Block>
-            <Block>
-              <MultipleSelect
-                control={control}
-                fieldName="collections"
-                labelTheme="bold"
-                options={collections}
-                label="Collection:"
-              />
-            </Block>
-            <Block>
-              <VariantsInput
-                fieldName="variants"
-                control={control}
-                labelTheme="bold"
-                register={register}
-                label="Variants:"
-              />
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
-              <Select
-                control={control}
-                register={register}
-                fieldName="status"
-                labelTheme="bold"
-                options={['draft', 'active']}
-                label="status"
-              />
-              <div className="flex justify-end mt-4">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-          </SmallBlocks>
-        </div>
-      </UpdatePageWrapper>
-    </form>
+            </div>
+          </Block>
+          <Block>
+            <RichText
+              control={control}
+              fieldName="description"
+              labelTheme="light"
+              label="Description:"
+            />
+            <Select
+              control={control}
+              register={register}
+              fieldName="isPinned"
+              labelTheme="light"
+              options={[
+                { name: 'pin', value: 'true' },
+                { name: 'Do not pin', value: 'false' },
+              ]}
+              label="Pin to top?"
+            />
+          </Block>
+          <Block>
+            <FilesInput
+              fieldName="previewImages"
+              allowedTypes="*"
+              control={control}
+              labelTheme="bold"
+              maxFilesCount={5}
+              key={2}
+              label="Preview images"
+              tooltip="Images that display when you hover on card. Max 5 images."
+            />
+          </Block>
+          <Block>
+            <FilesInput
+              fieldName="images"
+              allowedTypes="*"
+              control={control}
+              labelTheme="bold"
+              maxFilesCount={10}
+              key={1}
+              label="Product images"
+              tooltip="Images that display in product detail page. Max 10 images."
+            />
+          </Block>
+          <Block>
+            <MultipleSelect
+              control={control}
+              fieldName="collections"
+              labelTheme="bold"
+              options={collections}
+              label="Collection:"
+            />
+          </Block>
+          <Block>
+            <VariantsInput
+              fieldName="variants"
+              control={control}
+              labelTheme="bold"
+              register={register}
+              label="Variants:"
+            />
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              control={control}
+              register={register}
+              fieldName="status"
+              labelTheme="bold"
+              options={['draft', 'active']}
+              label="status"
+            />
+            <div className="flex justify-end mt-4">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+        </SmallBlocks>
+      </div>
+    </UpdatePageWrapper>
   );
 }
 

@@ -45,111 +45,112 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper control={control}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader reset={reset} control={control} />
-        <UpdatePageHeading
-          title={menu?.name || 'Add menu'}
-          requestConfig={requestConfig}
-          id={menu?._id}
-          status={menu?.status}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center">
-          <BigBlocks>
-            <Block>
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeading
+        title={menu?.name || 'Add menu'}
+        requestConfig={requestConfig}
+        id={menu?._id}
+        status={menu?.status}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              control={control}
+              fieldName="name"
+              labelTheme="light"
+              placeholder="menu display name"
+              label="Name:"
+              required={true}
+            />
+            <Input
+              register={register}
+              control={control}
+              fieldName="link"
+              labelTheme="light"
+              placeholder="https://..."
+              label="Link:"
+            />
+            <Select
+              control={control}
+              register={register}
+              fieldName="menuType"
+              labelTheme="light"
+              options={[
+                { name: 'root menu', value: 'root' },
+                { name: 'nested menu', value: 'nested' },
+              ]}
+              label="Menu level:"
+              tooltip="The menu hierarchy will start with the root menu at the first level!"
+              defaultValue="nested"
+            />
+            {watch('menuType') === 'root' ? (
+              <Select
+                control={control}
+                register={register}
+                fieldName="position"
+                labelTheme="light"
+                options={['header', 'footer']}
+                label="Position:"
+              />
+            ) : null}
+            {watch('menuType') === 'root' ? (
               <Input
                 register={register}
                 control={control}
-                fieldName="name"
+                fieldName="ordering"
                 labelTheme="light"
-                placeholder="menu display name"
-                label="Name:"
+                placeholder="1"
+                label="Ordering:"
+                tooltip="This will determine display order of root menu"
                 required={true}
               />
-              <Input
-                register={register}
-                control={control}
-                fieldName="link"
-                labelTheme="light"
-                placeholder="https://..."
-                label="Link:"
-              />
-              <Select
-                control={control}
-                register={register}
-                fieldName="menuType"
-                labelTheme="light"
-                options={[
-                  { name: 'root menu', value: 'root' },
-                  { name: 'nested menu', value: 'nested' },
-                ]}
-                label="Menu level:"
-                tooltip="The menu hierarchy will start with the root menu at the first level!"
-                defaultValue="nested"
-              />
-              {watch('menuType') === 'root' ? (
-                <Select
-                  control={control}
-                  register={register}
-                  fieldName="position"
-                  labelTheme="light"
-                  options={['header', 'footer']}
-                  label="Position:"
-                />
-              ) : null}
-              {watch('menuType') === 'root' ? (
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="ordering"
-                  labelTheme="light"
-                  placeholder="1"
-                  label="Ordering:"
-                  tooltip="This will determine display order of root menu"
-                  required={true}
-                />
-              ) : null}
-            </Block>
-            <Block>
-              <MultipleSelect
-                fieldName="childMenus"
-                control={control}
-                labelTheme="light"
-                options={menus}
-                label="Child menus:"
-                excludes={menu?._id ? [menu._id] : []}
-              />
-              <ChildMenus control={control} menus={menus} />
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
-              <Select
-                register={register}
-                control={control}
-                fieldName="status"
-                options={['draft', 'active']}
-                labelTheme="bold"
-                defaultValue={menu?.status}
-              />
-              <div className="flex justify-end mt-4">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-            {watch('menuType') === 'root' ? (
-              <Block>
-                <FilesInput
-                  allowedTypes="*"
-                  control={control}
-                  fieldName="photo"
-                  maxFilesCount={1}
-                  labelTheme="bold"
-                />
-              </Block>
             ) : null}
-          </SmallBlocks>
-        </div>
-      </form>
+          </Block>
+          <Block>
+            <MultipleSelect
+              fieldName="childMenus"
+              control={control}
+              labelTheme="light"
+              options={menus}
+              label="Child menus:"
+              excludes={menu?._id ? [menu._id] : []}
+            />
+            <ChildMenus control={control} menus={menus} />
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              register={register}
+              control={control}
+              fieldName="status"
+              options={['draft', 'active']}
+              labelTheme="bold"
+              defaultValue={menu?.status}
+            />
+            <div className="flex justify-end mt-4">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+          {watch('menuType') === 'root' ? (
+            <Block>
+              <FilesInput
+                allowedTypes="*"
+                control={control}
+                fieldName="photo"
+                maxFilesCount={1}
+                labelTheme="bold"
+              />
+            </Block>
+          ) : null}
+        </SmallBlocks>
+      </div>
     </UpdatePageWrapper>
   );
 }

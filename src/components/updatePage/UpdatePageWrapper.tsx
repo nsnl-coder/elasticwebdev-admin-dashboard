@@ -2,16 +2,19 @@ import useConfirm from '@src/hooks/useConfirm';
 import { Children } from '@src/types/shared';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Control, useFormState } from 'react-hook-form';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { Control, UseFormReset, useFormState } from 'react-hook-form';
+import UpdatePageHeader from './UpdatePageHeader';
 
 interface Props extends Children {
   className?: string;
   control: Control<any>;
+  reset: UseFormReset<any>;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 function UpdatePageWrapper(props: Props): JSX.Element {
-  const { control } = props;
+  const { control, onSubmit, reset } = props;
   const { isDirty } = useFormState({ control });
   const id = useRouter().query.id;
   const { isConfirmed } = useConfirm();
@@ -69,9 +72,12 @@ function UpdatePageWrapper(props: Props): JSX.Element {
   }, [isDirty]);
 
   return (
-    <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32 `}>
-      {props.children}
-    </div>
+    <form onSubmit={onSubmit}>
+      <UpdatePageHeader reset={reset} control={control} />
+      <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32 `}>
+        {props.children}
+      </div>
+    </form>
   );
 }
 

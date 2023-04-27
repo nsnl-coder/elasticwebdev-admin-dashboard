@@ -38,101 +38,102 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper control={control}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader control={control} reset={reset} />
-        <UpdatePageHeading
-          id={shipping?._id}
-          requestConfig={requestConfig}
-          status={shipping?.status}
-          title={shipping?.display_name || 'Add shipping method'}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center mt-8">
-          <BigBlocks>
-            <Block>
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeading
+        id={shipping?._id}
+        requestConfig={requestConfig}
+        status={shipping?.status}
+        title={shipping?.display_name || 'Add shipping method'}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center mt-8">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              control={control}
+              fieldName="display_name"
+              labelTheme="light"
+              placeholder="Express shipping"
+              label="Display name:"
+              tooltip="this name will be displayed to user"
+            />
+            <Input
+              register={register}
+              control={control}
+              fieldName="fees"
+              labelTheme="light"
+              placeholder="9.99"
+              label="Fees:"
+            />
+            <Input
+              register={register}
+              control={control}
+              fieldName="freeshipOrderOver"
+              labelTheme="light"
+              label="Freeship order over:"
+              placeholder="199"
+              tooltip="Leave empty if you not want freeship for all orders!"
+            />
+          </Block>
+          <Block>
+            <div className="flex gap-x-3">
               <Input
                 register={register}
                 control={control}
-                fieldName="display_name"
+                fieldName="delivery_min"
                 labelTheme="light"
-                placeholder="Express shipping"
-                label="Display name:"
-                tooltip="this name will be displayed to user"
+                placeholder="2"
+                label="Delivery Min:"
               />
-              <Input
-                register={register}
-                control={control}
-                fieldName="fees"
-                labelTheme="light"
-                placeholder="9.99"
-                label="Fees:"
-              />
-              <Input
-                register={register}
-                control={control}
-                fieldName="freeshipOrderOver"
-                labelTheme="light"
-                label="Freeship order over:"
-                placeholder="199"
-                tooltip="Leave empty if you not want freeship for all orders!"
-              />
-            </Block>
-            <Block>
-              <div className="flex gap-x-3">
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="delivery_min"
-                  labelTheme="light"
-                  placeholder="2"
-                  label="Delivery Min:"
-                />
-                <Select
-                  control={control}
-                  register={register}
-                  fieldName="delivery_min_unit"
-                  labelTheme="light"
-                  options={['hour', 'day', 'business_day', 'week', 'month']}
-                  label="unit"
-                />
-              </div>
-              <div className="flex gap-x-3">
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="delivery_max"
-                  labelTheme="light"
-                  placeholder="6"
-                  label="Delivery max:"
-                />
-                <Select
-                  control={control}
-                  register={register}
-                  fieldName="delivery_max_unit"
-                  labelTheme="light"
-                  options={['hour', 'day', 'business_day', 'week', 'month']}
-                  label="unit"
-                />
-              </div>
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
               <Select
                 control={control}
                 register={register}
-                fieldName="status"
-                labelTheme="bold"
-                options={['draft', 'active']}
-                label="status"
+                fieldName="delivery_min_unit"
+                labelTheme="light"
+                options={['hour', 'day', 'business_day', 'week', 'month']}
+                label="unit"
               />
-              <div className="flex justify-end mt-4">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-          </SmallBlocks>
-        </div>
-      </form>
+            </div>
+            <div className="flex gap-x-3">
+              <Input
+                register={register}
+                control={control}
+                fieldName="delivery_max"
+                labelTheme="light"
+                placeholder="6"
+                label="Delivery max:"
+              />
+              <Select
+                control={control}
+                register={register}
+                fieldName="delivery_max_unit"
+                labelTheme="light"
+                options={['hour', 'day', 'business_day', 'week', 'month']}
+                label="unit"
+              />
+            </div>
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              control={control}
+              register={register}
+              fieldName="status"
+              labelTheme="bold"
+              options={['draft', 'active']}
+              label="status"
+            />
+            <div className="flex justify-end mt-4">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+        </SmallBlocks>
+      </div>
     </UpdatePageWrapper>
   );
 }

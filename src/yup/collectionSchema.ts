@@ -1,7 +1,8 @@
 import { object, string, boolean, InferType } from 'yup';
 
 const collectionSchema = object({
-  name: string().max(255),
+  display_name: string().max(255).label('Display name').required(),
+  hidden_name: string().max(255).label('Hidden name'),
   description: string().max(10000).label('description'),
   photo: string().max(255),
   isPinned: boolean().label('Is pinned?'),

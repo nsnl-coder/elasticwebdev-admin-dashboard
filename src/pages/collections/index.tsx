@@ -95,7 +95,12 @@ const CollectionTable = (): JSX.Element => {
                     href={`/${requestConfig.pluralName}/${collection._id}`}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {collection.name}
+                    {collection.display_name &&
+                      `${collection.display_name} ${
+                        collection.hidden_name
+                          ? `(${collection.hidden_name})`
+                          : ''
+                      }`}
                   </Link>
                 </td>
                 <td>

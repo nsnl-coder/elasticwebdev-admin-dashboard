@@ -59,82 +59,84 @@ function Create(): JSX.Element {
   });
 
   return (
-    <UpdatePageWrapper control={control}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeading
-          title={home?.versionName || 'Add home'}
-          requestConfig={requestConfig}
-          id={home?._id}
-          status={home?.status}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center">
-          <BigBlocks>
-            <Block>
-              <Input
-                register={register}
-                control={control}
-                fieldName="versionName"
-                labelTheme="light"
-                placeholder="summer theme"
-                label="Version name:"
-                required={true}
-              />
-            </Block>
-            <Block>
-              <MultipleSelect
-                control={control}
-                fieldName="featuredProducts"
-                labelTheme="light"
-                options={products}
-                label="Featured products"
-              />
-            </Block>
-            <Block>
-              <MultipleSelect
-                control={control}
-                fieldName="featuredCollections"
-                labelTheme="light"
-                options={collections}
-                label="Featured collections:"
-              />
-            </Block>
-            <Block>
-              <MultipleSelect
-                control={control}
-                fieldName="featuredPost"
-                labelTheme="light"
-                options={[]}
-                label="Featured posts:"
-              />
-            </Block>
-            <Block>
-              <CarouselsInput
-                control={control}
-                errors={errors}
-                fieldName="carouselItems"
-                labelTheme="light"
-                register={register}
-              />
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
-              <Select
-                register={register}
-                control={control}
-                fieldName="status"
-                options={['draft', 'active']}
-                labelTheme="bold"
-                defaultValue={home?.status}
-                tooltip="Only one version is active at a time. Others with automatically be draft ."
-              />
-              <div className="flex justify-end mt-4">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-          </SmallBlocks>
-        </div>
-      </form>
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeading
+        title={home?.versionName || 'Add home'}
+        requestConfig={requestConfig}
+        id={home?._id}
+        status={home?.status}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              control={control}
+              fieldName="versionName"
+              labelTheme="light"
+              placeholder="summer theme"
+              label="Version name:"
+              required={true}
+            />
+          </Block>
+          <Block>
+            <MultipleSelect
+              control={control}
+              fieldName="featuredProducts"
+              labelTheme="light"
+              options={products}
+              label="Featured products"
+            />
+          </Block>
+          <Block>
+            <MultipleSelect
+              control={control}
+              fieldName="featuredCollections"
+              labelTheme="light"
+              options={collections}
+              label="Featured collections:"
+            />
+          </Block>
+          <Block>
+            <MultipleSelect
+              control={control}
+              fieldName="featuredPost"
+              labelTheme="light"
+              options={[]}
+              label="Featured posts:"
+            />
+          </Block>
+          <Block>
+            <CarouselsInput
+              control={control}
+              errors={errors}
+              fieldName="carouselItems"
+              labelTheme="light"
+              register={register}
+            />
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              register={register}
+              control={control}
+              fieldName="status"
+              options={['draft', 'active']}
+              labelTheme="bold"
+              defaultValue={home?.status}
+              tooltip="Only one version is active at a time. Others with automatically be draft ."
+            />
+            <div className="flex justify-end mt-4">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+        </SmallBlocks>
+      </div>
     </UpdatePageWrapper>
   );
 }

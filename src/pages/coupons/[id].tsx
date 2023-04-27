@@ -40,143 +40,144 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper control={control}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeader control={control} reset={reset} />
-        <UpdatePageHeading
-          id={coupon?._id}
-          requestConfig={requestConfig}
-          status={coupon?.status}
-          title={coupon?.couponCode || 'Add coupon'}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center mt-8">
-          <BigBlocks>
-            <Block>
-              <Input
-                register={register}
-                fieldName="name"
-                labelTheme="light"
-                placeholder="flash sale..."
-                label="Name:"
-                required={true}
-                control={control}
-              />
-              <Input
-                register={register}
-                fieldName="couponCode"
-                labelTheme="light"
-                placeholder="OFF10"
-                label="Coupon code:"
-                required={true}
-                control={control}
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeading
+        id={coupon?._id}
+        requestConfig={requestConfig}
+        status={coupon?.status}
+        title={coupon?.couponCode || 'Add coupon'}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center mt-8">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              fieldName="name"
+              labelTheme="light"
+              placeholder="flash sale..."
+              label="Name:"
+              required={true}
+              control={control}
+            />
+            <Input
+              register={register}
+              fieldName="couponCode"
+              labelTheme="light"
+              placeholder="OFF10"
+              label="Coupon code:"
+              required={true}
+              control={control}
+            >
+              <button
+                type="button"
+                className="bg-zinc-600 text-white px-4 rounded-md"
+                onClick={() => {
+                  setValue('couponCode', getRandomString(10));
+                  clearErrors('couponCode');
+                }}
               >
-                <button
-                  type="button"
-                  className="bg-zinc-600 text-white px-4 rounded-md"
-                  onClick={() => {
-                    setValue('couponCode', getRandomString(10));
-                    clearErrors('couponCode');
-                  }}
-                >
-                  Generate
-                </button>
-              </Input>
-              <div className="flex gap-x-4 py-2">
-                <Input
-                  register={register}
-                  fieldName="discountAmount"
-                  labelTheme="light"
-                  placeholder="99"
-                  label="Discount amount:"
-                  required={true}
-                  control={control}
-                />
-                <Select
-                  control={control}
-                  register={register}
-                  fieldName="discountUnit"
-                  labelTheme="light"
-                  options={[
-                    { name: 'By percentage (%)', value: '%' },
-                    { name: 'Discount amount ($)', value: '$' },
-                  ]}
-                  label="Discount unit:"
-                  required={true}
-                />
-              </div>
-
+                Generate
+              </button>
+            </Input>
+            <div className="flex gap-x-4 py-2">
               <Input
                 register={register}
-                fieldName="couponQuantity"
+                fieldName="discountAmount"
                 labelTheme="light"
-                placeholder="999"
-                label="Coupon quantity:"
+                placeholder="99"
+                label="Discount amount:"
                 required={true}
                 control={control}
               />
-            </Block>
-            <Block>
-              <div className="flex gap-x-4">
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="minimumOrder"
-                  labelTheme="light"
-                  placeholder="100"
-                  label="Minimum order:"
-                />
-                <Input
-                  register={register}
-                  control={control}
-                  fieldName="maximumOrder"
-                  labelTheme="light"
-                  placeholder="999"
-                  label="Maximum order:"
-                />
-              </div>
               <Select
                 control={control}
                 register={register}
-                fieldName="isFreeshipping"
+                fieldName="discountUnit"
                 labelTheme="light"
                 options={[
-                  { name: 'Freeship', value: 'true' },
-                  { name: 'Do not freeship', value: 'false' },
+                  { name: 'By percentage (%)', value: '%' },
+                  { name: 'Discount amount ($)', value: '$' },
                 ]}
-                label="Free shipping?"
-                defaultValue="false"
+                label="Discount unit:"
+                required={true}
               />
-            </Block>
-            <Block>
-              <DateRangeInput
-                control={control}
-                startDateFieldName="startDate"
-                endDateFieldName="endDate"
-                labelTheme="light"
-                label="Discount duration:"
-              />
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
-              <Select
-                control={control}
+            </div>
+
+            <Input
+              register={register}
+              fieldName="couponQuantity"
+              labelTheme="light"
+              placeholder="999"
+              label="Coupon quantity:"
+              required={true}
+              control={control}
+            />
+          </Block>
+          <Block>
+            <div className="flex gap-x-4">
+              <Input
                 register={register}
-                fieldName="status"
-                labelTheme="bold"
-                options={['draft', 'active']}
-                label="Status"
+                control={control}
+                fieldName="minimumOrder"
+                labelTheme="light"
+                placeholder="100"
+                label="Minimum order:"
               />
-              <div className="flex justify-end mt-6">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-            <Block>
-              <CouponSummary control={control} />
-            </Block>
-          </SmallBlocks>
-        </div>
-      </form>
+              <Input
+                register={register}
+                control={control}
+                fieldName="maximumOrder"
+                labelTheme="light"
+                placeholder="999"
+                label="Maximum order:"
+              />
+            </div>
+            <Select
+              control={control}
+              register={register}
+              fieldName="isFreeshipping"
+              labelTheme="light"
+              options={[
+                { name: 'Freeship', value: 'true' },
+                { name: 'Do not freeship', value: 'false' },
+              ]}
+              label="Free shipping?"
+              defaultValue="false"
+            />
+          </Block>
+          <Block>
+            <DateRangeInput
+              control={control}
+              startDateFieldName="startDate"
+              endDateFieldName="endDate"
+              labelTheme="light"
+              label="Discount duration:"
+            />
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              control={control}
+              register={register}
+              fieldName="status"
+              labelTheme="bold"
+              options={['draft', 'active']}
+              label="Status"
+            />
+            <div className="flex justify-end mt-6">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+          <Block>
+            <CouponSummary control={control} />
+          </Block>
+        </SmallBlocks>
+      </div>
     </UpdatePageWrapper>
   );
 }

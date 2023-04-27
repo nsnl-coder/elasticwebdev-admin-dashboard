@@ -16,6 +16,7 @@ import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
 import Thead from '@src/components/table/thead/Thead';
+import PhotoColumn from '@src/components/table/columns/PhotoColumn';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -85,11 +86,15 @@ const ProductTable = (): JSX.Element => {
                   />
                 </td>
                 <td>
-                  {!!product.previewImages?.length && (
-                    <div className="w-12 rounded-md overflow-hidden border ">
-                      <FilePreview src={product.previewImages[0]} />
-                    </div>
-                  )}
+                  <PhotoColumn
+                    id={product._id}
+                    requestConfig={queryConfig.products}
+                    s3Key={
+                      product.previewImages?.length
+                        ? product.previewImages[0]
+                        : ''
+                    }
+                  />
                 </td>
                 <td className="font-semibold hover:underline">
                   <Link

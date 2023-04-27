@@ -17,6 +17,7 @@ import useUpdateOne from '@src/react-query/query/useUpdateOne';
 import useCreateOne from '@src/react-query/query/useCreateOne';
 import UpdatePageHeading from '@src/components/updatePage/UpdatePageHeading';
 import UpdatePageWrapper from '@src/components/updatePage/UpdatePageWrapper';
+import UpdatePageHeader from '@src/components/updatePage/UpdatePageHeader';
 
 function Create(): JSX.Element {
   const id = useRouter().query.id;
@@ -41,71 +42,82 @@ function Create(): JSX.Element {
   };
 
   return (
-    <UpdatePageWrapper control={control}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <UpdatePageHeading
-          title={collection?.name || 'Add collection'}
-          requestConfig={requestConfig}
-          id={collection?._id}
-          status={collection?.status}
-        />
-        <div className="mx-auto flex gap-x-5 justify-center">
-          <BigBlocks>
-            <Block>
-              <Input
-                register={register}
-                fieldName="name"
-                control={control}
-                label="Name:"
-                labelTheme="light"
-              />
-              <RichText
-                control={control}
-                fieldName="description"
-                labelTheme="light"
-                label="Description:"
-              />
-            </Block>
-            <Block>
-              <Select
-                register={register}
-                control={control}
-                fieldName="isPinned"
-                label="Pin?"
-                labelTheme="bold"
-                options={[
-                  { name: 'Do not pin', value: 'false' },
-                  { name: 'Pin to top', value: 'true' },
-                ]}
-              />
-            </Block>
-          </BigBlocks>
-          <SmallBlocks>
-            <Block>
-              <Select
-                register={register}
-                control={control}
-                fieldName="status"
-                options={['draft', 'active']}
-                labelTheme="bold"
-              />
-              <div className="flex justify-end mt-4">
-                <SubmitBtn isUpdating={isUpdating} />
-              </div>
-            </Block>
-            <Block>
-              <FilesInput
-                allowedTypes="image"
-                control={control}
-                fieldName="photo"
-                maxFilesCount={1}
-                labelTheme="bold"
-                label="Collection photo"
-              />
-            </Block>
-          </SmallBlocks>
-        </div>
-      </form>
+    <UpdatePageWrapper
+      onSubmit={handleSubmit(onSubmit)}
+      control={control}
+      reset={reset}
+    >
+      <UpdatePageHeading
+        title={collection?.display_name || 'Add collection'}
+        requestConfig={requestConfig}
+        id={collection?._id}
+        status={collection?.status}
+      />
+      <div className="mx-auto flex gap-x-5 justify-center">
+        <BigBlocks>
+          <Block>
+            <Input
+              register={register}
+              fieldName="display_name"
+              control={control}
+              label="Display name:"
+              labelTheme="light"
+              tooltip="This will be displayed to user."
+            />
+            <Input
+              register={register}
+              fieldName="hidden_name"
+              control={control}
+              label="Hidden name:"
+              labelTheme="light"
+              tooltip="This name does not display to user"
+            />
+            <RichText
+              control={control}
+              fieldName="description"
+              labelTheme="light"
+              label="Description:"
+            />
+          </Block>
+          <Block>
+            <Select
+              register={register}
+              control={control}
+              fieldName="isPinned"
+              label="Pin?"
+              labelTheme="bold"
+              options={[
+                { name: 'Do not pin', value: 'false' },
+                { name: 'Pin to top', value: 'true' },
+              ]}
+            />
+          </Block>
+        </BigBlocks>
+        <SmallBlocks>
+          <Block>
+            <Select
+              register={register}
+              control={control}
+              fieldName="status"
+              options={['draft', 'active']}
+              labelTheme="bold"
+            />
+            <div className="flex justify-end mt-4">
+              <SubmitBtn isUpdating={isUpdating} />
+            </div>
+          </Block>
+          <Block>
+            <FilesInput
+              allowedTypes="image"
+              control={control}
+              fieldName="photo"
+              maxFilesCount={1}
+              labelTheme="bold"
+              label="Collection photo"
+            />
+          </Block>
+        </SmallBlocks>
+      </div>
     </UpdatePageWrapper>
   );
 }

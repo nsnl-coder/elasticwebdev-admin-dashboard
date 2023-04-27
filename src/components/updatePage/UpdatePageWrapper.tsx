@@ -56,6 +56,18 @@ function UpdatePageWrapper(props: Props): JSX.Element {
     };
   }, [onRouteChangeStart, router.query.id, router.events]);
 
+  const handleBeforeUnload = (e: any) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
+  useEffect(() => {
+    if (isDirty) window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isDirty]);
+
   return (
     <div className={`px-6 ${props.className} mx-auto max-w-5xl pb-32 `}>
       {props.children}

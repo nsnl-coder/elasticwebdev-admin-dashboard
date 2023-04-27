@@ -16,6 +16,7 @@ import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import Thead from '@src/components/table/thead/Thead';
 import MultipleSelect from '@src/components/table/customFilter/MultipleSelect';
+import NameColumn from '@src/components/table/columns/NameColumn';
 
 const MenuTable = (): JSX.Element => {
   const requestConfig = queryConfig.menus;
@@ -102,12 +103,11 @@ const MenuTable = (): JSX.Element => {
                   )}
                 </td>
                 <td className="font-semibold hover:underline">
-                  <Link
-                    href={`/${requestConfig.pluralName}/${menu._id}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {menu.name}
-                  </Link>
+                  <NameColumn
+                    _id={menu._id}
+                    requestConfig={queryConfig.menus}
+                    name={menu.name}
+                  />
                 </td>
                 <td>{menu.menuType}</td>
                 <td>{menu.position || '_'}</td>

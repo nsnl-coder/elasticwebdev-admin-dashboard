@@ -12,6 +12,7 @@ const collectionSchema = object({
 interface ICollection extends InferType<typeof collectionSchema> {
   _id?: string;
   slug?: string;
+  name: string;
 }
 
 export default collectionSchema;

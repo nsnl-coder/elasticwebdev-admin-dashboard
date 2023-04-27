@@ -16,6 +16,7 @@ import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
 import Thead from '@src/components/table/thead/Thead';
+import NameColumn from '@src/components/table/columns/NameColumn';
 
 const CollectionTable = (): JSX.Element => {
   const requestConfig = queryConfig.collections;
@@ -91,17 +92,11 @@ const CollectionTable = (): JSX.Element => {
                   )}
                 </td>
                 <td className="font-semibold hover:underline">
-                  <Link
-                    href={`/${requestConfig.pluralName}/${collection._id}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {collection.display_name &&
-                      `${collection.display_name} ${
-                        collection.hidden_name
-                          ? `(${collection.hidden_name})`
-                          : ''
-                      }`}
-                  </Link>
+                  <NameColumn
+                    _id={collection._id}
+                    requestConfig={queryConfig.collections}
+                    name={collection.name}
+                  />
                 </td>
                 <td>
                   <IsPinnedColumn

@@ -14,6 +14,7 @@ import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import Thead from '@src/components/table/thead/Thead';
+import NameColumn from '@src/components/table/columns/NameColumn';
 
 const ShippingTable = (): JSX.Element => {
   const requestConfig = queryConfig.shippings;
@@ -82,12 +83,11 @@ const ShippingTable = (): JSX.Element => {
                   />
                 </td>
                 <td className="font-semibold hover:underline">
-                  <Link
-                    href={`/${requestConfig.pluralName}/${shipping._id}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {shipping.display_name}
-                  </Link>
+                  <NameColumn
+                    _id={shipping._id}
+                    requestConfig={queryConfig.shippings}
+                    name={shipping.display_name}
+                  />
                 </td>
                 <td>{shipping.fees}</td>
                 <td>

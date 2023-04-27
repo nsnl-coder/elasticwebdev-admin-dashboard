@@ -15,6 +15,7 @@ import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import { BsCheck } from 'react-icons/bs';
 import Thead from '@src/components/table/thead/Thead';
+import NameColumn from '@src/components/table/columns/NameColumn';
 
 const CouponTable = (): JSX.Element => {
   const requestConfig = queryConfig.coupons;
@@ -101,6 +102,11 @@ const CouponTable = (): JSX.Element => {
                   >
                     {coupon.name}
                   </Link>
+                  <NameColumn
+                    _id={coupon._id}
+                    requestConfig={queryConfig.coupons}
+                    name={coupon.name}
+                  />
                 </td>
                 <td>
                   <span className="uppercase">{coupon.couponCode}</span>

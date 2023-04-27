@@ -17,6 +17,7 @@ import StatusColumn from '@src/components/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
 import Thead from '@src/components/table/thead/Thead';
 import PhotoColumn from '@src/components/table/columns/PhotoColumn';
+import NameColumn from '@src/components/table/columns/NameColumn';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -97,12 +98,11 @@ const ProductTable = (): JSX.Element => {
                   />
                 </td>
                 <td className="font-semibold hover:underline">
-                  <Link
-                    href={`/${requestConfig.pluralName}/${product._id}`}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {product.name}
-                  </Link>
+                  <NameColumn
+                    _id={product._id}
+                    requestConfig={queryConfig.products}
+                    name={product.name}
+                  />
                 </td>
                 <td>
                   <IsPinnedColumn

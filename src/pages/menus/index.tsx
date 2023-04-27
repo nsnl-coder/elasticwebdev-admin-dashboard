@@ -3,17 +3,16 @@ import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
 import FilePreview from '@src/components/filePreview/FilePreview';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { IMenu } from '@src/yup/menuSchema';
-import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import Thead from '@src/components/table/thead/Thead';
 import MultipleSelect from '@src/components/table/customFilter/MultipleSelect';
 import NameColumn from '@src/components/table/columns/NameColumn';
 import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
+import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
 
 const MenuTable = (): JSX.Element => {
   const requestConfig = queryConfig.menus;
@@ -77,13 +76,11 @@ const MenuTable = (): JSX.Element => {
                   : ''
               }
             >
-              <td>
-                <Checkbox
-                  checkedBoxesIds={checkedBoxesIds}
-                  handleCheckBoxChange={handleCheckBoxChange}
-                  id={menu._id}
-                />
-              </td>
+              <CheckBoxColumn
+                checkedBoxesIds={checkedBoxesIds}
+                handleCheckBoxChange={handleCheckBoxChange}
+                id={menu._id}
+              />
               <td>
                 {menu.photo && (
                   <div className="w-12 rounded-md overflow-hidden border ">
@@ -91,29 +88,23 @@ const MenuTable = (): JSX.Element => {
                   </div>
                 )}
               </td>
-              <td className="font-semibold hover:underline">
-                <NameColumn
-                  _id={menu._id}
-                  requestConfig={queryConfig.menus}
-                  name={menu.name}
-                />
-              </td>
+              <NameColumn
+                _id={menu._id}
+                requestConfig={queryConfig.menus}
+                name={menu.name}
+              />
               <td>{menu.menuType}</td>
               <td>{menu.position || '_'}</td>
               <td>{menu.ordering || '_'}</td>
-              <td>
-                <StatusColumn
-                  requestConfig={requestConfig}
-                  status={menu.status}
-                  id={menu._id}
-                />
-              </td>
+              <StatusColumn
+                requestConfig={requestConfig}
+                status={menu.status}
+                id={menu._id}
+              />
               <td>
                 <p className="truncate max-w-md">{menu.link}</p>
               </td>
-              <td>
-                <ActionsColumn requestConfig={requestConfig} id={menu._id} />
-              </td>
+              <ActionsColumn requestConfig={requestConfig} id={menu._id} />
             </tr>
           ))}
         </tbody>

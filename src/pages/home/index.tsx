@@ -52,10 +52,12 @@ function Create(): JSX.Element {
   // get products, collections and posts
   const { data: products } = useGetOnes<IProduct>(queryConfig.products, {
     fields: 'name',
+    includeUrlQuery: false,
   });
 
   const { data: collections } = useGetOnes<IProduct>(queryConfig.collections, {
     fields: 'name',
+    includeUrlQuery: false,
   });
 
   return (

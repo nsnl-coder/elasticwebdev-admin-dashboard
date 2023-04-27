@@ -16,11 +16,13 @@ function PhotoColumn(props: Props): JSX.Element | null {
   const href = `${requestConfig.pluralName}/${id}`;
 
   return (
-    <Link href={href} onClick={(e) => e.stopPropagation()}>
-      <div className="w-12 rounded-md overflow-hidden border ">
-        <FilePreview src={s3Key} />
-      </div>
-    </Link>
+    <td>
+      <Link href={href} onClick={(e) => e.stopPropagation()}>
+        <div className="w-12 rounded-md overflow-hidden border ">
+          <FilePreview src={s3Key} />
+        </div>
+      </Link>
+    </td>
   );
 }
 

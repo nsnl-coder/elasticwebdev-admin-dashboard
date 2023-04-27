@@ -1,7 +1,6 @@
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { IProduct } from '@src/yup/productSchema';
@@ -13,6 +12,7 @@ import PhotoColumn from '@src/components/table/columns/PhotoColumn';
 import NameColumn from '@src/components/table/columns/NameColumn';
 import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
 import queryConfig from '@src/react-query/queryConfig';
+import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
 
 const ProductTable = (): JSX.Element => {
   const requestConfig = queryConfig.products;
@@ -30,8 +30,6 @@ const ProductTable = (): JSX.Element => {
     isCheckedAll,
     toggleRowSelection,
   } = useBulkActions(products);
-
-  console.log(requestConfig);
 
   return (
     <TableWrapper
@@ -57,6 +55,7 @@ const ProductTable = (): JSX.Element => {
             <Thead fieldName="Name" sortBy="name" />
             <Thead fieldName="Pin?" sortBy="isPinned" />
             <Thead fieldName="Status" sortBy="status" />
+            <Thead fieldName="collections" sortBy="collection" />
             <Thead fieldName="Slug" sortBy="slug" />
             <th>Actions</th>
           </tr>
@@ -72,52 +71,38 @@ const ProductTable = (): JSX.Element => {
                   : ''
               }
             >
+              <CheckBoxColumn
+                checkedBoxesIds={checkedBoxesIds}
+                handleCheckBoxChange={handleCheckBoxChange}
+                id={product._id}
+              />
+              <PhotoColumn
+                id={product._id}
+                requestConfig={queryConfig.products}
+                s3Key={
+                  product.previewImages?.length ? product.previewImages[0] : ''
+                }
+              />
+              <NameColumn
+                _id={product._id}
+                requestConfig={queryConfig.products}
+                name={product.name}
+              />
+              <IsPinnedColumn
+                requestConfig={requestConfig}
+                isPinned={product.isPinned}
+                id={product._id}
+              />
+              <StatusColumn
+                id={product._id}
+                requestConfig={requestConfig}
+                status={product.status}
+              />
+              <td>{/* {product.collections?.map(c=><div>{c.}</div>)} */}</td>
               <td>
-                <Checkbox
-                  checkedBoxesIds={checkedBoxesIds}
-                  handleCheckBoxChange={handleCheckBoxChange}
-                  id={product._id}
-                />
+                <p className="truncate w-40">{product.slug}</p>
               </td>
-              <td>
-                <PhotoColumn
-                  id={product._id}
-                  requestConfig={queryConfig.products}
-                  s3Key={
-                    product.previewImages?.length
-                      ? product.previewImages[0]
-                      : ''
-                  }
-                />
-              </td>
-              <td className="font-semibold hover:underline">
-                <NameColumn
-                  _id={product._id}
-                  requestConfig={queryConfig.products}
-                  name={product.name}
-                />
-              </td>
-              <td>
-                <IsPinnedColumn
-                  requestConfig={requestConfig}
-                  isPinned={product.isPinned}
-                  id={product._id}
-                />
-              </td>
-              <td>
-                <StatusColumn
-                  id={product._id}
-                  requestConfig={requestConfig}
-                  status={product.status}
-                />
-              </td>
-
-              <td>
-                <p className="truncate max-w-md">{product.slug}</p>
-              </td>
-              <td>
-                <ActionsColumn requestConfig={requestConfig} id={product._id} />
-              </td>
+              <ActionsColumn requestConfig={requestConfig} id={product._id} />
             </tr>
           ))}
         </tbody>

@@ -29,7 +29,7 @@ function IsPinnedColumn(props: Props): JSX.Element {
   }, [props.isPinned]);
 
   return (
-    <div>
+    <td>
       {isPinned && (
         <button
           type="button"
@@ -40,7 +40,7 @@ function IsPinnedColumn(props: Props): JSX.Element {
           <AiFillPushpin size={24} />
         </button>
       )}
-    </div>
+    </td>
   );
 }
 

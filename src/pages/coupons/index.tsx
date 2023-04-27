@@ -1,10 +1,7 @@
-import Link from 'next/link';
-//
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { ICoupon } from '@src/yup/couponSchema';
@@ -14,6 +11,7 @@ import { BsCheck } from 'react-icons/bs';
 import Thead from '@src/components/table/thead/Thead';
 import NameColumn from '@src/components/table/columns/NameColumn';
 import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
+import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
 
 const CouponTable = (): JSX.Element => {
   const requestConfig = queryConfig.coupons;
@@ -78,26 +76,17 @@ const CouponTable = (): JSX.Element => {
                   : ''
               }
             >
-              <td>
-                <Checkbox
-                  checkedBoxesIds={checkedBoxesIds}
-                  handleCheckBoxChange={handleCheckBoxChange}
-                  id={coupon._id}
-                />
-              </td>
-              <td className="font-semibold hover:underline">
-                <Link
-                  href={`/${requestConfig.pluralName}/${coupon._id}`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {coupon.name}
-                </Link>
-                <NameColumn
-                  _id={coupon._id}
-                  requestConfig={queryConfig.coupons}
-                  name={coupon.name}
-                />
-              </td>
+              <CheckBoxColumn
+                checkedBoxesIds={checkedBoxesIds}
+                handleCheckBoxChange={handleCheckBoxChange}
+                id={coupon._id}
+              />
+
+              <NameColumn
+                _id={coupon._id}
+                requestConfig={queryConfig.coupons}
+                name={coupon.name}
+              />
               <td>
                 <span className="uppercase">{coupon.couponCode}</span>
               </td>
@@ -110,13 +99,11 @@ const CouponTable = (): JSX.Element => {
               </td>
               <td>{coupon.couponQuantity}</td>
               <td>{coupon.usedCoupons}</td>
-              <td>
-                <StatusColumn
-                  requestConfig={requestConfig}
-                  status={coupon.status}
-                  id={coupon._id}
-                />
-              </td>
+              <StatusColumn
+                requestConfig={requestConfig}
+                status={coupon.status}
+                id={coupon._id}
+              />
               <td>
                 {coupon.startDate &&
                   new Date(coupon.startDate).toLocaleDateString('en-US', {
@@ -126,9 +113,7 @@ const CouponTable = (): JSX.Element => {
                   })}
               </td>
               <td>{coupon.expiredIn}</td>
-              <td>
-                <ActionsColumn requestConfig={requestConfig} id={coupon._id} />
-              </td>
+              <ActionsColumn requestConfig={requestConfig} id={coupon._id} />
             </tr>
           ))}
         </tbody>

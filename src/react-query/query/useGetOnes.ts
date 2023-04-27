@@ -8,7 +8,22 @@ import { useCallback, useEffect } from 'react';
 import { toastError } from '@src/utils/toast';
 import { HttpError, HttpResponse } from '@src/types/http';
 
-const useGetOnes = <T>(requestConfig: RequestConfig, optionalQuery?: any) => {
+interface OptionalQuery {
+  includeUrlQuery: boolean;
+  fields?: string;
+  sort?: string;
+  page?: number;
+  itemsPerPage?: number;
+  [key: string]: any;
+  startAfter?: string;
+  prefix?: string;
+  key?: string;
+}
+
+const useGetOnes = <T>(
+  requestConfig: RequestConfig,
+  optionalQuery?: OptionalQuery,
+) => {
   const queryClient = useQueryClient();
   const { query } = useRouter();
 

@@ -6,6 +6,7 @@ import {
   InferType,
   array,
 } from 'yup';
+import { ICollection } from './collectionSchema';
 
 const number = () => {
   return originalNumber().transform((value, originalValue) => {
@@ -53,9 +54,11 @@ const productSchema = object({
   variants: array().of(variantSchema).max(100).label('Product variants'),
 });
 
-interface IProduct extends InferType<typeof productSchema> {
+interface IProduct
+  extends Omit<InferType<typeof productSchema>, 'collections'> {
   _id?: string;
   slug: string;
+  collections: ICollection[];
 }
 
 interface IOption extends InferType<typeof optionSchema> {

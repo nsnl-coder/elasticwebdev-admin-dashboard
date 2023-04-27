@@ -21,24 +21,26 @@ function ActionsColumn(props: Props): JSX.Element {
   };
 
   return (
-    <div className="flex gap-x-6 items-center">
-      <Link
-        href={`${requestConfig.pluralName}/${id}`}
-        className="tooltip tooltip-top hover:text-orange-500"
-        data-tip="edit"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <AiFillEdit size={22} />
-      </Link>
-      <button
-        type="button"
-        className="tooltip tooltip-top hover:text-red-400"
-        data-tip="delete"
-        onClick={handleDeleteOne}
-      >
-        <IoMdTrash size={24} />
-      </button>
-    </div>
+    <td>
+      <div className="flex gap-x-6 items-center">
+        <Link
+          href={`${requestConfig.pluralName}/${id}`}
+          className="tooltip tooltip-top hover:text-orange-500"
+          data-tip="edit"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <AiFillEdit size={22} />
+        </Link>
+        <button
+          type="button"
+          className="tooltip tooltip-top hover:text-red-400"
+          data-tip="delete"
+          onClick={handleDeleteOne}
+        >
+          <IoMdTrash size={24} />
+        </button>
+      </div>
+    </td>
   );
 }
 

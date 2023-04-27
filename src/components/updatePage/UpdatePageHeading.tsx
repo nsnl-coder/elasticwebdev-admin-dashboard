@@ -31,12 +31,6 @@ function UpdatePageHeading(props: Props): JSX.Element {
           <BiArrowBack size={28} />
         </Link>
         <h1 className="text-xl font-semibold">{title}</h1>
-        <StatusColumn
-          id={id}
-          requestConfig={requestConfig}
-          status={status}
-          className="pointer-events-none"
-        />
       </div>
       <div className="max-w-xs w-full flex items-center justify-end">
         <button

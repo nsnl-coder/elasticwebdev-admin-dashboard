@@ -2,7 +2,6 @@ import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { IShipping } from '@src/yup/shippingSchema';
@@ -11,6 +10,7 @@ import StatusColumn from '@src/components/table/columns/StatusColumn';
 import Thead from '@src/components/table/thead/Thead';
 import NameColumn from '@src/components/table/columns/NameColumn';
 import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
+import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
 
 const ShippingTable = (): JSX.Element => {
   const requestConfig = queryConfig.shippings;
@@ -63,28 +63,22 @@ const ShippingTable = (): JSX.Element => {
                   : ''
               }
             >
-              <td>
-                <Checkbox
-                  checkedBoxesIds={checkedBoxesIds}
-                  handleCheckBoxChange={handleCheckBoxChange}
-                  id={shipping._id}
-                />
-              </td>
-              <td className="font-semibold hover:underline">
-                <NameColumn
-                  _id={shipping._id}
-                  requestConfig={queryConfig.shippings}
-                  name={shipping.display_name}
-                />
-              </td>
+              <CheckBoxColumn
+                checkedBoxesIds={checkedBoxesIds}
+                handleCheckBoxChange={handleCheckBoxChange}
+                id={shipping._id}
+              />
+              <NameColumn
+                _id={shipping._id}
+                requestConfig={queryConfig.shippings}
+                name={shipping.display_name}
+              />
               <td>{shipping.fees}</td>
-              <td>
-                <StatusColumn
-                  requestConfig={requestConfig}
-                  status={shipping.status}
-                  id={shipping._id}
-                />
-              </td>
+              <StatusColumn
+                requestConfig={requestConfig}
+                status={shipping.status}
+                id={shipping._id}
+              />
               <td>
                 {shipping.delivery_min &&
                   `${shipping.delivery_min} ${shipping.delivery_min_unit}`}
@@ -93,12 +87,7 @@ const ShippingTable = (): JSX.Element => {
                 {shipping.delivery_max &&
                   `${shipping.delivery_max} ${shipping.delivery_max_unit}`}
               </td>
-              <td>
-                <ActionsColumn
-                  requestConfig={requestConfig}
-                  id={shipping._id}
-                />
-              </td>
+              <ActionsColumn requestConfig={requestConfig} id={shipping._id} />
             </tr>
           ))}
         </tbody>

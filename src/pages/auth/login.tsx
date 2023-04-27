@@ -40,7 +40,7 @@ function Login(): JSX.Element {
     <RequireNotLogin>
       <div className="modal modal-open">
         <div className="modal-box rounded-sm">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <h2 className="font-semibold text-2xl mb-8">Login</h2>
             <Input
               register={register}

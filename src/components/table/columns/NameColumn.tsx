@@ -13,12 +13,14 @@ function NameColumn(props: Props): JSX.Element | null {
   if (!_id) return null;
 
   return (
-    <Link
-      href={`/${requestConfig.pluralName}/${_id}`}
-      onClick={(e) => e.stopPropagation()}
-    >
-      {name}
-    </Link>
+    <td className="max-w-xs font-semibold hover:underline">
+      <Link
+        href={`/${requestConfig.pluralName}/${_id}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div>{name}</div>
+      </Link>
+    </td>
   );
 }
 

@@ -30,17 +30,19 @@ function StatusColumn(props: Props): JSX.Element {
   }, [props.status]);
 
   return (
-    <div data-tip="toggle status" className={`tooltip ${className}`}>
-      <button
-        className={`badge text-white border-none ${
-          isActive ? 'bg-green-600' : isDraft ? '' : 'bg-transparent'
-        }`}
-        onClick={toggleStatus}
-        type="button"
-      >
-        {isActive ? 'active' : isDraft ? 'draft' : 'unknown'}
-      </button>
-    </div>
+    <td>
+      <div data-tip="toggle status" className={`tooltip ${className}`}>
+        <button
+          className={`badge text-white border-none ${
+            isActive ? 'bg-green-600' : isDraft ? '' : 'bg-transparent'
+          }`}
+          onClick={toggleStatus}
+          type="button"
+        >
+          {isActive ? 'active' : isDraft ? 'draft' : 'unknown'}
+        </button>
+      </div>
+    </td>
   );
 }
 

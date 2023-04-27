@@ -1,22 +1,18 @@
-import Link from 'next/link';
-//
 import useBulkActions from '@src/hooks/useBulkActions';
 import useGetOnes from '@src/react-query/query/useGetOnes';
 import queryConfig from '@src/react-query/queryConfig';
 import FilePreview from '@src/components/filePreview/FilePreview';
 import BulkActions from '@src/components/table/bulkActions/BulkActions';
-import Checkbox from '@src/components/table/bulkActions/Checkbox';
 import HeaderCheckbox from '@src/components/table/bulkActions/HeaderCheckbox';
-import Pagination from '@src/components/table/pagination/Pagination';
 import Toolbar from '@src/components/table/toolbar/Toolbar';
 import { ICollection } from '@src/yup/collectionSchema';
-import EmptyUi from '@src/components/table/emptyui/EmptyUi';
 import ActionsColumn from '@src/components/table/columns/ActionsColumn';
 import StatusColumn from '@src/components/table/columns/StatusColumn';
 import IsPinnedColumn from '@src/components/table/columns/IsPinnedColumn';
 import Thead from '@src/components/table/thead/Thead';
 import NameColumn from '@src/components/table/columns/NameColumn';
 import TableWrapper from '@src/components/table/tableWrapper/TableWrapper';
+import CheckBoxColumn from '@src/components/table/columns/CheckBoxColumn';
 
 const CollectionTable = (): JSX.Element => {
   const requestConfig = queryConfig.collections;
@@ -69,13 +65,11 @@ const CollectionTable = (): JSX.Element => {
                   : ''
               }
             >
-              <td>
-                <Checkbox
-                  checkedBoxesIds={checkedBoxesIds}
-                  handleCheckBoxChange={handleCheckBoxChange}
-                  id={collection._id}
-                />
-              </td>
+              <CheckBoxColumn
+                checkedBoxesIds={checkedBoxesIds}
+                handleCheckBoxChange={handleCheckBoxChange}
+                id={collection._id}
+              />
               <td>
                 {collection.photo && (
                   <div className="w-12 rounded-md overflow-hidden border ">
@@ -83,20 +77,16 @@ const CollectionTable = (): JSX.Element => {
                   </div>
                 )}
               </td>
-              <td className="font-semibold hover:underline">
-                <NameColumn
-                  _id={collection._id}
-                  requestConfig={queryConfig.collections}
-                  name={collection.name}
-                />
-              </td>
-              <td>
-                <IsPinnedColumn
-                  requestConfig={requestConfig}
-                  id={collection._id}
-                  isPinned={collection.isPinned}
-                />
-              </td>
+              <NameColumn
+                _id={collection._id}
+                requestConfig={queryConfig.collections}
+                name={collection.name}
+              />
+              <IsPinnedColumn
+                requestConfig={requestConfig}
+                id={collection._id}
+                isPinned={collection.isPinned}
+              />
               <td>
                 <StatusColumn
                   requestConfig={requestConfig}
@@ -107,12 +97,10 @@ const CollectionTable = (): JSX.Element => {
               <td>
                 <p className="truncate max-w-md">{collection.slug}</p>
               </td>
-              <td>
-                <ActionsColumn
-                  requestConfig={requestConfig}
-                  id={collection._id}
-                />
-              </td>
+              <ActionsColumn
+                requestConfig={requestConfig}
+                id={collection._id}
+              />
             </tr>
           ))}
         </tbody>

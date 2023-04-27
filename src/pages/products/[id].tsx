@@ -54,6 +54,7 @@ function Create(): JSX.Element {
   const { data: collections } = useGetOnes<ICollection>(
     queryConfig.collections,
     {
+      includeUrlQuery: false,
       itemsPerPage: 999,
     },
   );
